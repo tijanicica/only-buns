@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SpringApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="onlybuns" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.project.onlybuns.OnlybunsApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
