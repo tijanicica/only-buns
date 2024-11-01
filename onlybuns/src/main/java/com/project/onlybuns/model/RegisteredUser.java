@@ -44,6 +44,8 @@ public class RegisteredUser {
 
     private LocalDateTime registrationDate;
 
+    private LocalDateTime activationDate;
+
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime lastLoginDate;
 

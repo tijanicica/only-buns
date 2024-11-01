@@ -2,7 +2,7 @@
   <configuration default="false" name="data.sql" type="DatabaseScript" editBeforeRun="true" nameIsGenerated="true">
     <script-file value="$PROJECT_DIR$/src/main/resources/data.sql" />
     <script-mode>FILE</script-mode>
-    <data-source id="19dfe1c2-7db8-4a9e-af50-83151c271d4d" />
+    <data-source id="481aa6f8-6876-484b-8c99-17883e534f96" />
     <method v="2" />
   </configuration>
 </component>
