@@ -20,16 +20,16 @@ VALUES ('jelena@example.com', 'jelena', 'hashedPassword3', 'Jelena', 'Jovanović
 
 -- Ubacivanje objava sa vremenima nakon activation_date
 INSERT INTO post (description, photo, location_id, created_at, user_id)
-VALUES ('Moj novi zeka! 🐰', '/images/bunny1.jpg', 1, '2024-10-26 15:00:00', 1);
+VALUES ('Moj novi zeka!', '/images/bunny1.jpg', 1, '2024-10-26 15:00:00', 1);
 
 INSERT INTO post (description, photo, location_id, created_at, user_id)
-VALUES ('Pogledajte kako moj zeka skace! 🐇', '/images/bunny2.jpg', 2, '2024-10-24 12:30:00', 2);
+VALUES ('Pogledajte kako moj zeka skace!', '/images/bunny2.jpg', 2, '2024-10-24 12:30:00', 2);
 
 INSERT INTO post (description, photo, location_id, created_at, user_id)
 VALUES ('Još jedno divno jutro sa mojim zekama', '/images/bunny3.jpg', 3, '2024-10-21 10:15:00', 3);
 
 INSERT INTO post (description, photo, location_id, created_at, user_id)
-VALUES ('Zečevi u akciji! 🐰🐰', '/images/bunny4.jpg', 1, '2024-10-27 09:00:00', 1);
+VALUES ('Zečevi u akciji!', '/images/bunny4.jpg', 1, '2024-10-27 09:00:00', 1);
 
 INSERT INTO post (description, photo, location_id, created_at, user_id)
 VALUES ('Najslađi zeka ikada!', '/images/bunny5.jpg', 2, '2024-10-26 17:20:00', 2);

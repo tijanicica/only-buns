@@ -1,5 +1,6 @@
 package com.project.onlybuns.controller;
 
+import com.project.onlybuns.dto.PostDto;
 import com.project.onlybuns.model.Post;
 import com.project.onlybuns.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,9 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @GetMapping
-    public ResponseEntity<List<Post>> getAllPosts() {
-        List<Post> posts =  postService.getAllSortedByDate();
+    @GetMapping(value = "/all")
+    public ResponseEntity<List<PostDto>> getAllPosts() {
+        List<PostDto> posts =  postService.getAllSortedByDate();
         return ResponseEntity.ok(posts);
     }
 
