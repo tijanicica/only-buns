@@ -1,8 +1,11 @@
 <template>
   <div class="container mt-5">
+    <div class="text-center mb-2">
+      <img src="@/assets/bunny-logo.jpg" alt="Bunny Logo" class="logo" />
+    </div>
     <h1 class="text-center">OnlyBuns</h1>
 
-    <!-- Login and Register Buttons -->
+    
     <div class="text-center mb-4">
       <button class="btn btn-primary" @click="goToLogin">Login</button>
       <button class="btn btn-secondary" @click="goToRegister">Register</button>
@@ -78,6 +81,10 @@ export default {
 </script>
 
 <style scoped>
+.logo {
+  width: 90px; /* Adjust size as needed */
+  height: auto;
+}
 .post-image {
   width: 100%;
   height: auto;
