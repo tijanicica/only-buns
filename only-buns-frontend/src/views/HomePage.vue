@@ -14,9 +14,18 @@
         <div class="card">
           <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
           <div class="card-body">
-            <h5 class="card-title">{{ post.description }}</h5>
+            <h5 class="card-title">
+              <router-link :to="{ name: 'UserProfile', params: { userId: post.creatorId } }">
+                {{ post.creatorUsername }}
+              </router-link>
+            </h5>
+            <p>{{ post.description }}</p>
             <p class="card-text">Posted at: {{ formatDate(post.createdAt) }}</p>
           </div>
+          <div class="icon-container">
+            <i class="fas fa-thumbs-up icon" @click="likePost(post.id)"></i>
+            <i class="fas fa-comment icon" @click="commentPost(post.id)"></i>
+        </div>
         </div>
       </div>
     </div>
@@ -74,5 +83,17 @@ export default {
   height: auto;
   max-height: 200px;
   object-fit: cover;
+}
+.icon-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.icon {
+  cursor: pointer;
+  width: 24px; 
+  height: 24px; 
+  color: #555; 
 }
 </style>

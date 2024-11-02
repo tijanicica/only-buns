@@ -17,6 +17,7 @@ public class PostDto {
     private String photo;
     private LocalDateTime createdAt;
     private Integer creatorId;
+    private String creatorUsername;
     private Integer locationId;
 
 
