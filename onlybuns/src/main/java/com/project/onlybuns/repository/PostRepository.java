@@ -10,4 +10,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findAllByOrderByCreatedAtDesc();
 
     List<Post> findAllByPostCreator(RegisteredUser postCreator);
+
+
 }
