@@ -18,7 +18,7 @@
 </template>
 
 <script>
-//import axios from "axios";
+import axios from "axios";
 export default {
   data() {
     return {
@@ -47,21 +47,35 @@ export default {
         this.errors.password = "";
       }
     },
-    submitForm() {
+    async submitForm() {
       this.validateEmail();
       this.validatePassword();
       
       
 
       if (Object.values(this.errors).every((error) => error === "")) {
-        alert("Successful login!");
-      
+    axios.post("http://localhost:8080/api/users/login", {
+      email: this.form.email,
+      password: this.form.password
+    })
+    .then(response => {
+      alert("Successful login! Token: " + response.data.token);
+      // Ovde možeš sačuvati token i preusmeriti korisnika na drugu stranicu
+    })
+    .catch(error => {
+      if (error.response && error.response.status === 401) {
+        alert("Login unsuccessful. Invalid email or password.");
       } else {
-        alert("Login unsuccessful.Please fill out all required fields.");
+        alert("An error occurred during login.");
       }
-    }
+    });
+  } else {
+    alert("Login unsuccessful. Please fill out all required fields.");
   }
-};
+},
+  },
+}
+
 </script>
 
 <style scoped>

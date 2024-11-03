@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
@@ -57,8 +58,17 @@ public class RegisteredUser implements UserDetails {
 
     private int followersNumber;
 
+    private String activationToken;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        String role = "USER";
+        if (isAdmin) {
+            role = "ADMIN";
+        }
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+ role));
+        return authorities;
     }
+
 }

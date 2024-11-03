@@ -1,11 +1,10 @@
 package com.project.onlybuns.controller;
 
-import com.project.onlybuns.dto.PostDto;
-import com.project.onlybuns.dto.RegisteredUserDto;
-import com.project.onlybuns.dto.RegistrationDto;
+import com.project.onlybuns.dto.*;
 import com.project.onlybuns.model.RegisteredUser;
 import com.project.onlybuns.service.RegisteredUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,4 +31,20 @@ public class RegisteredUserController {
 
     }
 
+    @GetMapping("/activate")
+    public ResponseEntity<Void> activateAccount(@RequestParam("token") String token) {
+        registeredUserService.activateUser(token);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto) {
+        String token = registeredUserService.login(loginDto);
+        if (!token.isEmpty()) {
+            return ResponseEntity.ok(new TokenDto(token));
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+    }
 }
