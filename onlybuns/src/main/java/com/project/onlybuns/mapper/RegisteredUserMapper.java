@@ -1,0 +1,21 @@
+package com.project.onlybuns.mapper;
+
+import com.project.onlybuns.dto.PostDto;
+import com.project.onlybuns.dto.RegisteredUserDto;
+import com.project.onlybuns.model.Post;
+import com.project.onlybuns.model.RegisteredUser;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
+public class RegisteredUserMapper {
+
+
+
+    public RegisteredUserDto toUserDto(RegisteredUser registeredUser) {
+        return RegisteredUserDto.builder().id(registeredUser.getId()).firstName(registeredUser.getFirstName()).
+                lastName(registeredUser.getLastName()).username(registeredUser.getUsername()).followersNumber(registeredUser.getFollowersNumber()).build();
+    }
+
+}

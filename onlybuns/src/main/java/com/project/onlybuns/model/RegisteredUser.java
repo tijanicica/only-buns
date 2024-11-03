@@ -5,10 +5,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor
@@ -16,8 +20,9 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@Builder
 @Entity
-public class RegisteredUser {
+public class RegisteredUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,5 +57,18 @@ public class RegisteredUser {
     private boolean isAdmin;
 
     private int followersNumber;
+
+    private String activationToken;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        String role = "USER";
+        if (isAdmin) {
+            role = "ADMIN";
+        }
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+ role));
+        return authorities;
+    }
 
 }

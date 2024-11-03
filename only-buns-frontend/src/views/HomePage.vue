@@ -1,8 +1,11 @@
 <template>
   <div class="container mt-5">
+    <div class="text-center mb-2">
+      <img src="@/assets/bunny-logo.jpg" alt="Bunny Logo" class="logo" />
+    </div>
     <h1 class="text-center">OnlyBuns</h1>
 
-    <!-- Login and Register Buttons -->
+    
     <div class="text-center mb-4">
       <button class="btn btn-primary" @click="goToLogin">Login</button>
       <button class="btn btn-secondary" @click="goToRegister">Register</button>
@@ -14,9 +17,18 @@
         <div class="card">
           <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
           <div class="card-body">
-            <h5 class="card-title">{{ post.description }}</h5>
+            <h5 class="card-title">
+              <router-link :to="{ name: 'UserProfile', params: { userId: post.creatorId } }">
+                {{ post.creatorUsername }}
+              </router-link>
+            </h5>
+            <p>{{ post.description }}</p>
             <p class="card-text">Posted at: {{ formatDate(post.createdAt) }}</p>
           </div>
+          <div class="icon-container">
+            <i class="fas fa-thumbs-up icon" @click="likePost(post.id)"></i>
+            <i class="fas fa-comment icon" @click="commentPost(post.id)"></i>
+        </div>
         </div>
       </div>
     </div>
@@ -69,10 +81,26 @@ export default {
 </script>
 
 <style scoped>
+.logo {
+  width: 90px; /* Adjust size as needed */
+  height: auto;
+}
 .post-image {
   width: 100%;
   height: auto;
   max-height: 200px;
   object-fit: cover;
+}
+.icon-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.icon {
+  cursor: pointer;
+  width: 24px; 
+  height: 24px; 
+  color: #555; 
 }
 </style>
