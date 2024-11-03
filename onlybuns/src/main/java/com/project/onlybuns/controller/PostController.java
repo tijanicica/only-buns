@@ -25,7 +25,7 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
-    @GetMapping("/{userId}/posts")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<List<PostDto>> getUserPosts(@PathVariable Integer userId) {
         List<PostDto> posts = postService.getUserPosts(userId);
         return ResponseEntity.ok(posts);

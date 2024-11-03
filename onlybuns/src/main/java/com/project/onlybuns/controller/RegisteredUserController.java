@@ -18,7 +18,7 @@ public class RegisteredUserController {
     private RegisteredUserService registeredUserService;
 
     // Endpoint za prikaz profila korisnika
-    @GetMapping("/{userId}")
+    @GetMapping("/profile/{userId}")
     public ResponseEntity<RegisteredUserDto> getUserProfile(@PathVariable Integer userId) {
         RegisteredUserDto user = registeredUserService.getUserProfile(userId);
         return ResponseEntity.ok(user);

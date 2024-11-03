@@ -48,7 +48,7 @@
     methods: {
       async fetchUserProfile(userId) {
         try {
-          const response = await axios.get(`http://localhost:8080/api/users/${userId}`);
+          const response = await axios.get(`http://localhost:8080/api/users/profile/${userId}`);
           this.user = response.data;
         } catch (error) {
           console.error('Error fetching user profile:', error);
@@ -56,7 +56,7 @@
       },
       async fetchUserPosts(userId) {
         try {
-          const response = await axios.get(`http://localhost:8080/api/posts/${userId}/posts`);
+          const response = await axios.get(`http://localhost:8080/api/posts/user/${userId}`);
           this.posts = response.data;
         } catch (error) {
           console.error('Error fetching user posts:', error);

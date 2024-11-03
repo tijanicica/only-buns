@@ -30,7 +30,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authz -> authz
-                .anyRequest().permitAll());
+                .requestMatchers("/api/users/login", "/api/users/register", "/api/posts/all", "/api/users/activate", "/api/posts/user/*", "/api/users/profile/*").permitAll()
+                .anyRequest().authenticated());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.csrf().disable();
         http.cors(Customizer.withDefaults());
