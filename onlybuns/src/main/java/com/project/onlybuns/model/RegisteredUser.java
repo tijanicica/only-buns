@@ -60,6 +60,10 @@ public class RegisteredUser implements UserDetails {
 
     private String activationToken;
 
+    
+
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();

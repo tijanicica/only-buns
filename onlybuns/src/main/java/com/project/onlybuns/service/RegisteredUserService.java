@@ -19,7 +19,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -110,6 +112,8 @@ public class RegisteredUserService {
             this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
             user.setLastLoginDate(LocalDateTime.now());
             registeredUserRepository.save(user);
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("role", user.isAdmin() ? "ADMIN" : "USER");
            return jwtService.generateToken(user);
         } else {
             return "";

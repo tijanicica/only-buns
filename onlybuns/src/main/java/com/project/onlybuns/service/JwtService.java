@@ -1,5 +1,6 @@
 package com.project.onlybuns.service;
 
+import com.project.onlybuns.model.RegisteredUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -49,10 +50,11 @@ public class JwtService {
             UserDetails userDetails,
             long expiration
     ) {
+        RegisteredUser user = (RegisteredUser) userDetails;
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(user.getEmail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
