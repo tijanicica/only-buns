@@ -3,6 +3,8 @@ import HomePage from '@/views/HomePage.vue';
 import LoginPage from '@/views/LoginPage.vue';
 import RegisterPage from '@/views/RegisterPage.vue';
 import UserProfilePage from '@/views/UserProfilePage.vue'
+import UserHomePage from '@/views/UserHomePage.vue'; 
+
 
 const routes = [
   {
@@ -24,6 +26,11 @@ const routes = [
     path: '/users/:userId',
     name: 'UserProfile',
     component: UserProfilePage,
+  },
+  {
+    path: '/user-home',
+    name: 'UserHome',
+    component: UserHomePage, // Make sure this is imported
   },
 ];
 

@@ -9,7 +9,6 @@ import com.project.onlybuns.model.Location;
 import com.project.onlybuns.model.RegisteredUser;
 import com.project.onlybuns.repository.RegisteredUserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import javafx.beans.value.WritableValue;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
