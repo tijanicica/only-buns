@@ -61,6 +61,7 @@ export default {
     .then(response => {
       alert("Successful login! Token: " + response.data.token);
       console.log(response.data.token);
+      
       // Ovde možeš sačuvati token i preusmeriti korisnika na drugu stranicu
     })
     .catch(error => {

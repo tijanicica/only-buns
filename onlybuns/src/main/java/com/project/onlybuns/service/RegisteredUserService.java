@@ -114,7 +114,7 @@ public class RegisteredUserService {
             registeredUserRepository.save(user);
             Map<String, Object> claims = new HashMap<>();
             claims.put("role", user.isAdmin() ? "ADMIN" : "USER");
-           return jwtService.generateToken(user);
+           return jwtService.generateToken(claims,user);
         } else {
             return "";
         }
