@@ -4,7 +4,11 @@ import LoginPage from '@/views/LoginPage.vue';
 import RegisterPage from '@/views/RegisterPage.vue';
 import UserProfilePage from '@/views/UserProfilePage.vue'
 import UserHomePage from '@/views/UserHomePage.vue'; 
-
+import YourProfilePage from '@/views/YourProfilePage.vue';
+import ChatPage from '@/views/ChatPage.vue';
+import FriendsPostsPage from '@/views/FriendsPostsPage.vue';
+import MapPage from '@/views/MapPage.vue';
+import TrendsPage from '@/views/TrendsPage.vue';
 
 const routes = [
   {
@@ -30,7 +34,32 @@ const routes = [
   {
     path: '/user-home',
     name: 'UserHome',
-    component: UserHomePage, // Make sure this is imported
+    component: UserHomePage,
+  },
+  {
+    path: '/your-profile',
+    name: 'YourProfile',
+    component: YourProfilePage,
+  },
+  {
+    path: '/chat',
+    name: 'Chat',
+    component: ChatPage,
+  },
+  {
+    path: '/friends-bunnies',
+    name: 'FriendsPosts',
+    component: FriendsPostsPage,
+  },
+  {
+    path: '/map',
+    name: 'Map',
+    component: MapPage,
+  },
+  {
+    path: '/trends',
+    name: 'Trends',
+    component: TrendsPage,
   },
 ];
 
