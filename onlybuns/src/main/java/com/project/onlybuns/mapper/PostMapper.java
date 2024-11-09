@@ -13,7 +13,7 @@ public class PostMapper {
 
     public PostDto toPostDto(Post post) {
         return PostDto.builder().id(post.getId()).photo(post.getPhoto()).description(post.getDescription()).createdAt(post.getCreatedAt())
-                        .creatorId(post.getPostCreator().getId()).creatorUsername(post.getPostCreator().getUsername()).locationId(post.getLocation().getId()).build();
+                        .creatorId(post.getPostCreator().getId()).creatorUsername(post.getPostCreator().getFirstName()).locationId(post.getLocation().getId()).build();
 
     }
 

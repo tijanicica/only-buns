@@ -9,7 +9,7 @@
       </div>
       <div class="form-group mb-3">
         <label for="password">Password:</label>
-        <input type="text" v-model="form.password" @blur="validatePassword" class="form-control" />
+        <input type="password" v-model="form.password" @blur="validatePassword" class="form-control" />
         <span v-if="errors.password" class="text-danger">{{ errors.password }}</span>
       </div>
       <button type="submit" class="btn btn-primary w-100">Login</button>
@@ -26,7 +26,7 @@ export default {
         email: "",
         password: "",
       },
-      errors: {}
+      errors: {},
     };
   },
   methods: {
@@ -50,34 +50,35 @@ export default {
     async submitForm() {
       this.validateEmail();
       this.validatePassword();
-      
-      
 
       if (Object.values(this.errors).every((error) => error === "")) {
-    axios.post("http://localhost:8080/api/users/login", {
-      email: this.form.email,
-      password: this.form.password
-    })
-    .then(response => {
-      alert("Successful login! Token: " + response.data.token);
-      console.log(response.data.token);
-      
-      // Ovde možeš sačuvati token i preusmeriti korisnika na drugu stranicu
-    })
-    .catch(error => {
-      if (error.response && error.response.status === 401) {
-        alert("Login unsuccessful. Invalid email or password.");
-      } else {
-        alert("An error occurred during login.");
-      }
-    });
-  } else {
-    alert("Login unsuccessful. Please fill out all required fields.");
-  }
-},
-  },
-}
+        try {
+          const response = await axios.post("http://localhost:8080/api/users/login", {
+            email: this.form.email,
+            password: this.form.password
+          });
+          
+          // Sačuvaj token u localStorage
+          const token = response.data.token;
+          localStorage.setItem('token', token);
+          console.log("Token saved to localStorage:", token);
 
+          // Preusmeravanje na /user-home
+          this.$router.push("/user-home"); 
+
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+            alert("Login unsuccessful. Invalid email or password.");
+          } else {
+            alert("An error occurred during login.");
+          }
+        }
+      } else {
+        alert("Login unsuccessful. Please fill out all required fields.");
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -113,5 +114,3 @@ button:hover {
   font-size: 0.9em;
 }
 </style>
-
-  

@@ -75,4 +75,9 @@ public class RegisteredUser implements UserDetails {
         return authorities;
     }
 
+    //zbog autorizacije
+    public String getUsername() {
+        return email;
+    }
+
 }
