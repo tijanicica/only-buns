@@ -10,6 +10,8 @@ import FriendsPostsPage from '@/views/FriendsPostsPage.vue';
 import MapPage from '@/views/MapPage.vue';
 import TrendsPage from '@/views/TrendsPage.vue';
 import AdminHomePage from '@/views/AdminHomePage.vue';
+import PostDetailsPage from '@/views/PostDetailsPage.vue'; 
+
 import { jwtDecode } from 'jwt-decode';
 
 const routes = [
@@ -96,10 +98,17 @@ const routes = [
         next("/login");  // redirect to login if no token found
       }
     },
+    
+  },{
+    path: '/post/:id',  // Parametar za id posta
+    name: 'PostDetails',
+    component: PostDetailsPage, // Nova stranica za prikaz detalja posta
+    props: true,  // Omogućava automatski prosleđivanje parametara
   },
 ];
 
 const router = createRouter({
+
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
