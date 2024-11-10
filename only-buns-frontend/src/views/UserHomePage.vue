@@ -15,16 +15,19 @@
     <div v-if="posts.length > 0" class="row">
       <div v-for="post in sortedPosts" :key="post.id" class="col-md-4 mb-4">
         <div class="card">
-          <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
-          <div class="card-body">
-            <h5 class="card-title">
-              <router-link :to="{ name: 'UserProfile', params: { userId: post.creatorId } }">
-                {{ post.creatorUsername }}
-              </router-link>
-            </h5>
-            <p>{{ post.description }}</p>
-            <p class="card-text">Posted at: {{ formatDate(post.createdAt) }}</p>
-          </div>
+          <router-link :to="{ name: 'PostDetails', params: { id: post.id } }">
+            <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
+            <div class="card-body">
+              <h5 class="card-title">
+                <router-link :to="{ name: 'UserProfile', params: { userId: post.creatorId } }">
+                  {{ post.creatorUsername }}
+                </router-link>
+              </h5>
+              <p>{{ post.description }}</p>
+              <p class="card-text">Posted at: {{ formatDate(post.createdAt) }}</p>
+            </div>
+          </router-link>
+
           <!-- Like and Comment Buttons -->
           <div class="icon-container">
             <i class="fas fa-thumbs-up icon" 
@@ -127,24 +130,31 @@ export default {
     toggleLike(postId, post) {
       const token = localStorage.getItem("token");
       if (token) {
-        axios
-          .post(`http://localhost:8080/api/posts/${postId}/like`, {}, {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          .then((response) => {
-            console.log("Post liked successfully:", response.data);
-            // Update the local 'likedByCurrentUser' state immediately after the like is successful
-            post.likedByCurrentUser = !post.likedByCurrentUser;
+        // Check if the post is already liked by the current user
+        if (!post.likedByCurrentUser) {
+          // User hasn't liked the post, so send a like request
+          axios
+            .post(`http://localhost:8080/api/posts/${postId}/like`, {}, {
+              headers: { Authorization: `Bearer ${token}` },
+            })
+            .then((response) => {
+              console.log("Post liked successfully:", response.data);
+              // Update the local 'likedByCurrentUser' state immediately after the like is successful
+              post.likedByCurrentUser = true;
 
-            // Update liked posts in localStorage
-            this.likedPosts[postId] = post.likedByCurrentUser;
-            this.updateLikedPostsInLocalStorage();
-          })
-          .catch((error) => {
-            console.error("Error liking post:", error.response ? error.response.status : error.message);
-            this.error = true;
-            this.errorMessage = "There was an error liking the post.";
-          });
+              // Update liked posts in localStorage
+              this.likedPosts[postId] = true;
+              this.updateLikedPostsInLocalStorage();
+            })
+            .catch((error) => {
+              console.error("Error liking post:", error.response ? error.response.status : error.message);
+              this.error = true;
+              this.errorMessage = "There was an error liking the post.";
+            });
+        } else {
+          // If the post is already liked, show an alert
+          alert("You have already liked this post.");
+        }
       }
     },
 
