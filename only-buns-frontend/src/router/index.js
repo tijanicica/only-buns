@@ -2,13 +2,15 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '@/views/HomePage.vue';
 import LoginPage from '@/views/LoginPage.vue';
 import RegisterPage from '@/views/RegisterPage.vue';
-import UserProfilePage from '@/views/UserProfilePage.vue'
+import UserProfilePage from '@/views/UserProfilePage.vue';
 import UserHomePage from '@/views/UserHomePage.vue'; 
 import YourProfilePage from '@/views/YourProfilePage.vue';
 import ChatPage from '@/views/ChatPage.vue';
 import FriendsPostsPage from '@/views/FriendsPostsPage.vue';
 import MapPage from '@/views/MapPage.vue';
 import TrendsPage from '@/views/TrendsPage.vue';
+import AdminHomePage from '@/views/AdminHomePage.vue';
+import { jwtDecode } from 'jwt-decode';
 
 const routes = [
   {
@@ -35,6 +37,20 @@ const routes = [
     path: '/user-home',
     name: 'UserHome',
     component: UserHomePage,
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        if (decodedToken.role === "USER") {
+          next();  // allow access to UserHome
+        } else {
+          alert("You are not authorized to view this page.");
+          next("/login");  // redirect to login if not authorized
+        }
+      } else {
+        next("/login");  // redirect to login if no token found
+      }
+    },
   },
   {
     path: '/your-profile',
@@ -60,6 +76,26 @@ const routes = [
     path: '/trends',
     name: 'Trends',
     component: TrendsPage,
+  },
+  // Admin Home page route
+  {
+    path: '/admin-home',
+    name: 'AdminHome',
+    component: AdminHomePage,
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        if (decodedToken.role === "ADMIN") {
+          next();  // allow access to AdminHome
+        } else {
+          alert("You are not authorized to view this page.");
+          next("/login");  // redirect to login if not authorized
+        }
+      } else {
+        next("/login");  // redirect to login if no token found
+      }
+    },
   },
 ];
 
