@@ -24,7 +24,7 @@
             <p class="card-text">Posted at: {{ formatDate(post.createdAt) }}</p>
           </div>
           <div class="icon-container">
-            <i class="fas fa-thumbs-up icon" @click="showAlert('You must be logged in to like posts.')"></i>
+            <i class="fas fa-thumbs-up icon" @click="handleLike(post.id)"></i>
             <i class="fas fa-comment icon" @click="showAlert('You must be logged in to comment.')"></i>
           </div>
         </div>
@@ -66,6 +66,26 @@ export default {
         console.error('Error fetching posts:', error);
       }
     },
+    handleLike(postId) {
+    if (!this.isAuthenticated) {
+      this.showAlert('Please register your account first.');
+      return;
+    }
+   
+    this.likePost(postId);
+  },
+  async likePost(postId) {
+    try {
+      await axios.post(`http://localhost:8080/api/posts/${postId}/like`, {}, {
+        headers: {
+          Authorization: `Bearer ${this.token}`  
+        }
+      });
+      this.showAlert('Post liked successfully!');
+    } catch (error) {
+      this.showAlert('Error liking post.');
+    }
+  },
     goToLogin() {
       this.$router.push('/login');
     },

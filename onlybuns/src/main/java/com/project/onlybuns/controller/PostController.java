@@ -44,17 +44,35 @@ public class PostController {
 
     @PostMapping("/{postId}/like")
     public ResponseEntity<String> likePost(@PathVariable Integer postId, @RequestHeader("Authorization") String authorization) {
-        // Extract the JWT token from the Authorization header
-        String token = authorization.split(" ")[1];
-        String userEmail = jwtService.extractUsername(token); // This method will extract the username (email) from the JWT token
 
-        likeService.likePost(postId, userEmail);
-        return ResponseEntity.ok("Post liked successfully!");
+        try {
+            if (authorization == null || !authorization.startsWith("Bearer ")) {
+                System.out.println("Unauthorized access attempt: Missing or invalid Authorization header.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Please register your account first.");
+            }
+
+            String token = authorization.split(" ")[1];
+            String userEmail = jwtService.extractUsername(token);
+
+            if (userEmail == null) {
+                System.out.println("Unauthorized access attempt: Failed to extract username from token.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Please register your account first.");
+            }
+
+            likeService.likePost(postId, userEmail);
+            return ResponseEntity.ok("Post liked successfully!");
+
+        } catch (Exception e) {
+            // Ispisuje grešku u konzoli
+            System.out.println("An error occurred while processing the like request: " + e.getMessage());
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
+        }
     }
 
     @GetMapping("/{postId}/likes")
     public List<Like> getLikesForPost(@PathVariable Integer postId) {
-        return likeService.getLikesForPost(postId);  // Return all likes for the specified post
+        return likeService.getLikesForPost(postId);
     }
 
 

@@ -18,5 +18,5 @@ public class RegistrationDto {
     private String streetName;
     private String city;
     private String country;
-    private int streetNumber;
+    private String streetNumber;
 }
