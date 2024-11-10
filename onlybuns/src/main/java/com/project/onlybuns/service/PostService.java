@@ -31,4 +31,8 @@ public class PostService {
                 .toList();
     }
 
+    public void createPost(){
+        
+    }
+
 }
