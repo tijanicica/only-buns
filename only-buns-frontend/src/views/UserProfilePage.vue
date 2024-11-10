@@ -1,11 +1,10 @@
 <template>
     <div v-if="user" class="profile-container">
       <div class="profile-card">
-        <h2 class="profile-header">{{ user.username }}'s Profile</h2>
+        <h2 class="profile-header">{{ user.firstName }}'s bunnies</h2>
         <div class="profile-info">
-          <p><strong>Username:</strong> {{ user.username }}</p>
-          <p><strong>First Name:</strong> {{ user.firstName }}</p>
-          <p><strong>Last Name:</strong> {{ user.lastName }}</p>
+          <p> {{ user.firstName }}</p>
+          <p> {{ user.lastName }}</p>
           <p><strong>Followers:</strong> {{ user.followersNumber }}</p>
         </div>
       </div>
@@ -16,7 +15,7 @@
           <div v-for="post in posts" :key="post.id" class="post-card">
             <img :src="post.photo" class="post-image" alt="Post Image" v-if="post.photo" />
             <p>{{ post.description }}</p>
-            <p class="post-date">Posted on: {{ formatDate(post.createdAt) }}</p>
+            <p class="post-date">{{ formatDate(post.createdAt) }}</p>
           </div>
         </div>
         <div v-else class="no-posts-message">

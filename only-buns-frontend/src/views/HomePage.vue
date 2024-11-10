@@ -5,13 +5,11 @@
     </div>
     <h1 class="text-center">OnlyBuns</h1>
 
-    
     <div class="text-center mb-4">
       <button class="btn btn-primary" @click="goToLogin">Login</button>
       <button class="btn btn-secondary" @click="goToRegister">Register</button>
     </div>
 
-    <!-- Display Posts -->
     <div v-if="posts.length > 0" class="row">
       <div v-for="post in sortedPosts" :key="post.id" class="col-md-4 mb-4">
         <div class="card">
@@ -26,14 +24,18 @@
             <p class="card-text">Posted at: {{ formatDate(post.createdAt) }}</p>
           </div>
           <div class="icon-container">
-            <i class="fas fa-thumbs-up icon" @click="likePost(post.id)"></i>
-            <i class="fas fa-comment icon" @click="commentPost(post.id)"></i>
-        </div>
+            <i class="fas fa-thumbs-up icon" @click="handleLike(post.id)"></i>
+            <i class="fas fa-comment icon" @click="showAlert('You must be logged in to comment.')"></i>
+          </div>
         </div>
       </div>
     </div>
     <div v-else>
       <p>No posts available.</p>
+    </div>
+
+    <div v-if="alertMessage" class="error-alert">
+      {{ alertMessage }}
     </div>
   </div>
 </template>
@@ -45,10 +47,10 @@ export default {
   data() {
     return {
       posts: [],
+      alertMessage: null,  
     };
   },
   computed: {
-    // Sort posts in reverse order based on createdAt field
     sortedPosts() {
       return [...this.posts].sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -64,6 +66,26 @@ export default {
         console.error('Error fetching posts:', error);
       }
     },
+    handleLike(postId) {
+    if (!this.isAuthenticated) {
+      this.showAlert('Please register your account first.');
+      return;
+    }
+   
+    this.likePost(postId);
+  },
+  async likePost(postId) {
+    try {
+      await axios.post(`http://localhost:8080/api/posts/${postId}/like`, {}, {
+        headers: {
+          Authorization: `Bearer ${this.token}`  
+        }
+      });
+      this.showAlert('Post liked successfully!');
+    } catch (error) {
+      this.showAlert('Error liking post.');
+    }
+  },
     goToLogin() {
       this.$router.push('/login');
     },
@@ -72,6 +94,12 @@ export default {
     },
     formatDate(date) {
       return new Date(date).toLocaleString();
+    },
+    showAlert(message) {
+      this.alertMessage = message;
+      setTimeout(() => {
+        this.alertMessage = null;
+      }, 5000);  
     },
   },
   mounted() {
@@ -82,7 +110,7 @@ export default {
 
 <style scoped>
 .logo {
-  width: 90px; /* Adjust size as needed */
+  width: 90px; 
   height: auto;
 }
 .post-image {
@@ -102,5 +130,18 @@ export default {
   width: 24px; 
   height: 24px; 
   color: #555; 
+}
+
+.error-alert {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
 }
 </style>
