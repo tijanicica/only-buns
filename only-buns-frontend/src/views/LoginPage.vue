@@ -60,16 +60,16 @@ export default {
             password: this.form.password
           });
 
-          // Sačuvaj token u localStorage
+          
           const token = response.data.token;
           localStorage.setItem('token', token);
           console.log("Token saved to localStorage:", token);
 
-          // Dekodiranje tokena da bismo dobili ulogu korisnika
+          
           const decodedToken = jwtDecode(token);
           console.log("Decoded token data:", decodedToken);
 
-          // Proveri ulogu korisnika i preusmeri na odgovarajuću stranicu
+          
           if (decodedToken.role === "USER") {
             this.$router.push("/user-home");
           } else if (decodedToken.authority === "ADMIN") {
