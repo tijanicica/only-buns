@@ -1,5 +1,6 @@
 package com.project.onlybuns.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,12 +25,14 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "location_id")
+    @JsonIgnore
     private Location location;
 
     private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private RegisteredUser postCreator;
 
 

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -31,4 +32,8 @@ public class PostService {
                 .toList();
     }
 
+
+    public Post getPostById(Integer postId) {
+        return postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+    }
 }

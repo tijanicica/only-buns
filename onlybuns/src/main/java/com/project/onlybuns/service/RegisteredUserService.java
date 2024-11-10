@@ -122,6 +122,11 @@ public class RegisteredUserService {
 
     }
 
+    public RegisteredUser findByEmail(String email) {
+        return registeredUserRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+    }
+
 
 
 }
