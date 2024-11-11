@@ -78,21 +78,39 @@ export default {
     };
   },
   methods: {
-    validateEmail() {
+    async validateEmail() {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!this.form.email) {
         this.errors.email = "Email is required.";
       } else if (!emailRegex.test(this.form.email)) {
         this.errors.email = "Email is in wrong format.";
       } else {
-        this.errors.email = "";
+        try {
+          const response = await axios.post("http://localhost:8080/api/users/check-email", { email: this.form.email });
+          if (response.data.exists) {
+            this.errors.email = "Email already in use.";
+          } else {
+            this.errors.email = "";
+          }
+        } catch (error) {
+          console.error("Error checking email:", error);
+        }
       }
     },
-    validateUsername() {
+    async validateUsername() {
       if (!this.form.username) {
         this.errors.username = "Username is required.";
       } else {
-        this.errors.username = "";
+        try {
+          const response = await axios.post("http://localhost:8080/api/users/check-username", { username: this.form.username });
+          if (response.data.exists) {
+            this.errors.username = "Username already in use.";
+          } else {
+            this.errors.username = "";
+          }
+        } catch (error) {
+          console.error("Error checking username:", error);
+        }
       }
     },
     validatePassword() {
@@ -154,7 +172,7 @@ export default {
       }
     },
     async submitForm() {
-      // Validacija
+      
       this.validateEmail();
       this.validateUsername();
       this.validatePassword();
@@ -167,12 +185,12 @@ export default {
       this.validateCountry();
 
       if (Object.values(this.errors).every((error) => error === "")) {
-        // Ako su svi podaci validni, šaljemo zahtev ka backend-u
+        
         try {
           await axios.post("http://localhost:8080/api/users/register", this.form);
           alert("Successful registration!");
-          // Redirekcija ili reset forme
-          this.$router.push("/login"); // Redirektuje korisnika na login stranicu
+          
+          this.$router.push("/login"); 
         } catch (error) {
           console.error("Error during registration:", error);
           alert("Registration unsuccessful. Please try again.");

@@ -134,6 +134,7 @@ public class PostController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
 
+
             CommentDto savedComment = commentService.submitComment(post, commentDto.getContent(), user);
 
             return ResponseEntity.ok(savedComment);

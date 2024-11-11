@@ -15,6 +15,10 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
 
     Optional<RegisteredUser> findByUsername(String username);
     Optional<RegisteredUser> findByActivationToken(String token);
+    boolean existsByEmail(String email);
+
+    boolean existsByUsername(String username);
+
 
     @Query("SELECT u FROM RegisteredUser u " +
             "WHERE (:firstName IS NULL OR LOWER(u.firstName) LIKE LOWER(CONCAT('%', :firstName, '%'))) " +
@@ -29,6 +33,7 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
             @Param("minPosts") Integer minPosts,
             @Param("maxPosts") Integer maxPosts,
             Pageable pageable);
+
 
 
 
