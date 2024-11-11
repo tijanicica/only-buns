@@ -35,8 +35,6 @@ public class RegisteredUserService {
 
 
     private final RegisteredUserRepository registeredUserRepository;
-    //private final PostService postService;
-    private final PostRepository postRepository;
     private final RegisteredUserMapper registeredUserMapper;
     private final EmailService emailService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
