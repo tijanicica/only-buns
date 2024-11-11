@@ -7,10 +7,15 @@ import com.project.onlybuns.dto.RegistrationDto;
 import com.project.onlybuns.mapper.RegisteredUserMapper;
 import com.project.onlybuns.model.Location;
 import com.project.onlybuns.model.RegisteredUser;
+import com.project.onlybuns.repository.PostRepository;
 import com.project.onlybuns.repository.RegisteredUserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -22,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -29,6 +35,8 @@ public class RegisteredUserService {
 
 
     private final RegisteredUserRepository registeredUserRepository;
+    //private final PostService postService;
+    private final PostRepository postRepository;
     private final RegisteredUserMapper registeredUserMapper;
     private final EmailService emailService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -126,6 +134,48 @@ public class RegisteredUserService {
         return registeredUserRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
     }
+
+    public List<RegisteredUserDto> getAllUsers() {
+        List<RegisteredUser> users = registeredUserRepository.findAll();  
+        return users.stream()
+                .map(registeredUserMapper::toUserDto)
+                .collect(Collectors.toList());
+    }
+
+
+
+
+    public int getNumberOfFollowers(Integer userId) {
+        RegisteredUser user = registeredUserRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+        return user.getFollowersNumber();
+    }
+
+    public void makeUserAdmin(Integer userId) {
+        RegisteredUser user = registeredUserRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        user.setAdmin(true);
+        registeredUserRepository.save(user);
+    }
+
+
+    public Page<RegisteredUserDto> searchUsers(String firstName, String lastName, String email,
+                                               Integer minPosts, Integer maxPosts, int page, int size, String sortBy, String order) {
+        Pageable pageable = PageRequest.of(page, size, order.equalsIgnoreCase("desc") ?
+                Sort.by(sortBy).descending() : Sort.by(sortBy).ascending());
+
+        Page<RegisteredUser> usersPage = registeredUserRepository.searchUsers(
+                firstName, lastName, email, minPosts, maxPosts, pageable);
+
+        return usersPage.map(registeredUserMapper::toUserDto);
+    }
+
+
+
+
+
+
+
 
 
 

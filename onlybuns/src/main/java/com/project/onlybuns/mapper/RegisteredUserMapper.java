@@ -14,8 +14,14 @@ public class RegisteredUserMapper {
 
 
     public RegisteredUserDto toUserDto(RegisteredUser registeredUser) {
-        return RegisteredUserDto.builder().id(registeredUser.getId()).firstName(registeredUser.getFirstName()).
-                lastName(registeredUser.getLastName()).username(registeredUser.getUsername()).followersNumber(registeredUser.getFollowersNumber()).build();
+        return RegisteredUserDto.builder()
+                .id(registeredUser.getId())
+                .firstName(registeredUser.getFirstName())
+                .lastName(registeredUser.getLastName())
+                .username(registeredUser.getUsername())
+                .email(registeredUser.getEmail())
+                .followersNumber(registeredUser.getFollowersNumber())
+                .build();
     }
 
 }

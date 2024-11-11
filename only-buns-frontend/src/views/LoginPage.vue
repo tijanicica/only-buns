@@ -19,7 +19,7 @@
 
 <script>
 import axios from "axios";
-import { jwtDecode } from "jwt-decode"; //import sa {}
+import { jwtDecode } from "jwt-decode"; 
 
 export default {
   data() {
@@ -60,19 +60,16 @@ export default {
             password: this.form.password
           });
 
-          // Sačuvaj token u localStorage
           const token = response.data.token;
           localStorage.setItem('token', token);
           console.log("Token saved to localStorage:", token);
 
-          // Dekodiranje tokena da bismo dobili ulogu korisnika
           const decodedToken = jwtDecode(token);
           console.log("Decoded token data:", decodedToken);
 
-          // Proveri ulogu korisnika i preusmeri na odgovarajuću stranicu
           if (decodedToken.role === "USER") {
             this.$router.push("/user-home");
-          } else if (decodedToken.authority === "ADMIN") {
+          } else if (decodedToken.role === "ADMIN") {
             this.$router.push("/admin-home");
           } else {
             alert("User role is not recognized.");
