@@ -1,5 +1,6 @@
 package com.project.onlybuns.dto;
 
+import com.project.onlybuns.model.Location;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -19,9 +20,5 @@ public class PostDto {
     private Integer creatorId;
     private String creatorUsername;
     private Integer locationId;
-
-
-
-
-
+    private Location location;
 }

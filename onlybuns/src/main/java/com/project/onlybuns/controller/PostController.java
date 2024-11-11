@@ -6,12 +6,17 @@ import com.project.onlybuns.model.Like;
 import com.project.onlybuns.model.Post;
 import com.project.onlybuns.model.RegisteredUser;
 import com.project.onlybuns.service.*;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +39,6 @@ public class PostController {
 
     @Autowired
     private JwtService jwtService;
-
 
 
     @GetMapping(value = "/all")
@@ -159,9 +163,17 @@ public class PostController {
         postService.deletePost(id);
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto, @RequestHeader("Authorization") String authorization) throws IOException {
+        String token = authorization.split(" ")[1];
+        String userEmail = jwtService.extractUsername(token);
 
+        RegisteredUser user = registeredUserService.findByEmail(userEmail);
 
+        PostDto createdPost = postService.createPost(user, postDto);
+        System.out.println("Created Post: " + createdPost);
 
-
+        return ResponseEntity.ok(createdPost);
+    }
 
 }

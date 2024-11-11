@@ -35,7 +35,4 @@ public class Post {
     @JsonIgnore
     private RegisteredUser postCreator;
 
-
-
-
 }

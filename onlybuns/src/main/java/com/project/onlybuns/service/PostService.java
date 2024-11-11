@@ -2,19 +2,23 @@ package com.project.onlybuns.service;
 
 import com.project.onlybuns.dto.CommentDto;
 import com.project.onlybuns.dto.PostDto;
-import com.project.onlybuns.dto.RegisteredUserDto;
 import com.project.onlybuns.mapper.CommentMapper;
 import com.project.onlybuns.mapper.PostMapper;
-import com.project.onlybuns.model.Comment;
+import com.project.onlybuns.model.Location;
 import com.project.onlybuns.model.Post;
 import com.project.onlybuns.model.RegisteredUser;
 import com.project.onlybuns.repository.PostRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -37,6 +41,37 @@ public class PostService {
                 .toList();
     }
 
+    public PostDto createPost(RegisteredUser user, PostDto postDto) throws IOException {
+        String photoUrl = savePhoto(postDto.getPhoto());
+        Location location = new Location();
+        location.setStreetNumber(postDto.getLocation().getStreetNumber());
+        location.setStreetName(postDto.getLocation().getStreetName());
+        location.setCity(postDto.getLocation().getCity());
+        location.setCountry(postDto.getLocation().getCountry());
+
+        Post post = new Post();
+        post.setDescription(postDto.getDescription());
+        post.setPostCreator(user);
+        post.setCreatedAt(LocalDateTime.now());
+        post.setLocation(postDto.getLocation());
+        post.setPhoto(photoUrl);
+
+        postRepository.save(post);
+
+        return postMapper.toPostDto(post);
+    }
+    public String savePhoto(String base64Photo) throws IOException {
+            String uploadDirectory = "C:\\Users\\tepam\\only-buns\\onlybuns\\src\\main\\resources\\static\\images"; // Modify as needed
+            String fileName = "image_" + System.currentTimeMillis() + ".jpg";
+            String base64Data = base64Photo.split(",")[1]; // Remove the prefix if present
+
+            byte[] imageBytes = Base64.getDecoder().decode(base64Data);
+
+            Path path = Paths.get(uploadDirectory, fileName);
+            Files.write(path, imageBytes);
+
+            return "/images/" + fileName;
+    }
 
     public Post getPostById(Integer postId) {
         return postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
@@ -80,9 +115,5 @@ public class PostService {
     public int countByUserId(Integer userId) {
         return postRepository.countByPostCreatorId(userId);
     }
-
-
-
-
 
 }
