@@ -29,8 +29,8 @@
 
       <div v-else>
         <!-- Post Details -->
-        <p class="post-details">Posted by: {{ post.creatorUsername }}</p>
-        <p class="post-details">Posted at: {{ formatDate(post.createdAt) }}</p>
+        <p class="post-details"> {{ post.creatorUsername }}</p>
+        <p class="post-details"> {{ formatDate(post.createdAt) }}</p>
 
         <!-- Like and Comment Count with Icons -->
         <div class="like-comment-container">
@@ -56,7 +56,7 @@
         <h3>Comments:</h3>
         <div v-for="comment in comments" :key="comment.id" class="comment">
           <p>{{ comment.content }}</p>
-          <small>Posted by: {{ comment.name }} at {{ formatDate(comment.date) }}</small>
+          <small>{{ comment.name }} at {{ formatDate(comment.date) }}</small>
         </div>
       </div>
     </div>
@@ -234,7 +234,7 @@ export default {
 </script>
 
 <style scoped>
-/* Styling for the header with logo */
+
 .header {
   display: flex;
   justify-content: center;
@@ -246,21 +246,26 @@ export default {
   height: auto;
 }
 
-/* Styling for the post details */
+
 .post-detail {
   text-align: center;
 }
 
 .post-image-container {
-  position: relative;
+  display: flex;
+  justify-content: center; /* Centralizuje sliku */
+  align-items: center;
+  margin: auto; /* Centralno postavlja kontejner na stranici */
 }
 
 .card-img-top {
-  width: 80%;
-  height: auto;
-  max-height: 300px;
-  object-fit: cover;
-  margin: 10px 0;
+  width: 100%; /* Širina slike u okviru kontejnera */
+  max-width: 600px; /* Maksimalna širina slike */
+  max-height: 400px; /* Maksimalna visina slike */
+  object-fit: cover; /* Da slika lepo popuni okvir */
+  border-radius: 8px; /* Zaobljeni uglovi */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Blaga senka za bolji vizuelni efekat */
+  margin: 10px 0; /* Razmak između slike i drugih elemenata */
 }
 
 .edit-delete-container {
@@ -288,7 +293,7 @@ p.post-details {
   margin-top: 10px;
 }
 
-/* Styling for Like and Comment Count */
+
 .like-comment-container {
   display: flex;
   justify-content: space-around;
@@ -327,7 +332,6 @@ textarea.form-control {
   border-radius: 5px;
 }
 
-/* Confirmation Dialog */
 .delete-confirmation-modal {
   position: fixed;
   top: 0;
@@ -351,5 +355,10 @@ textarea.form-control {
 
 .delete-confirmation-modal button {
   margin-top: 10px;
+}
+.container {
+  max-width: 800px; /* Prilagodi po želji */
+  margin: 0 auto; /* Centralizuje sadržaj */
+  padding: 20px; /* Doda razmak unutar stranice */
 }
 </style>

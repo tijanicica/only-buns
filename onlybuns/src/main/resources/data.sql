@@ -37,3 +37,63 @@ VALUES ('Zečevi u akciji!', '/images/bunny4.jpg', 1, '2024-10-27 09:00:00', 1);
 
 INSERT INTO post (description, photo, location_id, created_at, user_id)
 VALUES ('Najslađi zeka ikada!', '/images/bunny5.jpg', 2, '2024-10-26 17:20:00', 2);
+
+-- Ubacivanje dodatnih objava
+INSERT INTO post (description, photo, location_id, created_at, user_id)
+VALUES ('Zeka na odmoru', '/images/bunny9.jpg', 1, '2024-10-28 14:00:00', 1);
+
+INSERT INTO post (description, photo, location_id, created_at, user_id)
+VALUES ('Najlepši zeka ikada!', '/images/bunny10.jpg', 2, '2024-10-28 16:30:00', 2);
+
+INSERT INTO post (description, photo, location_id, created_at, user_id)
+VALUES ('Još jedno zimsko jutro sa zekama', '/images/bunny11.jpg', 3, '2024-10-29 11:15:00', 3);
+
+INSERT INTO post (description, photo, location_id, created_at, user_id)
+VALUES ('Vreme za igru!', '/images/bunny6.jpg', 1, '2024-10-29 18:00:00', 1);
+
+INSERT INTO post (description, photo, location_id, created_at, user_id)
+VALUES ('Zeka u prirodi!', '/images/bunny8.jpg', 2, '2024-10-30 09:20:00', 2);
+
+-- Ubacivanje lajkova
+INSERT INTO post_like (post_id, user_id, date)
+VALUES (1, 2, '2024-10-27 16:00:00');
+
+INSERT INTO post_like (post_id, user_id, date)
+VALUES (1, 3, '2024-10-27 16:30:00');
+
+INSERT INTO post_like (post_id, user_id, date)
+VALUES (2, 1, '2024-10-24 13:00:00');
+
+INSERT INTO post_like (post_id, user_id, date)
+VALUES (3, 2, '2024-10-21 11:00:00');
+
+INSERT INTO post_like (post_id, user_id, date)
+VALUES (4, 3, '2024-10-28 12:15:00');
+
+INSERT INTO post_like (post_id, user_id, date)
+VALUES (5, 1, '2024-10-26 18:00:00');
+
+INSERT INTO post_like (post_id, user_id, date)
+VALUES (5, 3, '2024-10-27 08:30:00');
+
+-- Ubacivanje komentara
+INSERT INTO comment (post_id, user_id, date, content)
+VALUES (1, 2, '2024-10-27 16:10:00', 'Predivno!');
+
+INSERT INTO comment (post_id, user_id, date, content)
+VALUES (1, 3, '2024-10-27 16:40:00', 'Baš je sladak zeka!');
+
+INSERT INTO comment (post_id, user_id, date, content)
+VALUES (2, 1, '2024-10-24 13:15:00', 'Sjajna fotka!');
+
+INSERT INTO comment (post_id, user_id, date, content)
+VALUES (3, 2, '2024-10-21 11:10:00', 'Voleo bih da upoznam tvog zeku!');
+
+INSERT INTO comment (post_id, user_id, date, content)
+VALUES (4, 3, '2024-10-28 12:30:00', 'Super je energičan!');
+
+INSERT INTO comment (post_id, user_id, date, content)
+VALUES (5, 1, '2024-10-26 18:30:00', 'Zeko izgleda prelepo!');
+
+INSERT INTO comment (post_id, user_id, date, content)
+VALUES (5, 3, '2024-10-27 08:40:00', 'Baš je simpatičan!');

@@ -1,11 +1,12 @@
 <template>
   <div class="container mt-5">
     <div class="text-center mb-2">
+      <h1 class="onlybuns-title">OnlyBuns</h1>
       <img src="@/assets/bunny-logo.jpg" alt="Bunny Logo" class="logo" />
     </div>
-    <h1 class="text-center">OnlyBuns</h1>
+    
 
-    <div v-if="!isAuthenticated" class="text-center mb-4">
+    <div class="button-container text-center mb-4">
       <button class="btn btn-primary" @click="goToLogin">Login</button>
       <button class="btn btn-secondary" @click="goToRegister">Register</button>
     </div>
@@ -16,15 +17,17 @@
           <div @click="viewPost(post.id)">
             <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
             <div class="card-body">
-              <h5 class="card-title">
-                <router-link :to="{ name: 'UserProfile', params: { userId: post.creatorId } }">
-                  {{ post.creatorUsername }}
-                </router-link>
-              </h5>
+             
               <p>{{ post.description }}</p>
-              <p class="card-text">Posted at: {{ formatDate(post.createdAt) }}</p>
+              <p class="card-text"> {{ formatDate(post.createdAt) }}</p>
             </div>
           </div>
+
+          <div class="card-footer">
+    <router-link :to="{ name: 'UserProfile', params: { userId: post.creatorId } }">
+      {{ post.creatorUsername }}
+    </router-link>
+  </div>
 
           <!-- Only Display Like and Comment Counts, No Commenting or Liking for Non-Authenticated Users -->
           <div class="icon-container">
@@ -107,6 +110,15 @@ export default {
 .logo {
   width: 90px;
   height: auto;
+}
+.button-container .btn {
+  margin: 0 10px; /* Adds spacing between buttons */
+}
+.onlybuns-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 .post-image {
   width: 100%;
