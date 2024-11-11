@@ -131,6 +131,14 @@ public class RegisteredUserService {
                 .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
     }
 
+    public boolean emailExists(String email) {
+        return registeredUserRepository.existsByEmail(email);
+    }
+
+    public boolean usernameExists(String username) {
+        return registeredUserRepository.existsByUsername(username);
+    }
+
 
 
 }

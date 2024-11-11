@@ -117,8 +117,6 @@ public class PostController {
         String token = authorization.split(" ")[1];
         String userEmail = jwtService.extractUsername(token);
 
-
-
         Post post = postService.getPostById(postId);
 
         RegisteredUser user = registeredUserService.findByEmail(userEmail);

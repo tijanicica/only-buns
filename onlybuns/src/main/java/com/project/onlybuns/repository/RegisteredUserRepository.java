@@ -11,6 +11,10 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
 
     Optional<RegisteredUser> findByUsername(String username);
     Optional<RegisteredUser> findByActivationToken(String token);
+    boolean existsByEmail(String email);
+
+    boolean existsByUsername(String username);
+
 }
 
 
