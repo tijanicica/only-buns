@@ -12,6 +12,7 @@ import TrendsPage from '@/views/TrendsPage.vue';
 import AdminHomePage from '@/views/AdminHomePage.vue';
 import PostDetailsPage from '@/views/PostDetailsPage.vue'; 
 import PostCreationPage from '@/views/PostCreationPage.vue';
+import ManageUsers from '@/views/ManageUsers.vue';  
 
 import { jwtDecode } from 'jwt-decode';
 
@@ -45,13 +46,13 @@ const routes = [
       if (token) {
         const decodedToken = jwtDecode(token);
         if (decodedToken.role === "USER") {
-          next();  // allow access to UserHome
+          next();  
         } else {
           alert("You are not authorized to view this page.");
-          next("/login");  // redirect to login if not authorized
+          next("/login");  
         }
       } else {
-        next("/login");  // redirect to login if no token found
+        next("/login");  
       }
     },
   },
@@ -85,7 +86,6 @@ const routes = [
     name: 'Trends',
     component: TrendsPage,
   },
-  // Admin Home page route
   {
     path: '/admin-home',
     name: 'AdminHome',
@@ -95,21 +95,27 @@ const routes = [
       if (token) {
         const decodedToken = jwtDecode(token);
         if (decodedToken.role === "ADMIN") {
-          next();  // allow access to AdminHome
+          next();  
         } else {
           alert("You are not authorized to view this page.");
-          next("/login");  // redirect to login if not authorized
+          next("/login");  
         }
       } else {
-        next("/login");  // redirect to login if no token found
+        next("/login");  
       }
     },
     
   },{
-    path: '/post/:id',  // Parametar za id posta
+    path: '/post/:id', 
     name: 'PostDetails',
-    component: PostDetailsPage, // Nova stranica za prikaz detalja posta
-    props: true,  // Omogućava automatski prosleđivanje parametara
+    component: PostDetailsPage, 
+    props: true,  //automatsko prosledjivanje parametara
+  },
+  {
+    path: '/admin/users',
+    name: 'ManageUsers',
+    component: ManageUsers,
+    meta: { requiresAuth: true, requiresAdmin: true },
   },
 ];
 

@@ -86,14 +86,7 @@ public class PostController {
         return likeService.getLikesForPost(postId);
     }
 
-    /*@GetMapping("/{postId}")
-    public ResponseEntity<PostDto> getPostDetails(@PathVariable Integer postId) {
-        // Get PostDto by calling the service
-        PostDto postDto = postService.getPostDtoById(postId);
 
-        // Return PostDto and comments
-        return ResponseEntity.ok(postDto);  // You can add comments here if needed in the frontend
-    }*/
 
     @GetMapping("/{postId}")
     public ResponseEntity<Map<String, Object>> getPostDetails(@PathVariable Integer postId) {
@@ -118,19 +111,44 @@ public class PostController {
     public ResponseEntity<CommentDto> submitComment(@PathVariable Integer postId,
                                                     @RequestBody CommentDto commentDto,
                                                     @RequestHeader("Authorization") String authorization) {
-        String token = authorization.split(" ")[1];
-        String userEmail = jwtService.extractUsername(token);
+        try {
+            if (authorization == null || !authorization.startsWith("Bearer ")) {
+                System.out.println("Unauthorized access attempt: Missing or invalid Authorization header.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null); // Unauthorized response
+            }
+
+            String token = authorization.split(" ")[1];
+
+            String userEmail = jwtService.extractUsername(token);
+
+            if (userEmail == null) {
+                System.out.println("Unauthorized access attempt: Failed to extract username from token.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null); // Unauthorized response
+            }
+
+            Post post = postService.getPostById(postId);
+            if (post == null) {
+                System.out.println("Post not found with ID: " + postId);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            RegisteredUser user = registeredUserService.findByEmail(userEmail);
+            if (user == null) {
+                System.out.println("User not found with email: " + userEmail);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
 
 
+            CommentDto savedComment = commentService.submitComment(post, commentDto.getContent(), user);
 
-        Post post = postService.getPostById(postId);
+            return ResponseEntity.ok(savedComment);
 
-        RegisteredUser user = registeredUserService.findByEmail(userEmail);
-
-        CommentDto savedComment = commentService.submitComment(post, commentDto.getContent(), user);
-
-        return ResponseEntity.ok(savedComment);
+        } catch (Exception e) {
+            System.out.println("An error occurred while submitting the comment: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
+
 
 
     @PutMapping("/{id}")

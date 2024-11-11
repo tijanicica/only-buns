@@ -112,4 +112,8 @@ public class PostService {
         postRepository.delete(post);
     }
 
+    public int countByUserId(Integer userId) {
+        return postRepository.countByPostCreatorId(userId);
+    }
+
 }

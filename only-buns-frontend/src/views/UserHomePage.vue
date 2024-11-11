@@ -19,30 +19,48 @@
       <div v-if="posts.length > 0" class="posts-container">
         <div v-for="post in sortedPosts" :key="post.id" class="card">
           <router-link :to="{ name: 'PostDetails', params: { id: post.id } }">
+          
+  <div class="container mt-5">
+    <h2 class="text-center">Welcome, User!</h2>
+
+    <!-- Logout Button -->
+    <div class="text-center">
+      <button @click="showLogoutConfirmation = true" class="btn btn-danger mt-4">Logout</button>
+    </div>
+
+    <!-- Display Posts -->
+    <div v-if="posts.length > 0" class="row">
+      <div v-for="post in sortedPosts" :key="post.id" class="col-md-4 mb-4">
+        <div class="card post-card">
+          <div @click="viewPost(post.id)">
+
             <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
             <div class="card-body">
-              <h5 class="card-title">
-                <router-link :to="{ name: 'UserProfile', params: { userId: post.creatorId } }">
-                  {{ post.creatorUsername }}
-                </router-link>
-              </h5>
+              <h5 class="card-title">{{ post.creatorUsername }}</h5>
               <p>{{ post.description }}</p>
               <p class="card-text">Posted at: {{ formatDate(post.createdAt) }}</p>
             </div>
-          </router-link>
+          </div>
 
-          <!-- Like and Comment Buttons -->
+          <!-- Like Button -->
           <div class="icon-container">
             <i class="fas fa-thumbs-up icon" 
                :class="{'liked': post.likedByCurrentUser}" 
-               @click="toggleLike(post.id, post)">
-            </i>
-            <i class="fas fa-comment icon" @click="commentPost(post.id)"></i>
+               @click="toggleLike(post.id, post)"></i>
           </div>
         </div>
       </div>
       <div v-else class="no-posts">
         <p>No posts available.</p>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal for Logout -->
+    <div v-if="showLogoutConfirmation" class="logout-confirmation-modal">
+      <div class="modal-content">
+        <h3>Are you sure you want to logout?</h3>
+        <button @click="confirmLogout" class="btn btn-danger">Yes, Logout</button>
+        <button @click="cancelLogout" class="btn btn-secondary">Cancel</button>
       </div>
     </div>
   </div>
@@ -60,10 +78,12 @@ export default {
       posts: [],
       error: false,
       errorMessage: "",
-      likedPosts: JSON.parse(localStorage.getItem("likedPosts")) || {}  // Fetch liked posts from localStorage
+      likedPosts: JSON.parse(localStorage.getItem("likedPosts")) || {},  // Fetch liked posts from localStorage
+      showLogoutConfirmation: false, // To control the logout confirmation modal
     };
   },
   computed: {
+    // Sort posts in reverse order based on createdAt field
     sortedPosts() {
       return [...this.posts].sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -82,6 +102,7 @@ export default {
     }
   },
   methods: {
+    // Fetch posts from backend
     async fetchPosts(token) {
       console.log("Fetching posts with token:", token);
       try {
@@ -109,6 +130,7 @@ export default {
       }
     },
 
+    // Check if the post is liked by the current user
     async checkIfLiked(postId, userEmail) {
       // Check if the post is liked by the user in the local storage first
       if (this.likedPosts[postId]) {
@@ -127,6 +149,7 @@ export default {
       }
     },
 
+    // Toggle the like status of a post
     toggleLike(postId, post) {
       const token = localStorage.getItem("token");
       if (token) {
@@ -163,9 +186,41 @@ export default {
       localStorage.setItem("likedPosts", JSON.stringify(this.likedPosts));
     },
 
+    // Format date to a more readable format
     formatDate(dateString) {
       const date = new Date(dateString);
       return date.toLocaleString();  // Formatting date as string
+    },
+
+    // Navigate to post details page
+    viewPost(postId) {
+      this.$router.push({ name: 'PostDetails', params: { id: postId } });
+    },
+
+    // Confirm logout method
+    confirmLogout() {
+      console.log("Confirming logout...");
+
+      // Log token before logout
+      const tokenBeforeLogout = localStorage.getItem("token");
+      console.log("Token before logout: ", tokenBeforeLogout);  // Log the current token
+
+      // Remove the token from localStorage
+      localStorage.removeItem("token");
+
+      // Optionally clear user data (like liked posts) from localStorage
+      localStorage.removeItem("likedPosts");
+
+      // Log token after logout
+      const tokenAfterLogout = localStorage.getItem("token");
+      console.log("Token after logout: ", tokenAfterLogout);  // Should be null or undefined
+
+      this.$router.push("/");  // Redirect to home page after logout
+    },
+
+    // Cancel logout method
+    cancelLogout() {
+      this.showLogoutConfirmation = false; // Hide the logout confirmation modal
     },
   },
 };
@@ -215,11 +270,34 @@ export default {
   gap: 20px;
 }
 
-/* Card styling */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.btn {
+  width: 100%;
+  text-align: left;
+}
+.post-image {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+}
 .card {
+  margin-bottom: 15px;
   display: flex;
   flex-direction: column;
   height: 100%;
+  cursor: pointer; /* Show a pointer cursor to indicate it's clickable */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Slight lift effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for hover */
 }
 
 .card-body {
@@ -229,10 +307,16 @@ export default {
 }
 
 .card-img-top {
-  width: 100%;
-  height: auto;
-  max-height: 200px;
+  max-height: 300px;
   object-fit: cover;
+}
+
+.text-muted {
+  font-size: 0.9em;
+}
+
+.alert {
+  font-size: 1.2em;
 }
 
 .icon-container {
@@ -252,6 +336,7 @@ export default {
   color: #007bff;
 }
 
+
 .no-posts {
   padding: 20px;
   text-align: center;
@@ -260,7 +345,32 @@ export default {
 .btn {
   text-align: left;
   width: 100%;
+
+.logout-confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.logout-confirmation-modal .modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 400px; /* Adjust the width to make it smaller */
+  max-width: 90%; /* Ensure it doesn't exceed screen size */
+}
+
+.logout-confirmation-modal button {
+  margin-top: 10px;
+}
+
 </style>
 
 
