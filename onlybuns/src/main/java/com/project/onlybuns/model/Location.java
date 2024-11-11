@@ -20,7 +20,7 @@ public class Location {
 
     private double latitude;
     private double longitude;
-    private int streetNumber;
+    private String streetNumber;
     private String streetName;
     private String city;
     private String country;

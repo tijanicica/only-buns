@@ -18,6 +18,10 @@ VALUES ('marko@example.com', 'marko', 'hashedPassword2', 'Marko', 'Marković', 2
 INSERT INTO registered_user (email, username, password, first_name, last_name, location_id, is_active, registration_date, activation_date, last_login_date, is_admin, followers_number)
 VALUES ('jelena@example.com', 'jelena', 'hashedPassword3', 'Jelena', 'Jovanović', 3, TRUE, '2024-10-15 08:45:00', '2024-10-20 13:30:00', '2024-10-29 15:00:00', FALSE, 200);
 
+INSERT INTO registered_user (email, username, password, first_name, last_name, location_id, is_active, registration_date, activation_date, last_login_date, is_admin, followers_number, activation_token)
+VALUES ('iva@example.com', 'iva', 'hashedPassword3', 'iva', 'ivanovic', 2, TRUE, '2024-10-15 08:45:00', '2024-10-20 13:30:00', '2024-10-29 15:00:00', TRUE, 200, 'f97dde36-9fa2-4f7c-8c3d-93efb61fbc79');
+
+
 -- Ubacivanje objava sa vremenima nakon activation_date
 INSERT INTO post (description, photo, location_id, created_at, user_id)
 VALUES ('Moj novi zeka!', '/images/bunny1.jpg', 1, '2024-10-26 15:00:00', 1);

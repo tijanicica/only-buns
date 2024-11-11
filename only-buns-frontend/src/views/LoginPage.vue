@@ -60,13 +60,18 @@ export default {
             password: this.form.password
           });
 
+
+          
           const token = response.data.token;
           localStorage.setItem('token', token);
           console.log("Token saved to localStorage:", token);
 
+
+          
           const decodedToken = jwtDecode(token);
           console.log("Decoded token data:", decodedToken);
 
+          
           if (decodedToken.role === "USER") {
             this.$router.push("/user-home");
           } else if (decodedToken.role === "ADMIN") {

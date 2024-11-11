@@ -100,9 +100,13 @@ public class RegisteredUserService {
     public void activateUser(String token) {
         RegisteredUser user = findUserByToken(token);
         if (user != null) {
-            user.setActive(true);
-            user.setActivationDate(LocalDateTime.now());
-            registeredUserRepository.save(user);
+            if (user.getRegistrationDate().plusMinutes(5).isAfter(LocalDateTime.now())){
+                user.setActive(true);
+                user.setActivationDate(LocalDateTime.now());
+                registeredUserRepository.save(user);
+            } else {
+                throw new IllegalArgumentException("Activation token has expired!");
+            }
         } else {
             throw new IllegalArgumentException("Invalid activation token!");
         }

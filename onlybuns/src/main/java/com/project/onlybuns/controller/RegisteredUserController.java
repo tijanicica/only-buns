@@ -35,9 +35,16 @@ public class RegisteredUserController {
     }
 
     @GetMapping("/activate")
-    public ResponseEntity<Void> activateAccount(@RequestParam("token") String token) {
-        registeredUserService.activateUser(token);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> activateAccount(@RequestParam("token") String token) {
+        try {
+            registeredUserService.activateUser(token);
+            return ResponseEntity.ok("Account activated successfully!");
+        } catch (IllegalArgumentException e) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Activation link has expired.");
+        }
     }
 
     @PostMapping("/login")
