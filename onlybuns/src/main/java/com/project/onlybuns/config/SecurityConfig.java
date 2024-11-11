@@ -30,7 +30,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authz -> authz
-                .requestMatchers("/api/users/login", "/api/users/register", "/api/users/activate" ,"/api/posts/user/*","/api/posts/all", "/api/users/profile/*", "/api/users/check-email", "api/users/check-username").permitAll()
+                .requestMatchers("/api/users/login", "/api/users/register", "/api/users/activate" ,"/api/posts/user/*","/api/posts/all", "/api/users/profile/*", "/api/posts/{postId}/likes", "/api/posts/{postId}","/api/users/check-email", "api/users/check-username" ).permitAll()
+                .requestMatchers("/api/posts/all", "/api/users/{userId}/postsCount", "/api/users/{userId}/followersCount", "/api/users/{userId}/makeAdmin", "/api/users/search").hasRole("ADMIN")
+
                 .anyRequest().authenticated());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.csrf().disable();

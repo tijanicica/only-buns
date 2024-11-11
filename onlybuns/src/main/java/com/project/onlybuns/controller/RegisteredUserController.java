@@ -2,8 +2,10 @@ package com.project.onlybuns.controller;
 
 import com.project.onlybuns.dto.*;
 import com.project.onlybuns.model.RegisteredUser;
+import com.project.onlybuns.service.PostService;
 import com.project.onlybuns.service.RegisteredUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +20,9 @@ public class RegisteredUserController {
 
     @Autowired
     private RegisteredUserService registeredUserService;
+    @Autowired
+    private PostService postService;
 
-    // Endpoint za prikaz profila korisnika
     @GetMapping("/profile/{userId}")
     public ResponseEntity<RegisteredUserDto> getUserProfile(@PathVariable Integer userId) {
         RegisteredUserDto user = registeredUserService.getUserProfile(userId);
@@ -57,6 +60,7 @@ public class RegisteredUserController {
 
     }
 
+
     @PostMapping("/check-email")
     public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestBody Map<String, String> request) {
         String email = request.get("email");
@@ -75,4 +79,50 @@ public class RegisteredUserController {
         response.put("exists", exists);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<RegisteredUserDto>> getAllUsers() {
+        List<RegisteredUserDto> users = registeredUserService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
+    //probaj sa dto ako stignes
+    @GetMapping("/{userId}/postsCount")
+    public ResponseEntity<Integer> getNumberOfPosts(@PathVariable Integer userId) {
+        int postsCount = postService.countByUserId(userId);
+        return ResponseEntity.ok(postsCount);
+    }
+
+    @GetMapping("/{userId}/followersCount")
+    public ResponseEntity<Integer> getNumberOfFollowers(@PathVariable Integer userId) {
+        int followersCount = registeredUserService.getNumberOfFollowers(userId);
+        return ResponseEntity.ok(followersCount);
+    }
+
+    @PutMapping("/{userId}/makeAdmin")
+    public ResponseEntity<Void> makeUserAdmin(@PathVariable Integer userId) {
+        registeredUserService.makeUserAdmin(userId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<RegisteredUserDto>> searchUsers(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) Integer minPosts,
+            @RequestParam(required = false) Integer maxPosts,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "followersNumber") String sortBy,
+            @RequestParam(defaultValue = "asc") String order) {
+
+        Page<RegisteredUserDto> users = registeredUserService.searchUsers(
+                firstName, lastName, email, minPosts, maxPosts, page, size, sortBy, order);
+
+        return ResponseEntity.ok(users);
+    }
+
+
+
 }
