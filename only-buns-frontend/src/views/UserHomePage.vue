@@ -1,20 +1,23 @@
 <template>
-  <div class="container mt-5">
-    <h2 class="text-center">Welcome, User!</h2>
-
-    <!-- Side Menu Buttons -->
+  <div class="main-container">
+    <!-- Side Menu on the left -->
     <div class="side-menu">
       <router-link to="/friends-bunnies" class="btn btn-primary mb-2">See your friends' bunnies</router-link>
       <router-link to="/trends" class="btn btn-primary mb-2">Trends</router-link>
       <router-link to="/map" class="btn btn-primary mb-2">Map</router-link>
       <router-link to="/chat" class="btn btn-primary mb-2">Chat</router-link>
       <router-link to="/your-profile" class="btn btn-primary mb-2">Your profile</router-link>
+      <router-link to="/post-creation" class="btn btn-primary mb-2">Create post</router-link>
     </div>
 
-    <!-- Display Posts -->
-    <div v-if="posts.length > 0" class="row">
-      <div v-for="post in sortedPosts" :key="post.id" class="col-md-4 mb-4">
-        <div class="card">
+    <!-- Content Area on the right -->
+    <div class="content-container">
+      <!-- Welcome message -->
+      <h2 class="welcome-message text-center">Welcome, User!</h2>
+
+      <!-- Display Posts -->
+      <div v-if="posts.length > 0" class="posts-container">
+        <div v-for="post in sortedPosts" :key="post.id" class="card">
           <router-link :to="{ name: 'PostDetails', params: { id: post.id } }">
             <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
             <div class="card-body">
@@ -38,17 +41,14 @@
           </div>
         </div>
       </div>
-    </div>
-    <div v-else>
-      <p>No posts available.</p>
-    </div>
-
-    <!-- Error Message -->
-    <div v-if="error" class="alert alert-danger mt-3 text-center">
-      {{ errorMessage }}
+      <div v-else class="no-posts">
+        <p>No posts available.</p>
+      </div>
     </div>
   </div>
 </template>
+
+
 
 <script>
 import axios from "axios";
@@ -172,10 +172,53 @@ export default {
 </script>
 
 <style scoped>
+/* Main container with full width */
+.main-container {
+  display: flex;
+}
+
+/* Fixed side menu on the left */
+.side-menu {
+  width: 200px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 120vh;
+  padding: 20px;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow-y: auto;
+}
+
+/* Content area to the right of the side menu */
+.content-container {
+  margin-left: 220px; /* Space for the side menu */
+  padding: 20px;
+  width: 100%;
+}
+
+/* Welcome message styling */
+.welcome-message {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 32px;
+  color: #333;
+}
+
+/* Posts grid */
+.posts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Card styling */
 .card {
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
   height: 100%;
 }
 
@@ -192,10 +235,6 @@ export default {
   object-fit: cover;
 }
 
-.text-muted {
-  font-size: 0.9em;
-}
-
 .icon-container {
   display: flex;
   justify-content: space-between;
@@ -210,18 +249,18 @@ export default {
 }
 
 .icon.liked {
-  color: #007bff;  /* Change the color to blue when liked */
+  color: #007bff;
 }
 
-.side-menu {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 20px;
+.no-posts {
+  padding: 20px;
+  text-align: center;
 }
 
 .btn {
-  width: 100%;
   text-align: left;
+  width: 100%;
 }
 </style>
+
+

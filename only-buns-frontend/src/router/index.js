@@ -11,6 +11,7 @@ import MapPage from '@/views/MapPage.vue';
 import TrendsPage from '@/views/TrendsPage.vue';
 import AdminHomePage from '@/views/AdminHomePage.vue';
 import PostDetailsPage from '@/views/PostDetailsPage.vue'; 
+import PostCreationPage from '@/views/PostCreationPage.vue';
 
 import { jwtDecode } from 'jwt-decode';
 
@@ -68,6 +69,11 @@ const routes = [
     path: '/friends-bunnies',
     name: 'FriendsPosts',
     component: FriendsPostsPage,
+  },
+  {
+    path: '/post-creation',
+    name: 'PostCreation',
+    component: PostCreationPage,
   },
   {
     path: '/map',
