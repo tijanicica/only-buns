@@ -13,16 +13,18 @@
     <div v-if="posts.length > 0" class="row">
       <div v-for="post in sortedPosts" :key="post.id" class="col-md-4 mb-4">
         <div class="card">
-          <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
-          <div class="card-body">
-            <h5 class="card-title">
-              <router-link :to="{ name: 'UserProfile', params: { userId: post.creatorId } }">
-                {{ post.creatorUsername }}
-              </router-link>
-            </h5>
-            <p>{{ post.description }}</p>
-            <p class="card-text">Posted at: {{ formatDate(post.createdAt) }}</p>
-          </div>
+          <div @click="viewPost(post.id)">
+              <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
+              <div class="card-body">
+                <p>{{ post.description }}</p>
+                <p class="card-text">Posted at: {{ formatDate(post.createdAt) }}</p>
+              </div>
+            </div>
+            <div class="card-footer">
+            <router-link :to="{ name: 'UserProfile', params: { userId: post.creatorId } }">
+              {{ post.creatorUsername }}
+            </router-link>
+            </div>
           <!-- Like and Comment Buttons -->
           <div class="icon-container">
             <i class="fas fa-thumbs-up icon" @click="likePost(post.id)"></i>
@@ -141,6 +143,9 @@ export default {
     },
     formatDate(date) {
       return new Date(date).toLocaleString();
+    },
+    viewPost(postId) {
+      this.$router.push({ name: 'PostDetails', params: { id: postId } });
     },
 
     logout() {

@@ -1,76 +1,74 @@
 <template>
-  <div class="main-container">
-    <!-- Side Menu on the left -->
+  <div class="container mt-5 d-flex">
+    <!-- Side Menu -->
     <div class="side-menu">
-      <router-link to="/friends-bunnies" class="btn btn-primary mb-2">See your friends' bunnies</router-link>
-      <router-link to="/trends" class="btn btn-primary mb-2">Trends</router-link>
-      <router-link to="/map" class="btn btn-primary mb-2">Map</router-link>
-      <router-link to="/chat" class="btn btn-primary mb-2">Chat</router-link>
-      <router-link to="/your-profile" class="btn btn-primary mb-2">Your profile</router-link>
-      <router-link to="/post-creation" class="btn btn-primary mb-2">Create post</router-link>
+      <h3>Menu</h3>
+      <button @click="$router.push('/create')" class="btn btn-success mb-3">Create</button>
+      <button @click="$router.push('/friends-bunnies')" class="btn btn-primary mb-2">See your friends' bunnies</button>
+      <button @click="$router.push('/trends')" class="btn btn-primary mb-2">Trends</button>
+      <button @click="$router.push('/map')" class="btn btn-primary mb-2">Map</button>
+      <button @click="$router.push('/chat')" class="btn btn-primary mb-2">Chat</button>
+      <button @click="$router.push('/your-profile')" class="btn btn-primary mb-2">Your profile</button>
     </div>
 
-    <!-- Content Area on the right -->
-    <div class="content-container">
-      <!-- Welcome message -->
-      <h2 class="welcome-message text-center">Welcome, User!</h2>
+    <!-- Main Content -->
+    <div class="content">
+      <h2 class="text-center">Welcome, User!</h2>
+
+      <!-- Logout Button -->
+      <div class="text-center">
+        <button @click="showLogoutConfirmation = true" class="btn btn-danger mt-4">Logout</button>
+      </div>
 
       <!-- Display Posts -->
-      <div v-if="posts.length > 0" class="posts-container">
-        <div v-for="post in sortedPosts" :key="post.id" class="card">
-          <router-link :to="{ name: 'PostDetails', params: { id: post.id } }">
-          
-  <div class="container mt-5">
-    <h2 class="text-center">Welcome, User!</h2>
-
-    <!-- Logout Button -->
-    <div class="text-center">
-      <button @click="showLogoutConfirmation = true" class="btn btn-danger mt-4">Logout</button>
-    </div>
-
-    <!-- Display Posts -->
-    <div v-if="posts.length > 0" class="row">
-      <div v-for="post in sortedPosts" :key="post.id" class="col-md-4 mb-4">
-        <div class="card post-card">
-          <div @click="viewPost(post.id)">
-
-            <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
-            <div class="card-body">
-              <h5 class="card-title">{{ post.creatorUsername }}</h5>
-              <p>{{ post.description }}</p>
-              <p class="card-text">Posted at: {{ formatDate(post.createdAt) }}</p>
+      <div v-if="posts.length > 0" class="row">
+        <div v-for="post in sortedPosts" :key="post.id" class="col-md-4 mb-4">
+          <div class="card post-card">
+            <div @click="viewPost(post.id)">
+              <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
+              <div class="card-body">
+                <p>{{ post.description }}</p>
+                <p class="card-text">Posted at: {{ formatDate(post.createdAt) }}</p>
+              </div>
             </div>
-          </div>
-
-          <!-- Like Button -->
-          <div class="icon-container">
-            <i class="fas fa-thumbs-up icon" 
-               :class="{'liked': post.likedByCurrentUser}" 
-               @click="toggleLike(post.id, post)"></i>
+            <div class="card-footer">
+            <router-link :to="{ name: 'UserProfile', params: { userId: post.creatorId } }">
+              {{ post.creatorUsername }}
+            </router-link>
+            </div>
+            <!-- Like Button -->
+            <div class="icon-container">
+              <i class="fas fa-thumbs-up icon"
+                 :class="{'liked': post.likedByCurrentUser}"
+                 @click="toggleLike(post.id, post)"></i>
+            </div>
           </div>
         </div>
       </div>
-      <div v-else class="no-posts">
+      <div v-else>
         <p>No posts available.</p>
       </div>
-    </div>
 
-    <!-- Confirmation Modal for Logout -->
-    <div v-if="showLogoutConfirmation" class="logout-confirmation-modal">
-      <div class="modal-content">
-        <h3>Are you sure you want to logout?</h3>
-        <button @click="confirmLogout" class="btn btn-danger">Yes, Logout</button>
-        <button @click="cancelLogout" class="btn btn-secondary">Cancel</button>
+      <!-- Error Message -->
+      <div v-if="error" class="alert alert-danger mt-3 text-center">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Confirmation Modal for Logout -->
+      <div v-if="showLogoutConfirmation" class="logout-confirmation-modal">
+        <div class="modal-content">
+          <h3>Are you sure you want to logout?</h3>
+          <button @click="confirmLogout" class="btn btn-danger">Yes, Logout</button>
+          <button @click="cancelLogout" class="btn btn-secondary">Cancel</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-
-
 <script>
 import axios from "axios";
-import { jwtDecode } from "jwt-decode"; // Import jwtDecode
+import { jwtDecode } from "jwt-decode";
 
 export default {
   data() {
@@ -226,97 +224,45 @@ export default {
 };
 </script>
 
+
 <style scoped>
-/* Main container with full width */
-.main-container {
-  display: flex;
-}
-
-/* Fixed side menu on the left */
-.side-menu {
-  width: 200px;
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 120vh;
-  padding: 20px;
-  background-color: #f8f9fa;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  overflow-y: auto;
-}
-
-/* Content area to the right of the side menu */
-.content-container {
-  margin-left: 220px; /* Space for the side menu */
-  padding: 20px;
-  width: 100%;
-}
-
-/* Welcome message styling */
-.welcome-message {
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 32px;
-  color: #333;
-}
-
-/* Posts grid */
-.posts-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-}
-
 .container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  display: flex;
 }
 
-.btn {
+.side-menu {
+  flex: 0 0 200px;
+  margin-right: 20px;
+}
+
+.content {
+  flex: 1;
+}
+
+.side-menu .btn {
   width: 100%;
   text-align: left;
 }
+
 .post-image {
   width: 100%;
   height: auto;
   max-height: 200px;
   object-fit: cover;
 }
+
 .card {
   margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  cursor: pointer; /* Show a pointer cursor to indicate it's clickable */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px); /* Slight lift effect */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for hover */
-}
-
-.card-body {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.card-img-top {
-  max-height: 300px;
-  object-fit: cover;
-}
-
-.text-muted {
-  font-size: 0.9em;
-}
-
-.alert {
-  font-size: 1.2em;
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .icon-container {
@@ -336,16 +282,6 @@ export default {
   color: #007bff;
 }
 
-
-.no-posts {
-  padding: 20px;
-  text-align: center;
-}
-
-.btn {
-  text-align: left;
-  width: 100%;
-
 .logout-confirmation-modal {
   position: fixed;
   top: 0;
@@ -363,14 +299,13 @@ export default {
   padding: 20px;
   border-radius: 8px;
   text-align: center;
-  width: 400px; /* Adjust the width to make it smaller */
-  max-width: 90%; /* Ensure it doesn't exceed screen size */
+  width: 400px;
+  max-width: 90%;
 }
 
 .logout-confirmation-modal button {
   margin-top: 10px;
 }
-
 </style>
 
 

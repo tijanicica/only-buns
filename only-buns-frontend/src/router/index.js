@@ -72,7 +72,7 @@ const routes = [
     component: FriendsPostsPage,
   },
   {
-    path: '/post-creation',
+    path: '/create',
     name: 'PostCreation',
     component: PostCreationPage,
   },
