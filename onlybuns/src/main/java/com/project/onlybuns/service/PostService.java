@@ -61,7 +61,7 @@ public class PostService {
         return postMapper.toPostDto(post);
     }
     public String savePhoto(String base64Photo) throws IOException {
-            String uploadDirectory = "C:\\Users\\tepam\\only-buns\\onlybuns\\src\\main\\resources\\static\\images"; // Modify as needed
+            String uploadDirectory = "C:\\Users\\tijanicica\\Desktop\\isa-project\\onlybuns\\src\\main\\resources\\static\\images"; // Modify as needed
             String fileName = "image_" + System.currentTimeMillis() + ".jpg";
             String base64Data = base64Photo.split(",")[1]; // Remove the prefix if present
 
