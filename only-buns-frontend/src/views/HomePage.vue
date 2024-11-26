@@ -27,7 +27,7 @@
     <router-link :to="{ name: 'UserProfile', params: { userId: post.creatorId } }">
       {{ post.creatorUsername }}
     </router-link>
-  </div>
+          </div>
 
           <!-- Only Display Like and Comment Counts, No Commenting or Liking for Non-Authenticated Users -->
           <div class="icon-container">
