@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -155,6 +157,16 @@ public class RegisteredUserController {
             return ResponseEntity.ok("Password changed successfully");
         } catch (Exception e) {
             return ResponseEntity.status(400).body("Error: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/edit-profile")
+    public ResponseEntity<?> editProfile(@RequestBody EditUserDto userEditDTO, @AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            registeredUserService.updateUserProfile(userDetails.getUsername(), userEditDTO);
+            return ResponseEntity.ok("Profile updated successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

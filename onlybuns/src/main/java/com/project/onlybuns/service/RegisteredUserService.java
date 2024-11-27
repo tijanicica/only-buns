@@ -1,13 +1,11 @@
 package com.project.onlybuns.service;
 
-import com.project.onlybuns.dto.LoginDto;
-import com.project.onlybuns.dto.PostDto;
-import com.project.onlybuns.dto.RegisteredUserDto;
-import com.project.onlybuns.dto.RegistrationDto;
+import com.project.onlybuns.dto.*;
 import com.project.onlybuns.mapper.RegisteredUserMapper;
 import com.project.onlybuns.model.Follow;
 import com.project.onlybuns.model.Location;
 import com.project.onlybuns.model.RegisteredUser;
+import com.project.onlybuns.repository.LocationRepository;
 import com.project.onlybuns.repository.PostRepository;
 import com.project.onlybuns.repository.RegisteredUserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -42,6 +40,8 @@ public class RegisteredUserService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final FollowService followService;
+    private final LocationService locationService;
+    private final LocationRepository locationRepository;
 
     public RegisteredUserDto getUserProfile(Integer userId) {
         return registeredUserRepository.findById(userId)
@@ -220,6 +220,24 @@ public class RegisteredUserService {
 
         // Ažuriramo lozinku korisnika
         user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        registeredUserRepository.save(user);
+    }
+
+    public void updateUserProfile(String email, EditUserDto userEditDTO) throws Exception {
+        RegisteredUser user = registeredUserRepository.findByEmail(email).orElseThrow(() -> new Exception("User not found"));
+
+        Location location = new Location();
+
+
+        user.setFirstName(userEditDTO.getFirstName());
+        user.setLastName(userEditDTO.getLastName());
+        location.setCity(userEditDTO.getCity());
+        location.setCountry(userEditDTO.getCountry());
+        location.setStreetName(userEditDTO.getStreetName());
+        location.setStreetNumber(userEditDTO.getStreetNumber());
+        user.setAddress(location);
+
+        locationRepository.save(location);
         registeredUserRepository.save(user);
     }
 
