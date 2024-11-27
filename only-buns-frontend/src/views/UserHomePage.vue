@@ -1,24 +1,44 @@
 <template>
   <div class="container mt-5 d-flex">
-    <!-- Side Menu -->
-    <div class="side-menu">
-      <h3>Menu</h3>
-      <button @click="$router.push('/create')" class="btn btn-success mb-3">Create</button>
-      <button @click="$router.push('/friends-bunnies')" class="btn btn-primary mb-2">See your friends' bunnies</button>
-      <button @click="$router.push('/trends')" class="btn btn-primary mb-2">Trends</button>
-      <button @click="$router.push('/map')" class="btn btn-primary mb-2">Map</button>
-      <button @click="$router.push('/chat')" class="btn btn-primary mb-2">Chat</button>
-      <button @click="$router.push('/your-profile')" class="btn btn-primary mb-2">Your profile</button>
-    </div>
+    
+  
+
+  
+<!-- Side Menu -->
+<div class="side-menu">
+  <h1 class="onlybuns-title">OnlyBuns</h1>
+  <ul class="menu-list">
+    <li @click="$router.push('/create')" class="menu-item">
+      <i class="fas fa-plus-circle"></i> Create
+    </li>
+    <li @click="$router.push('/friends-bunnies')" class="menu-item">
+      <i class="fas fa-paw"></i> Friends' Bunnies
+    </li>
+    <li @click="$router.push('/trends')" class="menu-item">
+      <i class="fas fa-chart-line"></i> Trends
+    </li>
+    <li @click="$router.push('/map')" class="menu-item">
+      <i class="fas fa-map-marker-alt"></i> Map
+    </li>
+    <li @click="$router.push('/chat')" class="menu-item">
+      <i class="fas fa-comments"></i> Chat
+    </li>
+    <li @click="goToProfile" class="menu-item">
+      <i class="fas fa-user"></i> Your Profile
+    </li>
+  </ul>
+  <button @click="showLogoutConfirmation = true" class="logout-btn">
+    <i class="fas fa-sign-out-alt"></i> Logout
+  </button>
+</div>
+
+
 
     <!-- Main Content -->
     <div class="content">
-      <h2 class="text-center">Welcome, User!</h2>
+     
 
-      <!-- Logout Button -->
-      <div class="text-center">
-        <button @click="showLogoutConfirmation = true" class="btn btn-danger mt-4">Logout</button>
-      </div>
+    
 
       <!-- Display Posts -->
       <div v-if="posts.length > 0" class="row">
@@ -28,7 +48,7 @@
               <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
               <div class="card-body">
                 <p>{{ post.description }}</p>
-                <p class="card-text">Posted at: {{ formatDate(post.createdAt) }}</p>
+                <p class="card-text"> {{ formatDate(post.createdAt) }}</p>
               </div>
             </div>
             <div class="card-footer">
@@ -94,6 +114,7 @@ export default {
     if (token) {
       console.log("Token found, fetching posts...");
       this.fetchPosts(token);
+
     } else {
       alert("No token found. Please login first.");
       this.$router.push("/login");
@@ -101,6 +122,16 @@ export default {
   },
   methods: {
     // Fetch posts from backend
+    goToProfile() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      const userEmail = decoded.sub;
+      this.$router.push(`/profile/${userEmail}`);
+    } else {
+      this.$router.push("/login");  // Ako nema tokena, redirektuj na login
+    }
+  },
     async fetchPosts(token) {
       console.log("Fetching posts with token:", token);
       try {
@@ -227,20 +258,35 @@ export default {
 
 <style scoped>
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
   display: flex;
+  flex-wrap: nowrap; /* Sprečava prelamanje sadržaja */
 }
 
-.side-menu {
-  flex: 0 0 200px;
-  margin-right: 20px;
+.top-right {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.content {
-  flex: 1;
+.user-name {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
 }
+
+.profile-icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.profile-icon:hover {
+  color: #0056b3;
+}
+
 
 .side-menu .btn {
   width: 100%;
@@ -256,7 +302,10 @@ export default {
 
 .card {
   margin-bottom: 15px;
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  cursor: pointer; 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -305,6 +354,93 @@ export default {
 
 .logout-confirmation-modal button {
   margin-top: 10px;
+}
+
+.side-menu {
+  position: fixed; /* Fiksira meni na levoj strani */
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh; /* Puni visinu ekrana */
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Odvaja stavke menija od Logout dugmeta */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.onlybuns-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #007bff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-item i {
+  font-size: 18px;
+  color: #007bff;
+}
+
+.menu-item:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.menu-item:hover i {
+  color: white;
+}
+.logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #ff4d4d; /* Crvena boja za Logout */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 30px; /* Razmak između menija i dugmeta */
+}
+.logout-btn i {
+  font-size: 18px;
+}
+
+.logout-btn:hover {
+  background-color: #cc0000; /* Tamnija crvena na hover */
+}
+
+.content {
+  flex: 1;
+  margin-left: 250px; /* Ostavlja prostor za meni */
+  padding: 20px; /* Dodatno unutrašnje margine */
+  box-sizing: border-box; /* Uključuje padding u dimenzije elementa */
 }
 </style>
 

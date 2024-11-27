@@ -5,6 +5,7 @@ import com.project.onlybuns.dto.PostDto;
 import com.project.onlybuns.dto.RegisteredUserDto;
 import com.project.onlybuns.dto.RegistrationDto;
 import com.project.onlybuns.mapper.RegisteredUserMapper;
+import com.project.onlybuns.model.Follow;
 import com.project.onlybuns.model.Location;
 import com.project.onlybuns.model.RegisteredUser;
 import com.project.onlybuns.repository.PostRepository;
@@ -40,6 +41,7 @@ public class RegisteredUserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final FollowService followService;
 
     public RegisteredUserDto getUserProfile(Integer userId) {
         return registeredUserRepository.findById(userId)
@@ -181,6 +183,45 @@ public class RegisteredUserService {
         return usersPage.map(registeredUserMapper::toUserDto);
     }
 
+    public RegisteredUserDto findDtoByEmail(String email) {
+        RegisteredUser registeredUser = registeredUserRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        return registeredUserMapper.toUserDto(registeredUser); // koristimo mapper
+    }
+
+        public List<RegisteredUserDto> getFollowers(String email) {
+            // Prvo, nađemo sve Follow entitete gde je 'followedUser' onaj koji nas zanima
+            List<Follow> follows = followService.findByFollowedUserEmail(email);
+
+            // Pretvorimo listu Follow entiteta u listu RegisteredUserDto objekata
+            return follows.stream()
+                    .map(follow -> registeredUserMapper.toUserDto(follow.getFollower()))
+                    .collect(Collectors.toList());
+        }
+
+    public List<RegisteredUserDto> getFollowing(String email) {
+        // Prvo, nađemo sve Follow entitete gde je 'followedUser' onaj koji nas zanima
+        List<Follow> follows = followService.findByFollowerEmail(email);
+
+        // Pretvorimo listu Follow entiteta u listu RegisteredUserDto objekata
+        return follows.stream()
+                .map(follow -> registeredUserMapper.toUserDto(follow.getFollower()))
+                .collect(Collectors.toList());
+    }
+
+
+    public void changePassword(String email, String oldPassword, String newPassword) {
+        RegisteredUser user = registeredUserRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("User not found!"));
+
+        // Proveravamo da li je stara lozinka tačna
+        if (!bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new IllegalArgumentException("Incorrect old password");
+        }
+
+        // Ažuriramo lozinku korisnika
+        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        registeredUserRepository.save(user);
+    }
 
 
 

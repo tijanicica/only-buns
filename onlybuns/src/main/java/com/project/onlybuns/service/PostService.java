@@ -41,6 +41,13 @@ public class PostService {
                 .toList();
     }
 
+    public List<PostDto> getUserPostsByEmail(String email) {
+        RegisteredUser user = registeredUserService.findByEmail(email);
+        return postRepository.findAllByPostCreator(user).stream()
+                .map(postMapper::toPostDto)
+                .toList();
+    }
+
     public PostDto createPost(RegisteredUser user, PostDto postDto) throws IOException {
         String photoUrl = savePhoto(postDto.getPhoto());
         Location location = new Location();
