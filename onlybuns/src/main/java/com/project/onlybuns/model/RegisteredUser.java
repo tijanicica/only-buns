@@ -41,7 +41,7 @@ public class RegisteredUser implements UserDetails {
 
     private String lastName;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "location_id")
     private Location address;
 

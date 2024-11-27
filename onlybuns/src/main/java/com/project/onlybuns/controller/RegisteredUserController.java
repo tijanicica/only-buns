@@ -1,6 +1,7 @@
 package com.project.onlybuns.controller;
 
 import com.project.onlybuns.dto.*;
+import com.project.onlybuns.model.Post;
 import com.project.onlybuns.model.RegisteredUser;
 import com.project.onlybuns.service.PostService;
 import com.project.onlybuns.service.RegisteredUserService;
@@ -122,6 +123,41 @@ public class RegisteredUserController {
 
         return ResponseEntity.ok(users);
     }
+    @GetMapping("/my-profile/{userEmail}")
+    public ResponseEntity<RegisteredUserDto> getUserProfile(@PathVariable("userEmail") String userEmail) {
+        RegisteredUserDto userProfile = registeredUserService.findDtoByEmail(userEmail);
+        return ResponseEntity.ok(userProfile);
+    }
+
+    @GetMapping("/posts/{userEmail}")
+    public ResponseEntity<List<PostDto>> getUserPosts(@PathVariable("userEmail") String userEmail) {
+        List<PostDto> posts = postService.getUserPostsByEmail(userEmail);
+        return ResponseEntity.ok(posts);
+    }
+
+    @GetMapping("/followers/{userEmail}")
+    public ResponseEntity<List<RegisteredUserDto>> getFollowers(@PathVariable("userEmail") String userEmail) {
+        List<RegisteredUserDto> followers = registeredUserService.getFollowers(userEmail);
+        return ResponseEntity.ok(followers);
+    }
+
+    @GetMapping("/following/{userEmail}")
+    public ResponseEntity<List<RegisteredUserDto>> getFollowing(@PathVariable("userEmail") String userEmail) {
+        List<RegisteredUserDto> following = registeredUserService.getFollowing(userEmail);
+        return ResponseEntity.ok(following);
+    }
+
+
+    @PutMapping("/change-password")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDto changePasswordRequest) {
+        try {
+            registeredUserService.changePassword(changePasswordRequest.getEmail(), changePasswordRequest.getOldPassword(), changePasswordRequest.getNewPassword());
+            return ResponseEntity.ok("Password changed successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body("Error: " + e.getMessage());
+        }
+    }
+
 
 
 

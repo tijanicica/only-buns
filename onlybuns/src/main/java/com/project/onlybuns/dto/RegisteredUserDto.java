@@ -16,5 +16,9 @@ public class RegisteredUserDto {
     private String lastName;
     private String email;
     private int followersNumber;
+    private String streetNumber;
+    private String streetName;
+    private String city;
+    private String country;
 
 }

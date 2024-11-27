@@ -57,9 +57,10 @@ const routes = [
     },
   },
   {
-    path: '/your-profile',
+    path: '/profile/:userEmail',
     name: 'YourProfile',
     component: YourProfilePage,
+    props: true
   },
   {
     path: '/chat',
