@@ -1,5 +1,6 @@
 <template>
-  <div class="user-profile">
+  <div class="user-profile" v-if="isLoaded">
+  
     <div class="profile-info">
       <div class="user-details">
         
@@ -64,14 +65,21 @@
       <h3>Followers</h3>
       <ul class="scrollable-list">
         <li v-for="follower in followers" :key="follower.id">
-          {{ follower.firstName }} {{ follower.lastName }}
+          <router-link :to="{ name: 'UserProfile', params: { userId: follower.id } }">
+            {{ follower.firstName }} {{ follower.lastName }}
+
+          </router-link>
+          
         </li>
       </ul>
 
       <h3>Following</h3>
       <ul class="scrollable-list">
         <li v-for="followee in following" :key="followee.id">
-          {{ followee.firstName }} {{ followee.lastName }}
+          <router-link :to="{ name: 'UserProfile', params: { userId: followee.id } }">
+            {{ followee.firstName }} {{ followee.lastName }}
+          </router-link>
+          
         </li>
       </ul>
     </div>
@@ -107,6 +115,7 @@ export default {
       followers: [],
       following: [],
       posts: [],
+      isLoaded: false,
       isEditModalOpen: false,
       passwordData: {
         currentPassword: '',
@@ -129,6 +138,7 @@ export default {
           headers: { Authorization: `Bearer ${token}` }
         });
         this.profileData = response.data;
+        this.isLoaded = true;
       } catch (error) {
         console.error('Error fetching profile:', error);
         alert('Unable to load profile.');
@@ -238,23 +248,65 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
+
 
 .modal-content {
   background: white;
-  padding: 20px;
+  padding: 30px;
   border-radius: 10px;
-  width: 400px;
+  width: 600px; /* Povećana širina */
   max-width: 90%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.edit-profile-form input {
+h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 1.5em;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Razmak između elemenata */
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input {
   width: 100%;
   padding: 10px;
-  margin: 10px 0;
-  border-radius: 4px;
   border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  margin-top: 15px;
+}
+
+button[type="button"] {
+  background-color: #ccc;
+  color: black;
+}
+
+button:hover {
+  opacity: 0.9;
 }
 
 .edit-profile-form label {
