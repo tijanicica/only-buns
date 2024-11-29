@@ -8,6 +8,7 @@ import com.project.onlybuns.model.RegisteredUser;
 import com.project.onlybuns.repository.LocationRepository;
 import com.project.onlybuns.repository.PostRepository;
 import com.project.onlybuns.repository.RegisteredUserRepository;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -42,6 +44,9 @@ public class RegisteredUserService {
     private final FollowService followService;
     private final LocationService locationService;
     private final LocationRepository locationRepository;
+
+
+
 
     public RegisteredUserDto getUserProfile(Integer userId) {
         return registeredUserRepository.findById(userId)
