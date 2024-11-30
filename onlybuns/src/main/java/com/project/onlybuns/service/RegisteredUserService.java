@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -24,6 +25,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -222,6 +224,48 @@ public class RegisteredUserService {
         user.setPassword(bCryptPasswordEncoder.encode(newPassword));
         registeredUserRepository.save(user);
     }
+
+
+    public void deleteInactiveUsers() {
+        LocalDateTime cutoffDate = LocalDateTime.now()
+                .minusMonths(1)
+                .with(TemporalAdjusters.lastDayOfMonth())
+                .withHour(23).withMinute(59).withSecond(59);
+
+        List<RegisteredUser> inactiveUsers = registeredUserRepository.findInactiveUsersBefore(cutoffDate);
+
+        if (!inactiveUsers.isEmpty()) {
+            registeredUserRepository.deleteAll(inactiveUsers);
+            System.out.println("Deleted " + inactiveUsers.size() + " inactive user(s).");
+        } else {
+            System.out.println("No inactive users found to delete.");
+        }
+    }
+
+    // ovo otkomentarisati pred odbranu - to je funkcionalnost
+    /* 0 - nula sekundi
+       0 - nula minuta
+       0 - sati
+       L - poslednji dan u mesecu
+       * - sve
+       ? - nije nikakav konkretan dan u nedelji
+       znaci svaki posl dan u mesecu u ponoc
+     */
+
+  /*  @Scheduled(cron = "0 0 0 L * ?")
+    public void scheduleInactiveUserCleanup() {
+        deleteInactiveUsers();
+    }*/
+
+    // ovo je samo da se pokaze da radi, svaki minut
+    @Scheduled(cron = "0 * * * * ?")
+    public void scheduleInactiveUserCleanup() {
+        System.out.println("Starting cleanup task at: " + LocalDateTime.now());
+        deleteInactiveUsers();
+        System.out.println("Cleanup task completed at: " + LocalDateTime.now());
+    }
+
+
 
 
 
