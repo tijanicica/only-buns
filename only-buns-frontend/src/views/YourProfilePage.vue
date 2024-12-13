@@ -1,10 +1,13 @@
 <template>
   <div class="user-profile" v-if="isLoaded">
-  
+
+    <!-- Profile Header -->
+    
+
+    <!-- Profile Information -->
     <div class="profile-info">
       <div class="user-details">
-        
-        <h1>
+        <h1 class="user-name">
           <span>{{ profileData.firstName }} {{ profileData.lastName }}</span>
           <button @click="openEditModal" class="edit-button">
             <i class="fas fa-edit"></i> 
@@ -13,10 +16,52 @@
         <p><strong>Email:</strong> {{ profileData.email }}</p>
         <p><strong>Address:</strong> {{ profileData.streetName + ' ' + profileData.streetNumber + ', ' + profileData.city + ', ' + profileData.country }}</p>
         
-        <p><strong>Followers:</strong> {{ followers.length }}</p>
-      </div>
+        <button @click="toggleFollowersList">{{ followers.length }} Followers</button>
+        <div v-if="isFollowersListVisible" class="dropdown-list">
+          <ul>
+            <li v-for="follower in followers" :key="follower.id">
+              <router-link :to="{ name: 'UserProfile', params: { userId: follower.id } }">
+                {{ follower.firstName }} {{ follower.lastName }}
+              </router-link>
+            </li>
+          </ul>
+        </div>
 
-      <div v-if="isEditModalOpen" class="modal">
+        <button @click="toggleFollowingList">{{ following.length }} Following</button>
+        <div v-if="isFollowingListVisible" class="dropdown-list">
+          <ul>
+            <li v-for="followee in following" :key="followee.id">
+              <router-link :to="{ name: 'UserProfile', params: { userId: followee.id } }">
+                {{ followee.firstName }} {{ followee.lastName }}
+              </router-link>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Change Password section -->
+        <div class="password-change">
+          <button @click="showPasswordForm = !showPasswordForm">Change Password</button>
+          <div v-if="showPasswordForm">
+            <form @submit.prevent="changePassword">
+              <label>Current Password:</label>
+              <input type="password" v-model="passwordData.currentPassword" required />
+              
+              <label>New Password:</label>
+              <input type="password" v-model="passwordData.newPassword" required />
+              
+              <label>Confirm New Password:</label>
+              <input type="password" v-model="passwordData.confirmPassword" required />
+              
+              <button type="submit">Change</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div v-if="isEditModalOpen" class="modal">
       <div class="modal-content">
         <h2>Edit Profile</h2>
         <form @submit.prevent="updateProfile">
@@ -42,67 +87,27 @@
           <button @click="closeEditModal">Cancel</button>
         </form>
       </div>
+    </div>
+
+    <!-- Posts Section -->
+    <div class="posts-section">
+      <div v-if="posts.length > 0" class="posts-list">
+        <div 
+          v-for="(post, index) in posts" 
+          :key="post.id" 
+          class="post-card clickable-post" 
+          @click="viewPost(post.id)"
+          :class="{'post-column': index % 3 === 0, 'post-column-middle': (index - 1) % 3 === 0, 'post-column-right': (index - 2) % 3 === 0}">
+          <img :src="post.photo" class="post-image" alt="Post Image" v-if="post.photo" />
+          <p>{{ post.description }}</p>
+          <p class="post-date">{{ formatDate(post.createdAt) }}</p>
+        </div>
       </div>
-
-      <div class="password-change">
-        <h3>Change Password</h3>
-        <form @submit.prevent="changePassword">
-          <label>Current Password:</label>
-          <input type="password" v-model="passwordData.currentPassword" required />
-          
-          <label>New Password:</label>
-          <input type="password" v-model="passwordData.newPassword" required />
-          
-          <label>Confirm New Password:</label>
-          <input type="password" v-model="passwordData.confirmPassword" required />
-          
-          <button type="submit">Change</button>
-        </form>
+      <div v-else class="no-posts-message">
+        <p>This user has no posts yet.</p>
       </div>
     </div>
-
-    <div class="connections">
-      <h3>Followers</h3>
-      <ul class="scrollable-list">
-        <li v-for="follower in followers" :key="follower.id">
-          <router-link :to="{ name: 'UserProfile', params: { userId: follower.id } }">
-            {{ follower.firstName }} {{ follower.lastName }}
-
-          </router-link>
-          
-        </li>
-      </ul>
-
-      <h3>Following</h3>
-      <ul class="scrollable-list">
-        <li v-for="followee in following" :key="followee.id">
-          <router-link :to="{ name: 'UserProfile', params: { userId: followee.id } }">
-            {{ followee.firstName }} {{ followee.lastName }}
-          </router-link>
-          
-        </li>
-      </ul>
-    </div>
   </div>
-
-  <div class="posts-section">
-  <div v-if="posts.length > 0" class="posts-list">
-    <div 
-      v-for="post in posts" 
-      :key="post.id" 
-      class="post-card clickable-post" 
-      @click="viewPost(post.id)"
-    >
-      <img :src="post.photo" class="post-image" alt="Post Image" v-if="post.photo" />
-      <p>{{ post.description }}</p>
-      <p class="post-date">{{ formatDate(post.createdAt) }}</p>
-    </div>
-  </div>
-  <div v-else class="no-posts-message">
-    <p>This user has no posts yet.</p>
-  </div>
-</div>
-
 </template>
 
 <script>
@@ -121,7 +126,10 @@ export default {
         currentPassword: '',
         newPassword: '',
         confirmPassword: ''
-      }
+      },
+      isFollowersListVisible: false,
+      isFollowingListVisible: false,
+      showPasswordForm: false,
     };
   },
   created() {
@@ -146,7 +154,6 @@ export default {
     },
     openEditModal() {
       this.isEditModalOpen = true;
-      // Kopiranje trenutnih podataka za editovanje
       this.editData = { ...this.profileData };
     },
     closeEditModal() {
@@ -160,7 +167,7 @@ export default {
         });
         if (response.status === 200) {
           alert('Profile updated successfully!');
-          this.profileData = { ...this.editData }; // Ažuriraj prikaz
+          this.profileData = { ...this.editData };
           this.closeEditModal();
         }
       } catch (error) {
@@ -200,7 +207,7 @@ export default {
         alert('New passwords do not match');
         return;
       }
-    
+
       const token = localStorage.getItem('token');
       const email = this.$route.params.userEmail;
 
@@ -225,16 +232,23 @@ export default {
         alert('Error changing password: ' + error.response.data);
       }
     },
+    toggleFollowersList() {
+      this.isFollowersListVisible = !this.isFollowersListVisible;
+    },
+    toggleFollowingList() {
+      this.isFollowingListVisible = !this.isFollowingListVisible;
+    },
     viewPost(postId) {
-    this.$router.push({ name: 'PostDetails', params: { id: postId } });
-  },
-  formatDate(dateString) {
+      this.$router.push({ name: 'PostDetails', params: { id: postId } });
+    },
+    formatDate(dateString) {
       const date = new Date(dateString);
-      return date.toLocaleString();  // Formatting date as string
+      return date.toLocaleDateString();
     },
   }
 };
 </script>
+
 
 <style scoped>
 /* Profile Section */

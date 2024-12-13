@@ -47,8 +47,7 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
     List<RegisteredUser> findTopLikersInLastWeek(@Param("lastWeek") LocalDateTime lastWeek);
 
 
-
-
+    long countByUsername(String user1);
 }
 
 

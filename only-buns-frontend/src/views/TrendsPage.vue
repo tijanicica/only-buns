@@ -1,14 +1,16 @@
 <template>
   <div class="trends-page">
     <h1>Trends</h1>
-    
+
     <div v-if="loading">Loading trends...</div>
     <div v-else>
+      <!-- Stats and Top Likers Section -->
       <div class="stats-top-likers-container">
         <div class="stats">
-          <p>Total Posts: {{ stats.totalPosts }}</p>
-          <p>Posts Last Month: {{ stats.postsLastMonth }}</p>
+          <p>Total Posts: <span class="stats-value">{{ stats.totalPosts }}</span></p>
+          <p>Posts Last Month: <span class="stats-value">{{ stats.postsLastMonth }}</span></p>
         </div>
+
         <div class="top-likers">
           <h2><i class="fas fa-thumbs-up"></i> Top Likers (Last Week)</h2>
           <ul>
@@ -21,15 +23,16 @@
         </div>
       </div>
 
+      <!-- Weekly Popular Posts -->
       <div v-if="weeklyPopularPosts.length > 0" class="row">
         <h2 class="section-title">This Week's Best</h2>
-        <div v-for="post in weeklyPopularPosts" :key="post.id" class="col-md-4 mb-4">
+        <div v-for="post in weeklyPopularPosts" :key="post.id" class="col-sm-6 col-md-4 mb-4">
           <div class="card post-card">
             <div @click="viewPost(post.id)">
               <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
               <div class="card-body">
                 <p>{{ post.description }}</p>
-                <p class="card-text"> {{ formatDate(post.createdAt) }}</p>
+                <p class="card-text">{{ formatDate(post.createdAt) }}</p>
               </div>
             </div>
             <div class="card-footer">
@@ -41,18 +44,19 @@
         </div>
       </div>
       <div v-else>
-        <p>No posts available.</p>
+        <p>Nothing trendy from last week.</p>
       </div>
 
+      <!-- All Time Popular Posts -->
       <div v-if="allTimePopularPosts.length > 0" class="row">
         <h2 class="section-title">All Time Favourites</h2>
-        <div v-for="post in allTimePopularPosts" :key="post.id" class="col-md-4 mb-4">
+        <div v-for="post in allTimePopularPosts" :key="post.id" class="col-sm-6 col-md-4 mb-4">
           <div class="card post-card">
             <div @click="viewPost(post.id)">
               <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
               <div class="card-body">
                 <p>{{ post.description }}</p>
-                <p class="card-text"> {{ formatDate(post.createdAt) }}</p>
+                <p class="card-text">{{ formatDate(post.createdAt) }}</p>
               </div>
             </div>
             <div class="card-footer">
@@ -70,12 +74,10 @@
   </div>
 </template>
 
-
 <script>
 import axios from "axios";
 
 export default {
-  
   data() {
     return {
       stats: {},
@@ -131,16 +133,19 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .trends-page {
-  padding: 20px 40px;
+  padding: 40px;
   background-color: #f9f9f9;
   font-family: 'Arial', sans-serif;
+  margin: 0 auto;
+  max-width: 1200px; /* Increase the max-width for larger margins */
 }
 
 h1 {
   text-align: center;
-  font-size: 2rem; /* Smanjen font za naslov */
+  font-size: 2.2rem;
   margin-bottom: 20px;
   color: #333;
 }
@@ -156,19 +161,19 @@ h1 {
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 48%; /* Postavljanje pored jedno drugo */
+  width: 48%;
 }
 
-.stats p {
-  font-size: 1rem; /* Smanjen font za statistiku */
-  font-weight: bold;
+.stats p,
+.top-likers h2 {
+  font-size: 1.2rem;
   margin: 10px 0;
   color: #333;
 }
 
-.top-likers h2 {
-  font-size: 1.5rem; /* Smanjen font za naslov top likers */
-  color: #333;
+.stats-value {
+  color: #007bff;
+  font-weight: bold;
 }
 
 .top-likers ul {
@@ -178,7 +183,7 @@ h1 {
 }
 
 .top-likers li {
-  font-size: 1rem; /* Smanjen font za korisničke stavke */
+  font-size: 1rem;
   margin: 8px 0;
 }
 
@@ -206,6 +211,7 @@ h1 {
   margin-bottom: 30px;
 }
 
+.col-sm-6,
 .col-md-4 {
   flex: 1 1 calc(33.333% - 20px);
   max-width: 33.333%;
@@ -226,12 +232,12 @@ h1 {
 }
 
 .card-body {
-  padding: 12px; /* Manji padding za kartice */
+  padding: 12px;
 }
 
 .card-img-top {
   width: 100%;
-  height: auto;
+  height: 150px; /* Reduced image size */
   object-fit: cover;
   border-bottom: 1px solid #ddd;
 }
@@ -254,7 +260,7 @@ h1 {
 }
 
 .post-image {
-  height: 200px;
+  height: 150px; /* Reduced image size */
   object-fit: cover;
 }
 
@@ -283,9 +289,9 @@ h1 {
     flex: 1 1 100%;
     max-width: 100%;
   }
+
   .stats-top-likers-container {
     flex-direction: column;
   }
 }
 </style>
-

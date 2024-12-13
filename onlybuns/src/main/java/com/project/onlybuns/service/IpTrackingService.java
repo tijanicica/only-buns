@@ -59,8 +59,6 @@ public class IpTrackingService {
             resetAttempts(request);
             return false;
         }
-
-
         return attemptInfo.attempts >= MAX_ATTEMPTS;
     }
 }
