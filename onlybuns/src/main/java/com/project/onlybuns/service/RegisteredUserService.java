@@ -296,16 +296,33 @@ public class RegisteredUserService {
         System.out.println("Cleanup task completed at: " + LocalDateTime.now());
     }
 
+    @Transactional
     public void followUser(Integer userId, String loggedInUserEmail) {
-        // Find the user to follow
+        // Proveri ograničenje broja praćenja u minuti
+        if (!followService.canFollow(loggedInUserEmail)) {
+            throw new IllegalArgumentException("You can only follow up to 50 users per minute.");
+        }
+
+        // Pronađi korisnika koji će biti praćen
         RegisteredUser userToFollow = findById(userId);
 
-        // Find the logged-in user using the email
+        // Pronađi ulogovanog korisnika koji prati
         RegisteredUser follower = findByEmail(loggedInUserEmail);
 
-        // Use the FollowService to perform the follow operation
+        // Sačuvaj praćenje u bazi
         followService.followUser(userToFollow, follower);
+
+        // Povećaj broj pratilaca korisnika koji je praćen koristeći transakciju
+        incrementFollowerCount(userToFollow);
     }
+
+    // Transakcijski metod za povećanje broja pratilaca
+    @Transactional
+    public void incrementFollowerCount(RegisteredUser userToFollow) {
+        userToFollow.setFollowersNumber(userToFollow.getFollowersNumber() + 1);
+        registeredUserRepository.save(userToFollow);
+    }
+
 
     public void unfollowUser(Integer userId, String followerEmail) {
         RegisteredUser userToUnfollow = findById(userId);
