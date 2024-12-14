@@ -5,6 +5,7 @@ import com.project.onlybuns.service.RegisteredUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.concurrent.*;
 
@@ -21,12 +22,12 @@ public class RegisteredUserServiceTest {
         ExecutorService executor = Executors.newFixedThreadPool(2);
 
         Callable<Void> task1 = () -> {
-            registeredUserService.register(new RegistrationDto("ticatica@mail.com", "password", "test2", "test", "test1", "test", "test", "test", "1"));
+            registeredUserService.register(new RegistrationDto("ticatica1@mail.com", "password", "test2", "test", "ticatica", "test", "test", "test", "1"));
             return null;
         };
 
         Callable<Void> task2 = () -> {
-            registeredUserService.register(new RegistrationDto("ticatica@mail.com", "password", "test3", "test", "test2", "test", "test", "test", "1"));
+            registeredUserService.register(new RegistrationDto("ticatica2@mail.com", "password", "test3", "test", "ticatica", "test", "test", "test", "1"));
             return null;
         };
 
@@ -48,13 +49,13 @@ public class RegisteredUserServiceTest {
             exception2 = (Exception) e.getCause();
         }
 
-        // Assert that one of the tasks threw an IllegalArgumentException
+         // Asserting that one of the exceptions throws DataConstraintViolation
         Exception finalException = exception1;
         Exception finalException1 = exception2;
-        assertThrows(IllegalArgumentException.class, () -> {
-            if (finalException instanceof IllegalArgumentException) {
+        assertThrows(DataIntegrityViolationException.class, () -> {
+            if (finalException instanceof DataIntegrityViolationException) {
                 throw finalException;
-            } else if (finalException1 instanceof IllegalArgumentException) {
+            } else if (finalException1 instanceof DataIntegrityViolationException) {
                 throw finalException1;
             }
         });

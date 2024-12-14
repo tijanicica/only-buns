@@ -21,6 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -57,7 +58,7 @@ public class RegisteredUserService {
     public RegisteredUser findById(Integer userId) {
         return registeredUserRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
     }
-
+    @Transactional
     public void register(RegistrationDto registrationDto) {
 
         //validacije
@@ -66,6 +67,13 @@ public class RegisteredUserService {
         }
         if (registeredUserRepository.findByUsername(registrationDto.getUsername()).isPresent()) {
             throw new IllegalArgumentException ("User with the given username already exists!");
+        }
+
+        // samo za testiranje transakcije
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
 
