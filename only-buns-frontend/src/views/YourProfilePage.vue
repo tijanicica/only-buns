@@ -21,7 +21,7 @@
           <ul>
             <li v-for="follower in followers" :key="follower.id">
               <router-link :to="{ name: 'UserProfile', params: { userId: follower.id } }">
-                {{ follower.firstName }} {{ follower.lastName }}
+                {{ follower.firstName }} 
               </router-link>
             </li>
           </ul>
@@ -32,7 +32,7 @@
           <ul>
             <li v-for="followee in following" :key="followee.id">
               <router-link :to="{ name: 'UserProfile', params: { userId: followee.id } }">
-                {{ followee.firstName }} {{ followee.lastName }}
+                {{ followee.firstName }} 
               </router-link>
             </li>
           </ul>
@@ -251,6 +251,44 @@ export default {
 
 
 <style scoped>
+.user-stats {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Space between buttons */
+  margin-bottom: 15px; /* Add spacing below the buttons */
+}
+
+.user-stats button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #007bff; /* Use your preferred color */
+}
+
+.user-stats button:hover {
+  text-decoration: underline;
+}
+
+.dropdown-list ul {
+  list-style-type: none; /* Remove dots */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.dropdown-list li {
+  margin: 5px 0; /* Add spacing between list items */
+}
+
+.dropdown-list li a {
+  text-decoration: none;
+  color: #007bff; /* Use your preferred color */
+}
+
+.dropdown-list li a:hover {
+  text-decoration: underline;
+}
 /* Profile Section */
 .modal {
   position: fixed;
@@ -258,20 +296,21 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 20px; /* Adds space around the edges of the viewport */
+  box-sizing: border-box;
 }
-
 
 .modal-content {
   background: white;
-  padding: 30px;
+  padding: 30px; /* Space inside the modal content */
   border-radius: 10px;
-  width: 600px; /* Povećana širina */
-  max-width: 90%;
+  width: 600px; /* Width of the modal content */
+  max-width: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -379,11 +418,17 @@ button:hover {
 }
 
 .user-details {
-  font-family: 'Arial', sans-serif;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 600px;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.user-name span {
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .password-change {
@@ -472,9 +517,9 @@ button:hover {
 
 .posts-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  width: 100%;
+  padding: 20px;
 }
 
 .post-card {
