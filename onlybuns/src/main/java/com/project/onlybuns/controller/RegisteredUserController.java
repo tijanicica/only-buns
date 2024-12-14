@@ -200,22 +200,22 @@ public class RegisteredUserController {
             @PathVariable Integer userId,
             @RequestHeader("Authorization") String authorization) {
         try {
-            // Validate the Authorization header
             if (authorization == null || !authorization.startsWith("Bearer ")) {
-                System.out.println("Unauthorized access attempt: Missing or invalid Authorization header.");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Please log in to follow a user.");
             }
 
-            // Extract the token and email
             String token = authorization.split(" ")[1];
             String userEmail = jwtService.extractUsername(token);
 
             if (userEmail == null) {
-                System.out.println("Unauthorized access attempt: Failed to extract username from token.");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token. Please log in again.");
             }
 
-            // Perform the follow operation
+            // Proveriti da li korisnik može da prati
+            if (!followService.canFollow(userEmail)) {
+                return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("You can only follow up to 50 users per minute.");
+            }
+
             registeredUserService.followUser(userId, userEmail);
             return ResponseEntity.ok("User followed successfully!");
 
@@ -224,6 +224,7 @@ public class RegisteredUserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
         }
     }
+
 
 
 

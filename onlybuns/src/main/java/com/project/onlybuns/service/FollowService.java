@@ -8,7 +8,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -87,6 +90,22 @@ public class FollowService {
         return followRepository.findAllByFollower(user);
     }
 
+    private final Map<String, List<Long>> userFollowTimestamps = new ConcurrentHashMap<>();
+
+    public synchronized boolean canFollow(String userEmail) {
+        long currentTime = System.currentTimeMillis();
+        List<Long> timestamps = userFollowTimestamps.getOrDefault(userEmail, new ArrayList<>());
+
+        // Uklanjanje praćenja starijih od jednog minuta
+        timestamps.removeIf(timestamp -> (currentTime - timestamp) > 60_000);
+
+        if (timestamps.size() < 50) {
+            timestamps.add(currentTime);
+            userFollowTimestamps.put(userEmail, timestamps);
+            return true;
+        }
+        return false;
+    }
 
 
 }

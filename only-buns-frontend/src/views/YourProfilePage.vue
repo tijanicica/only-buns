@@ -1,5 +1,4 @@
 <template>
-
   <div class="user-profile" v-if="isLoaded">
 
     <!-- Profile Header -->
@@ -72,15 +71,6 @@
           <label>Last Name:</label>
           <input type="text" v-model="editData.lastName" required />
 
-  <div v-else>
-    <p>Loading profile...</p>
-  </div>
-
-  <div class="posts-section">
-    <div v-if="posts.length > 0" class="posts-list">
-      <div v-for="post in posts" :key="post.id" class="post-card">
-        <img :src="post.photo" class="post-image" alt="Post Image" v-if="post.photo" />
-        <p>{{ post.description }}</p>
           <label>Street Name:</label>
           <input type="text" v-model="editData.streetName" required />
 
@@ -195,8 +185,7 @@ export default {
         const followingResponse = await axios.get(`http://localhost:8080/api/users/following/${email}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        const loggedInUser = this.profileData;
-        this.following = followingResponse.data.filter(user => user.email !== loggedInUser.email);
+        this.following = followingResponse.data;
       } catch (error) {
         console.error('Error fetching connections:', error);
         alert('Unable to load connections.');

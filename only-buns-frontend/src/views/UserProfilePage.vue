@@ -56,7 +56,7 @@
 
   <!-- Following Modal -->
   <div v-if="showFollowingModal" class="modal-overlay" @click.self="closeFollowingModal">
-  <div class="modal" @click.stop>
+  <div class="unfollow-modal" @click.stop>
     <h3>Following</h3>
     <ul v-if="followingList.length > 0">
       <li v-for="following in followingList" :key="following.id">
