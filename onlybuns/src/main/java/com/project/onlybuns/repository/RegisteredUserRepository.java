@@ -37,6 +37,14 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
             @Param("maxPosts") Integer maxPosts,
             Pageable pageable);
 
+    @Query("SELECT u FROM RegisteredUser u " +
+            "WHERE u.isActive = false " +
+            "AND u.activationDate IS NULL " +
+            "AND u.registrationDate <= :cutoffDate")
+    List<RegisteredUser> findInactiveUsersBefore(@Param("cutoffDate") LocalDateTime cutoffDate);
+
+
+
 
     @Query("SELECT u FROM RegisteredUser u " +
             "LEFT JOIN Like l ON l.user = u " +
