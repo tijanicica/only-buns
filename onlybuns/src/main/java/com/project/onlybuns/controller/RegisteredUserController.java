@@ -3,17 +3,29 @@ package com.project.onlybuns.controller;
 import com.project.onlybuns.dto.*;
 import com.project.onlybuns.model.Post;
 import com.project.onlybuns.model.RegisteredUser;
+import com.project.onlybuns.service.IpTrackingService;
 import com.project.onlybuns.service.PostService;
 import com.project.onlybuns.service.RegisteredUserService;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.juli.logging.Log;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static org.springframework.boot.Banner.Mode.LOG;
 
 @RestController
 @RequestMapping("/api/users")
@@ -23,6 +35,12 @@ public class RegisteredUserController {
     private RegisteredUserService registeredUserService;
     @Autowired
     private PostService postService;
+    private final IpTrackingService ipTrackingService;
+    private final Logger LOG = LoggerFactory.getLogger(RegisteredUserController.class);
+
+    public RegisteredUserController(IpTrackingService ipTrackingService) {
+        this.ipTrackingService = ipTrackingService;
+    }
 
     @GetMapping("/profile/{userId}")
     public ResponseEntity<RegisteredUserDto> getUserProfile(@PathVariable Integer userId) {
@@ -49,9 +67,15 @@ public class RegisteredUserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Activation link has expired.");
         }
     }
-
+    @RateLimiter(name = "login", fallbackMethod = "loginFallback")
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<TokenDto> login(HttpServletRequest request, @RequestBody LoginDto loginDto) {
+        if (ipTrackingService.isBlocked(request)) {
+            return new ResponseEntity<>(HttpStatus.TOO_MANY_REQUESTS);
+        }
+
+
+        ipTrackingService.trackAttempt(request);
         String token = registeredUserService.login(loginDto);
         if (!token.isEmpty()) {
             return ResponseEntity.ok(new TokenDto(token));
@@ -59,6 +83,11 @@ public class RegisteredUserController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
+    }
+    public ResponseEntity<String> loginFallback(LoginDto loginRequest, RequestNotPermitted ex) {
+        LOG.warn("Too many logins. Try again later");
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                .body("Too many logins. Try again later");
     }
 
 
@@ -155,6 +184,16 @@ public class RegisteredUserController {
             return ResponseEntity.ok("Password changed successfully");
         } catch (Exception e) {
             return ResponseEntity.status(400).body("Error: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/edit-profile")
+    public ResponseEntity<?> editProfile(@RequestBody EditUserDto userEditDTO, @AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            registeredUserService.updateUserProfile(userDetails.getUsername(), userEditDTO);
+            return ResponseEntity.ok("Profile updated successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

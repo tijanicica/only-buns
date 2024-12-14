@@ -31,8 +31,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authz -> authz
 
-                .requestMatchers("/api/posts/create", "/images/**", "/api/users/followers/{userEmail}", "api/users/following/{userEmail}", "api/users/my-profile/{userEmail}", "api/users/posts/{userEmail}", "/api/users/change-password").hasRole("USER")
-                .requestMatchers("/api/users/login", "/api/users/register", "/api/users/activate" ,"/api/posts/user/*","/api/posts/all", "/api/users/profile/*", "/api/posts/{postId}/likes", "/api/posts/{postId}","/api/users/check-email", "api/users/check-username" ).permitAll()
+                .requestMatchers("/api/posts/create", "/images/**", "/api/users/followers/{userEmail}", "api/users/following/{userEmail}", "api/users/my-profile/{userEmail}", "api/users/posts/{userEmail}", "/api/users/change-password", "/api/trends/**").hasRole("USER")
+                .requestMatchers("/api/users/login", "/api/users/register", "/api/users/activate" ,"/api/posts/user/*","/api/posts/all", "/api/users/profile/*", "/api/posts/{postId}/likes", "/api/posts/{postId}","/api/users/check-email", "api/users/check-username", "/api/users/edit-profile" ).permitAll()
                 .requestMatchers("/api/posts/all", "/api/users/{userId}/postsCount", "/api/users/{userId}/followersCount", "/api/users/{userId}/makeAdmin", "/api/users/search").hasRole("ADMIN")
 
                 .anyRequest().authenticated());

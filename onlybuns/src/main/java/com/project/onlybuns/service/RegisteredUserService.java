@@ -1,15 +1,14 @@
 package com.project.onlybuns.service;
 
-import com.project.onlybuns.dto.LoginDto;
-import com.project.onlybuns.dto.PostDto;
-import com.project.onlybuns.dto.RegisteredUserDto;
-import com.project.onlybuns.dto.RegistrationDto;
+import com.project.onlybuns.dto.*;
 import com.project.onlybuns.mapper.RegisteredUserMapper;
 import com.project.onlybuns.model.Follow;
 import com.project.onlybuns.model.Location;
 import com.project.onlybuns.model.RegisteredUser;
+import com.project.onlybuns.repository.LocationRepository;
 import com.project.onlybuns.repository.PostRepository;
 import com.project.onlybuns.repository.RegisteredUserRepository;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -44,6 +45,11 @@ public class RegisteredUserService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final FollowService followService;
+    private final LocationService locationService;
+    private final LocationRepository locationRepository;
+
+
+
 
     public RegisteredUserDto getUserProfile(Integer userId) {
         return registeredUserRepository.findById(userId)
@@ -54,7 +60,7 @@ public class RegisteredUserService {
     public RegisteredUser findById(Integer userId) {
         return registeredUserRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
     }
-
+    @Transactional
     public void register(RegistrationDto registrationDto) {
 
         //validacije
@@ -63,6 +69,13 @@ public class RegisteredUserService {
         }
         if (registeredUserRepository.findByUsername(registrationDto.getUsername()).isPresent()) {
             throw new IllegalArgumentException ("User with the given username already exists!");
+        }
+
+        // samo za testiranje transakcije
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
 
@@ -222,6 +235,24 @@ public class RegisteredUserService {
 
         // Ažuriramo lozinku korisnika
         user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        registeredUserRepository.save(user);
+    }
+
+    public void updateUserProfile(String email, EditUserDto userEditDTO) throws Exception {
+        RegisteredUser user = registeredUserRepository.findByEmail(email).orElseThrow(() -> new Exception("User not found"));
+
+        Location location = new Location();
+
+
+        user.setFirstName(userEditDTO.getFirstName());
+        user.setLastName(userEditDTO.getLastName());
+        location.setCity(userEditDTO.getCity());
+        location.setCountry(userEditDTO.getCountry());
+        location.setStreetName(userEditDTO.getStreetName());
+        location.setStreetNumber(userEditDTO.getStreetNumber());
+        user.setAddress(location);
+
+        locationRepository.save(location);
         registeredUserRepository.save(user);
     }
 
