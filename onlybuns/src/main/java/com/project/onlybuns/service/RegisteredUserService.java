@@ -207,7 +207,7 @@ public class RegisteredUserService {
 
         // Pretvorimo listu Follow entiteta u listu RegisteredUserDto objekata
         return follows.stream()
-                .map(follow -> registeredUserMapper.toUserDto(follow.getFollower()))
+                .map(follow -> registeredUserMapper.toUserDto(follow.getFollowedUser()))
                 .collect(Collectors.toList());
     }
 
@@ -264,6 +264,59 @@ public class RegisteredUserService {
         deleteInactiveUsers();
         System.out.println("Cleanup task completed at: " + LocalDateTime.now());
     }
+
+    public void followUser(Integer userId, String loggedInUserEmail) {
+        // Find the user to follow
+        RegisteredUser userToFollow = findById(userId);
+
+        // Find the logged-in user using the email
+        RegisteredUser follower = findByEmail(loggedInUserEmail);
+
+        // Use the FollowService to perform the follow operation
+        followService.followUser(userToFollow, follower);
+    }
+
+    public void unfollowUser(Integer userId, String followerEmail) {
+        RegisteredUser userToUnfollow = findById(userId);
+        RegisteredUser follower = findByEmail(followerEmail);
+
+        // Use the FollowService to perform the unfollow operation
+        followService.unfollowUser(userToUnfollow, follower);
+    }
+
+   /* public int getNumberOfFollowers(Integer userId) {
+        return followService.getNumberOfFollowers(userId);
+    }*/
+
+    public int getNumberOfFollowing(Integer userId) {
+        return followService.getNumberOfFollowing(userId);
+    }
+
+    public List<RegisteredUserDto> getFollowersByUserId(Integer userId) {
+        RegisteredUser user = registeredUserRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+
+        List<Follow> followers = followService.findFollowersByUser(user);
+        return followers.stream()
+                .map(follow -> registeredUserMapper.toUserDto(follow.getFollower()))
+                .collect(Collectors.toList());
+    }
+
+    public List<RegisteredUserDto> getFollowingByUserId(Integer userId) {
+        RegisteredUser user = registeredUserRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+
+        List<Follow> following = followService.findFollowingByUser(user);
+        return following.stream()
+                .map(follow -> registeredUserMapper.toUserDto(follow.getFollowedUser()))
+                .collect(Collectors.toList());
+    }
+
+
+
+
+
+
 
 
 

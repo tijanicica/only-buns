@@ -19,6 +19,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -29,6 +30,7 @@ public class PostService {
     private final RegisteredUserService registeredUserService;
     private final CommentMapper commentMapper;
     private final CommentService commentService;
+    private final FollowService followService;
 
     public List<PostDto> getAllSortedByDate() {
         return postRepository.findAllByOrderByCreatedAtDesc().stream().map(this.postMapper::toPostDto).toList();
@@ -124,5 +126,17 @@ public class PostService {
     public int countByUserId(Integer userId) {
         return postRepository.countByPostCreatorId(userId);
     }
+
+    public List<PostDto> getPostsFromFollowedUsers(RegisteredUser user) {
+        // Fetch the list of users the given user is following
+        List<RegisteredUser> followedUsers = followService.findFollowedByUser(user.getId());
+
+        // Retrieve and map posts from these followed users to PostDto
+        return postRepository.findAllByPostCreatorIn(followedUsers).stream()
+                .map(postMapper::toPostDto) // Use the provided mapper to convert to PostDto
+                .toList(); // Convert the stream to a list
+    }
+
+
 
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="user-profile">
+  <div v-if="profileData" class="user-profile">
     <div class="profile-info">
       <div class="user-details">
         <h1>{{ profileData.firstName }} {{ profileData.lastName }}</h1>
@@ -39,6 +39,10 @@
         </li>
       </ul>
     </div>
+  </div>
+
+  <div v-else>
+    <p>Loading profile...</p>
   </div>
 
   <div class="posts-section">
@@ -100,7 +104,8 @@ export default {
         const followingResponse = await axios.get(`http://localhost:8080/api/users/following/${email}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        this.following = followingResponse.data;
+        const loggedInUser = this.profileData;
+        this.following = followingResponse.data.filter(user => user.email !== loggedInUser.email);
       } catch (error) {
         console.error('Error fetching connections:', error);
         alert('Unable to load connections.');

@@ -3,6 +3,8 @@ package com.project.onlybuns.controller;
 import com.project.onlybuns.dto.*;
 import com.project.onlybuns.model.Post;
 import com.project.onlybuns.model.RegisteredUser;
+import com.project.onlybuns.service.FollowService;
+import com.project.onlybuns.service.JwtService;
 import com.project.onlybuns.service.PostService;
 import com.project.onlybuns.service.RegisteredUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,12 @@ public class RegisteredUserController {
     private RegisteredUserService registeredUserService;
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private FollowService followService;
+
+    @Autowired
+    private JwtService jwtService;
 
     @GetMapping("/profile/{userId}")
     public ResponseEntity<RegisteredUserDto> getUserProfile(@PathVariable Integer userId) {
@@ -157,6 +165,127 @@ public class RegisteredUserController {
             return ResponseEntity.status(400).body("Error: " + e.getMessage());
         }
     }
+
+    @PostMapping("/{userId}/follow")
+    public ResponseEntity<String> followUser(
+            @PathVariable Integer userId,
+            @RequestHeader("Authorization") String authorization) {
+        try {
+            // Validate the Authorization header
+            if (authorization == null || !authorization.startsWith("Bearer ")) {
+                System.out.println("Unauthorized access attempt: Missing or invalid Authorization header.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Please log in to follow a user.");
+            }
+
+            // Extract the token and email
+            String token = authorization.split(" ")[1];
+            String userEmail = jwtService.extractUsername(token);
+
+            if (userEmail == null) {
+                System.out.println("Unauthorized access attempt: Failed to extract username from token.");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token. Please log in again.");
+            }
+
+            // Perform the follow operation
+            registeredUserService.followUser(userId, userEmail);
+            return ResponseEntity.ok("User followed successfully!");
+
+        } catch (Exception e) {
+            System.out.println("An error occurred while processing the follow request: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
+        }
+    }
+
+
+
+    @GetMapping("/{userId}/followingCount")
+    public ResponseEntity<Integer> getNumberOfFollowing(@PathVariable Integer userId) {
+        int followingCount = followService.getNumberOfFollowing(userId);
+        return ResponseEntity.ok(followingCount);
+    }
+
+
+
+    @GetMapping("/{userId}/isFollowing")
+    public ResponseEntity<Boolean> isFollowing(
+            @PathVariable Integer userId,
+            @RequestHeader("Authorization") String authorization) {
+
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+        }
+
+        String token = authorization.split(" ")[1];
+        String userEmail = jwtService.extractUsername(token);
+        RegisteredUser follower = registeredUserService.findByEmail(userEmail);
+        RegisteredUser userToFollow = registeredUserService.findById(userId);
+
+        boolean isFollowing = followService.isFollowing(userToFollow, follower);
+        return ResponseEntity.ok(isFollowing);
+    }
+
+    @DeleteMapping("/{userId}/unfollow")
+    public ResponseEntity<String> unfollowUser(
+            @PathVariable Integer userId,
+            @RequestHeader("Authorization") String authorization) {
+        try {
+            // Validacija Authorization header-a
+            if (authorization == null || !authorization.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Please log in to unfollow a user.");
+            }
+
+            // Ekstrakcija tokena i email-a
+            String token = authorization.split(" ")[1];
+            String userEmail = jwtService.extractUsername(token);
+
+            if (userEmail == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token. Please log in again.");
+            }
+
+            // Prekid praćenja korisnika
+            registeredUserService.unfollowUser(userId, userEmail);
+            return ResponseEntity.ok("User unfollowed successfully!");
+
+        } catch (Exception e) {
+            System.out.println("An error occurred while processing the unfollow request: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
+        }
+    }
+
+    @GetMapping("/{userId}/followers")
+    public ResponseEntity<List<RegisteredUserDto>> getFollowers(@PathVariable Integer userId, @RequestHeader("Authorization") String authorization) {
+        System.out.println("Fetching followers for userId: " + userId);
+        System.out.println("Authorization Header: " + authorization);
+
+        List<RegisteredUserDto> followers = registeredUserService.getFollowersByUserId(userId);
+        return ResponseEntity.ok(followers);
+    }
+
+
+    @GetMapping("/{userId}/following")
+    public ResponseEntity<List<RegisteredUserDto>> getFollowing(@PathVariable Integer userId) {
+        List<RegisteredUserDto> following = registeredUserService.getFollowingByUserId(userId);
+        return ResponseEntity.ok(following);
+    }
+
+    @GetMapping("/{userId}/followers/count")
+    public ResponseEntity<Integer> getFollowersCount(@PathVariable Integer userId, @RequestHeader("Authorization") String authorization) {
+        System.out.println("Authorization header: " + authorization);
+        return ResponseEntity.ok(followService.getNumberOfFollowers(userId));
+    }
+
+
+    @GetMapping("/{userId}/following/count")
+    public ResponseEntity<Integer> getFollowingCount(@PathVariable Integer userId, @RequestHeader("Authorization") String authorization) {
+        System.out.println("Authorization header: " + authorization);
+        return ResponseEntity.ok(followService.getNumberOfFollowing(userId));
+    }
+
+
+
+
+
+
 
 
 
