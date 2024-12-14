@@ -16,6 +16,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     int countByPostCreatorId(Integer userId);
 
+    List<Post> findAllByPostCreatorIn(List<RegisteredUser> users);
+
 
     @Query("SELECT COUNT(p) FROM Post p")
     long countTotalPosts();

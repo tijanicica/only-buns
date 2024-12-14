@@ -176,4 +176,12 @@ public class PostController {
         return ResponseEntity.ok(createdPost);
     }
 
+    @GetMapping("/followed")
+    public ResponseEntity<List<PostDto>> getFollowedUsersPosts(@RequestHeader("Authorization") String token) {
+        String userEmail = jwtService.extractUsername(token.split(" ")[1]);
+        RegisteredUser user = registeredUserService.findByEmail(userEmail);
+        List<PostDto> posts = postService.getPostsFromFollowedUsers(user);
+        return ResponseEntity.ok(posts);
+    }
+
 }

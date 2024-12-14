@@ -1,24 +1,92 @@
 package com.project.onlybuns.service;
 
 import com.project.onlybuns.model.Follow;
+import com.project.onlybuns.model.RegisteredUser;
 import com.project.onlybuns.repository.FollowRepository;
+import com.project.onlybuns.repository.RegisteredUserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-@AllArgsConstructor
+import java.util.stream.Collectors;
+
 @Service
-public class FollowService
-{
+@AllArgsConstructor
+public class FollowService {
 
     private final FollowRepository followRepository;
+    private final RegisteredUserRepository registeredUserRepository;
 
-    List<Follow> findByFollowedUserEmail(String email){
+    public void followUser(RegisteredUser userToFollow, RegisteredUser follower) {
+        if (userToFollow.getId().equals(follower.getId())) {
+            throw new IllegalArgumentException("You cannot follow yourself.");
+        }
+
+        boolean alreadyFollowing = followRepository.existsByFollowedUserAndFollower(userToFollow, follower);
+        if (alreadyFollowing) {
+            throw new IllegalArgumentException("You are already following this user.");
+        }
+
+        Follow follow = new Follow();
+        follow.setFollowedUser(userToFollow);
+        follow.setFollower(follower);
+        follow.setCreatedAt(LocalDateTime.now());
+
+        followRepository.save(follow);
+
+        // Update followers count
+        userToFollow.setFollowersNumber(userToFollow.getFollowersNumber() + 1);
+        registeredUserRepository.save(userToFollow);
+    }
+
+    public void unfollowUser(RegisteredUser userToUnfollow, RegisteredUser follower) {
+        Follow follow = followRepository.findByFollowedUserAndFollower(userToUnfollow, follower)
+                .orElseThrow(() -> new IllegalArgumentException("You are not following this user."));
+
+        followRepository.delete(follow);
+
+        // Update followers count
+        userToUnfollow.setFollowersNumber(Math.max(userToUnfollow.getFollowersNumber() - 1, 0));
+        registeredUserRepository.save(userToUnfollow);
+    }
+
+    public int getNumberOfFollowers(Integer userId) {
+        return followRepository.countByFollowedUserId(userId);
+    }
+
+    public int getNumberOfFollowing(Integer userId) {
+        return followRepository.countByFollowerId(userId);
+    }
+
+
+    public List<Follow> findByFollowedUserEmail(String email) {
         return followRepository.findByFollowedUserEmail(email);
     }
 
-    List<Follow> findByFollowerEmail(String email){
-        return followRepository.findByFollowedUserEmail(email);
+    public List<Follow> findByFollowerEmail(String email) {
+        return followRepository.findByFollowerEmail(email);
     }
+
+    public boolean isFollowing(RegisteredUser userToFollow, RegisteredUser follower) {
+        return followRepository.existsByFollowedUserAndFollower(userToFollow, follower);
+    }
+
+    public List<RegisteredUser> findFollowedByUser(Integer userId) {
+        List<Follow> followRelations = followRepository.findAllByFollowerId(userId);
+        return followRelations.stream()
+                .map(Follow::getFollowedUser)
+                .collect(Collectors.toList());
+    }
+
+    public List<Follow> findFollowersByUser(RegisteredUser user) {
+        return followRepository.findAllByFollowedUser(user);
+    }
+
+    public List<Follow> findFollowingByUser(RegisteredUser user) {
+        return followRepository.findAllByFollower(user);
+    }
+
+
+
 }
