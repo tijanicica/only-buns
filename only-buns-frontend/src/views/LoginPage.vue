@@ -83,7 +83,11 @@ export default {
         } catch (error) {
           if (error.response && error.response.status === 401) {
             alert("Login unsuccessful. Invalid email or password.");
-          } else {
+          } else if (error.response && error.response.status === 429) {
+        alert("Too many login attempts. Please wait and try again.");
+    }
+          
+          else {
             alert("An error occurred during login.");
           }
         }
