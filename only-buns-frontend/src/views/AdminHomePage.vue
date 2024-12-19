@@ -1,23 +1,36 @@
 <template>
-  <div class="container mt-5">
-    <h2 class="text-center">Admin Dashboard</h2>
-    
+  <div class="container mt-5 d-flex">
     <!-- Admin Side Menu -->
     <div class="side-menu">
-      <router-link to="/admin/users" class="btn btn-primary mb-2">Manage Users</router-link>
-      <router-link to="/admin/posts" class="btn btn-primary mb-2">Manage Posts</router-link>
-      <router-link to="/admin/settings" class="btn btn-primary mb-2">Settings</router-link>
+      <h1 class="onlybuns-title">OnlyBuns</h1>
+      <ul class="menu-list">
+        <li @click="$router.push('/admin/trends')" class="menu-item">
+          <i class="fas fa-chart-line"></i> Trends
+        </li>
+        <li @click="$router.push('/admin/analytics')" class="menu-item">
+          <i class="fas fa-chart-pie"></i> Analytics
+        </li>
+        <li @click="$router.push('/admin/users')" class="menu-item">
+          <i class="fas fa-users"></i> User Profiles
+        </li>
+      </ul>
+      <button @click="showLogoutConfirmation = true" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
     </div>
 
-    <!-- Display Posts -->
-    <div v-if="posts.length > 0" class="row">
-      <div v-for="post in sortedPosts" :key="post.id" class="col-md-4 mb-4">
-        <div class="card">
-          <div @click="viewPost(post.id)">
+    <!-- Main Content -->
+    <div class="content">
+      <h2 class="text-center">Admin Dashboard - All Posts</h2>
+
+      <div v-if="posts.length > 0" class="row">
+        <div v-for="post in sortedPosts" :key="post.id" class="col-md-4 mb-4">
+          <div class="card post-card">
+            <div @click="viewPost(post.id)">
               <img :src="post.photo" class="card-img-top post-image" alt="Post Image" v-if="post.photo" />
               <div class="card-body">
                 <p>{{ post.description }}</p>
-                <p class="card-text">Posted at: {{ formatDate(post.createdAt) }}</p>
+                <p class="card-text"> {{ formatDate(post.createdAt) }}</p>
               </div>
             </div>
             <div class="card-footer">
@@ -25,34 +38,31 @@
               {{ post.creatorUsername }}
             </router-link>
             </div>
-          <!-- Like and Comment Buttons -->
-          <div class="icon-container">
-            <i class="fas fa-thumbs-up icon" @click="likePost(post.id)"></i>
-            <i class="fas fa-comment icon" @click="commentPost(post.id)"></i>
+            <!-- Like Button -->
+            <div class="icon-container">
+              <i class="fas fa-thumbs-up icon"
+                 :class="{'liked': post.likedByCurrentUser}"
+                 @click="toggleLike(post.id, post)"></i>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div v-else>
-      <p>No posts available.</p>
-    </div>
+      <div v-else>
+        <p>No posts available.</p>
+      </div>
 
-    <!-- Error Message -->
-    <div v-if="error" class="alert alert-danger mt-3 text-center">
-      {{ errorMessage }}
-    </div>
+      <!-- Error Message -->
+      <div v-if="error" class="alert alert-danger mt-3 text-center">
+        {{ errorMessage }}
+      </div>
 
-    <!-- Logout Button -->
-    <div class="text-center">
-      <button @click="showLogoutConfirmation = true" class="btn btn-danger mt-4">Logout</button>
-    </div>
-
-    <!-- Confirmation Modal for Logout -->
-    <div v-if="showLogoutConfirmation" class="logout-confirmation-modal">
-      <div class="modal-content">
-        <h3>Are you sure you want to logout?</h3>
-        <button @click="logout" class="btn btn-danger">Yes, Logout</button>
-        <button @click="cancelLogout" class="btn btn-secondary">Cancel</button>
+      <!-- Confirmation Modal for Logout -->
+      <div v-if="showLogoutConfirmation" class="logout-confirmation-modal">
+        <div class="modal-content">
+          <h3>Are you sure you want to logout?</h3>
+          <button @click="logout" class="btn btn-danger">Yes, Logout</button>
+          <button @click="cancelLogout" class="btn btn-secondary">Cancel</button>
+        </div>
       </div>
     </div>
   </div>
@@ -84,8 +94,6 @@ export default {
 
     if (token) {
       const hasAdminRole = this.getRolesFromToken(token);
-      console.log("User has admin role:", hasAdminRole);
-
       if (hasAdminRole) {
         this.fetchPosts(token);
       } else {
@@ -101,29 +109,18 @@ export default {
     getRolesFromToken(token) {
       try {
         const tokenData = jwtDecode(token);
-        console.log("Decoded token data:", tokenData);
-
-        // Check if the role is 'ADMIN'
-        if (tokenData.role && tokenData.role === "ADMIN") {
-          console.log("User has ADMIN authority");
-          return true;
-        }
-
-        console.log("User does not have the required admin role");
-        return false;
+        return tokenData.role === "ADMIN";
       } catch (e) {
         console.error("Error decoding token:", e);
         return false;
       }
     },
     fetchPosts(token) {
-      console.log("Sending request with token:", token);
       axios
         .get("http://localhost:8080/api/posts/all", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
-          console.log("Posts fetched successfully:", response.data);
           this.posts = response.data;
         })
         .catch((error) => {
@@ -135,76 +132,98 @@ export default {
           this.errorMessage = "There was an error fetching posts. Please try again later.";
         });
     },
-    likePost(postId) {
-      console.log(`Liked post with ID: ${postId}`);
-    },
-    commentPost(postId) {
-      console.log(`Commented on post with ID: ${postId}`);
-    },
     formatDate(date) {
       return new Date(date).toLocaleString();
     },
     viewPost(postId) {
-      this.$router.push({ name: 'PostDetails', params: { id: postId } });
+      this.$router.push({ name: "PostDetails", params: { id: postId } });
     },
-
     logout() {
-      // Log token before logout
-      const tokenBeforeLogout = localStorage.getItem("token");
-      console.log("Token before logout: ", tokenBeforeLogout);  // Log the current token
-
       localStorage.removeItem("token");
-
       localStorage.removeItem("likedPosts");
-
-      // Log token after logout
-      const tokenAfterLogout = localStorage.getItem("token");
-      console.log("Token after logout: ", tokenAfterLogout);  // Should be null or undefined
-
       this.$router.push("/");
     },
-
     cancelLogout() {
-      this.showLogoutConfirmation = false; // Hide the logout confirmation modal
+      this.showLogoutConfirmation = false;
     },
   },
 };
 </script>
 
 <style scoped>
+/* Add styles from the User Home Page for consistency */
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-right: 1px solid #ddd;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-between;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.onlybuns-title {
+  font-family: "Pacifico", cursive;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #007bff;
+  text-align: center;
   margin-bottom: 20px;
 }
 
-.btn {
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-item:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.post-image {
   width: 100%;
-  text-align: left;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
 }
 
 .card {
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  cursor: pointer; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card-img-top {
-  max-height: 300px;
-  object-fit: cover;
-}
-
-.text-muted {
-  font-size: 0.9em;
-}
-
-.alert {
-  font-size: 1.2em;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .icon-container {
@@ -220,29 +239,31 @@ export default {
   color: #555;
 }
 
-/* Confirmation Modal Styling */
-.logout-confirmation-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.icon.liked {
+  color: #007bff;
 }
 
-.logout-confirmation-modal .modal-content {
-  background-color: #fff;
-  padding: 20px;
+
+
+.logout-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
   border-radius: 8px;
-  text-align: center;
-  width: 400px; /* Adjust the width to make it smaller */
-  max-width: 90%; /* Ensure it doesn't exceed screen size */
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.logout-confirmation-modal button {
-  margin-top: 10px;
+.logout-btn:hover {
+  background-color: #cc0000;
+}
+
+.content {
+  flex: 1;
+  margin-left: 250px;
+  padding: 20px;
 }
 </style>
