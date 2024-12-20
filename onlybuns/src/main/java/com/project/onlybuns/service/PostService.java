@@ -57,6 +57,8 @@ public class PostService {
         location.setStreetName(postDto.getLocation().getStreetName());
         location.setCity(postDto.getLocation().getCity());
         location.setCountry(postDto.getLocation().getCountry());
+        location.setLongitude(postDto.getLocation().getLongitude());
+        location.setLatitude(postDto.getLocation().getLatitude());
 
         Post post = new Post();
         post.setDescription(postDto.getDescription());
