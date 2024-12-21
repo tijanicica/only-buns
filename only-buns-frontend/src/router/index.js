@@ -118,6 +118,25 @@ const routes = [
     component: ManageUsers,
     meta: { requiresAuth: true, requiresAdmin: true },
   },
+
+  {
+    path: '/admin/analytics',
+    name: 'Analytics',
+    component: () => import('@/views/AnalyticsPage.vue'),
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        if (decodedToken.role === "ADMIN") {
+          next();  
+        } else {
+          alert("You are not authorized to view this page.");
+          next("/login");  
+        }
+      } else {
+        next("/login");  
+      }
+    },},
 ];
 
 const router = createRouter({

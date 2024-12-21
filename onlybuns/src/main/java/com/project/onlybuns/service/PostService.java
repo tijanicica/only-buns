@@ -137,6 +137,15 @@ public class PostService {
                 .toList(); // Convert the stream to a list
     }
 
+    public long countByCreatedAtAfter(LocalDateTime date) {
+        return postRepository.countByCreatedAtAfter(date);
+    }
+    public long countUsersWithPosts() {
+        return postRepository.countDistinctPostCreators();
+    }
 
+    public long countUsersWithPostsAndComments() {
+        return postRepository.countUsersWithPostsAndComments();
+    }
 
 }

@@ -289,12 +289,12 @@ public class RegisteredUserService {
     }*/
 
     // ovo je samo da se pokaze da radi, svaki minut
-    @Scheduled(cron = "0 * * * * ?")
+  /*  @Scheduled(cron = "0 * * * * ?")
     public void scheduleInactiveUserCleanup() {
         System.out.println("Starting cleanup task at: " + LocalDateTime.now());
         deleteInactiveUsers();
         System.out.println("Cleanup task completed at: " + LocalDateTime.now());
-    }
+    }*/
 
     @Transactional
     public void followUser(Integer userId, String loggedInUserEmail) {
@@ -359,6 +359,11 @@ public class RegisteredUserService {
                 .map(follow -> registeredUserMapper.toUserDto(follow.getFollowedUser()))
                 .collect(Collectors.toList());
     }
+
+    public long countUsers() {
+        return registeredUserRepository.count();
+    }
+
 
 
 
