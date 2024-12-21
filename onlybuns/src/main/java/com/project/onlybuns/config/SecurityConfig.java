@@ -33,7 +33,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authz -> authz
                 .requestMatchers("/api/posts/create", "/images/**", "/api/users/followers/{userEmail}", "api/users/following/{userEmail}", "api/users/my-profile/{userEmail}", "api/users/posts/{userEmail}", "/api/users/change-password", "/api/users/{userId}/follow","/api/users/{userId}/isFollowing", "/api/users/{userId}/followingCount","/api/posts/followed", "/api/users/{userId}/followers", "/api/users/{userId}/following","api/users/{userId}/followers/count", "/api/users/{userId}/following/count","/api/trends/**" ).hasRole("USER")
                 .requestMatchers("/api/users/login", "/api/users/register", "/api/users/activate" ,"/api/posts/user/*","/api/posts/all", "/api/users/profile/*", "/api/posts/{postId}/likes", "/api/posts/{postId}","/api/users/check-email","api/users/check-username",  "/api/users/edit-profile").permitAll()
-                .requestMatchers("/api/posts/all", "/api/users/{userId}/postsCount", "/api/users/{userId}/followersCount", "/api/users/{userId}/makeAdmin", "/api/users/search").hasRole("ADMIN")
+                .requestMatchers("/api/posts/all", "/api/users/{userId}/postsCount", "/api/users/{userId}/followersCount", "/api/users/{userId}/makeAdmin", "/api/users/search", "api/analytics/posts-comments").hasRole("ADMIN")
 
                 .anyRequest().authenticated());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

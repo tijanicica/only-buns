@@ -43,6 +43,16 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "LIMIT 10")
     List<Post> findAllTimePopularPosts();
 
+    long countByCreatedAtAfter(LocalDateTime date);
+
+
+    @Query("SELECT COUNT(DISTINCT p.postCreator) FROM Post p")
+    long countDistinctPostCreators();
+
+    @Query("SELECT COUNT(DISTINCT p.postCreator.id) FROM Post p WHERE p.postCreator.id IN (SELECT c.user.id FROM Comment c)")
+    long countUsersWithPostsAndComments();
+
+
 
 
 }

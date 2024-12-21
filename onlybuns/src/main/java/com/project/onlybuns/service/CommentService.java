@@ -9,6 +9,7 @@ import com.project.onlybuns.repository.CommentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -36,5 +37,11 @@ public class CommentService {
         return commentDto;
     }
 
+    public long countByCreatedAtAfter(LocalDateTime date) {
+        return commentRepository.countByDateAfter(date);
+    }
 
+    public long countUsersWithComments() {
+        return commentRepository.countDistinctCommentCreators();
+    }
 }
