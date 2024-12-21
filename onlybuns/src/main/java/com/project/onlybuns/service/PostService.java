@@ -9,9 +9,9 @@ import com.project.onlybuns.model.Post;
 import com.project.onlybuns.model.RegisteredUser;
 import com.project.onlybuns.repository.PostRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,7 +19,6 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -84,6 +83,14 @@ public class PostService {
             Files.write(path, imageBytes);
 
             return "/images/" + fileName;
+    }
+
+    @Scheduled(cron = "*/30 * * * * ?")
+    public void compressImages() {
+        String workingDirectory = System.getProperty("user.dir");
+        String inputDirectory = Paths.get(workingDirectory, "..", "only-buns-frontend", "public", "images").toString();;
+        String outputDirectory = Paths.get(workingDirectory, "..", "only-buns-frontend", "public", "compressed+images").toString();
+        ImageCompression.compressOldImages(inputDirectory, outputDirectory);
     }
 
     public Post getPostById(Integer postId) {
