@@ -47,6 +47,7 @@ public class RegisteredUserService {
     private final FollowService followService;
     private final LocationService locationService;
     private final LocationRepository locationRepository;
+    private final BloomFilterService bloomFilterService;
 
 
 
@@ -67,16 +68,20 @@ public class RegisteredUserService {
         if (registeredUserRepository.findByEmail(registrationDto.getEmail()).isPresent()) {
             throw new IllegalArgumentException ("User with the given email already exists!");
         }
-        if (registeredUserRepository.findByUsername(registrationDto.getUsername()).isPresent()) {
-            throw new IllegalArgumentException ("User with the given username already exists!");
+        // bloom filter za username
+        if (bloomFilterService.mightContain(registrationDto.getUsername())) {
+            // zbog laznih pozitiva
+            if (registeredUserRepository.findByUsername(registrationDto.getUsername()).isPresent()) {
+                throw new IllegalArgumentException("User with the given username already exists!");
+            }
         }
 
         // samo za testiranje transakcije
-        try {
+        /*try {
             Thread.sleep(1500);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
+        } */
 
 
         RegisteredUser user = new RegisteredUser();
@@ -104,6 +109,8 @@ public class RegisteredUserService {
         user.setActivationToken(token);
 
         registeredUserRepository.save(user);
+
+        bloomFilterService.addUsername(user.getUsername());
 
         emailService.sendActivationEmail(user.getEmail(), token);
     }
