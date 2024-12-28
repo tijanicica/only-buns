@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-5">
     <h2 class="text-center">Register</h2>
-    <div id="map" style="height: 400px;"></div> <!-- Dodaj mapu -->
+    <div id="map" style="height: 200px; width: 20%; margin: 0 auto;"></div>  <!-- Dodaj mapu -->
     <form @submit.prevent="submitForm" class="mx-auto mt-4" style="max-width: 500px;">
       <div class="form-group mb-3">
         <label for="email">Email:</label>
@@ -87,7 +87,7 @@ export default {
     this.$nextTick(() => {
       const mapContainer = document.getElementById("map");
       if (mapContainer) {
-        this.map = L.map("map").setView([51.505, -0.09], 13);
+        this.map = L.map("map").setView([45.2671, 19.8310], 13);
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
       } else {
         console.error("Map container not found.");
