@@ -35,6 +35,10 @@ public class PostService {
         return postRepository.findAllByOrderByCreatedAtDesc().stream().map(this.postMapper::toPostDto).toList();
     }
 
+    public List<Post> getAll() {
+        return postRepository.findAll();
+    }
+
     public List<PostDto> getUserPosts(Integer userId) {
         RegisteredUser user = registeredUserService.findById(userId);
         return postRepository.findAllByPostCreator(user).stream()

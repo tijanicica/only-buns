@@ -61,6 +61,10 @@ public class RegisteredUserService {
     public RegisteredUser findById(Integer userId) {
         return registeredUserRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
     }
+
+    public RegisteredUser findByUsername(String username) {
+        return registeredUserRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found"));
+    }
     @Transactional
     public void register(RegistrationDto registrationDto) {
 
