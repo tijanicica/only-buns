@@ -90,6 +90,9 @@ public class RegisteredUserService {
         location.setCountry(registrationDto.getCountry());
         location.setStreetName(registrationDto.getStreetName());
         location.setStreetNumber(registrationDto.getStreetNumber());
+        location.setLatitude(registrationDto.getLatitude());
+        location.setLongitude(registrationDto.getLongitude());
+        locationRepository.save(location);
         user.setUsername(registrationDto.getUsername());
 
         user.setFirstName(registrationDto.getFirstName());

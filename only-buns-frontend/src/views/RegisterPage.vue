@@ -1,6 +1,7 @@
 <template>
   <div class="container mt-5">
     <h2 class="text-center">Register</h2>
+    <div id="map" style="height: 400px;"></div> <!-- Dodaj mapu -->
     <form @submit.prevent="submitForm" class="mx-auto mt-4" style="max-width: 500px;">
       <div class="form-group mb-3">
         <label for="email">Email:</label>
@@ -59,6 +60,9 @@
 
 <script>
 import axios from "axios";
+import L from "leaflet";
+import "leaflet-control-geocoder";
+import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
 export default {
   data() {
     return {
@@ -72,11 +76,25 @@ export default {
         streetName: "",
         streetNumber: "",
         city: "",
-        country: ""
+        country: "", 
+        latitude: null,
+        longitude: null
       },
       errors: {}
     };
   },
+  mounted() {
+    this.$nextTick(() => {
+      const mapContainer = document.getElementById("map");
+      if (mapContainer) {
+        this.map = L.map("map").setView([51.505, -0.09], 13);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
+      } else {
+        console.error("Map container not found.");
+      }
+    });
+  },
+
   methods: {
     async validateEmail() {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -171,35 +189,69 @@ export default {
         this.errors.country = "";
       }
     },
-    async submitForm() {
-      
-      this.validateEmail();
-      this.validateUsername();
-      this.validatePassword();
-      this.validateConfirmPassword();
-      this.validateFirstName();
-      this.validateLastName();
-      this.validateStreetName();
-      this.validateStreetNumber();
-      this.validateCity();
-      this.validateCountry();
+    async geocodeAddress() {
+      const address = `${this.form.streetName} ${this.form.streetNumber}, ${this.form.city}, ${this.form.country}`;
+      console.log("Geocoding address:", address);
 
-      if (Object.values(this.errors).every((error) => error === "")) {
-        
-        try {
-          await axios.post("http://localhost:8080/api/users/register", this.form);
-          alert("Successful registration!");
-          
-          this.$router.push("/login"); 
-        } catch (error) {
-          console.error("Error during registration:", error);
-          alert("Registration unsuccessful. Please try again.");
+      const apiKey = "ba089c09d4be49efa75b6419011869ca"; // Replace with your actual API key
+      const url = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
+        address
+      )}&key=${apiKey}`;
+
+      try {
+        const response = await axios.get(url);
+        console.log("OpenCage response:", response);
+
+        if (
+          response.data &&
+          response.data.results &&
+          response.data.results.length > 0
+        ) {
+          const location = response.data.results[0].geometry;
+          this.form.latitude = location.lat;
+          this.form.longitude = location.lng;
+          this.map.setView([location.lat, location.lng], 14);
+
+          L.marker([location.lat, location.lng]).addTo(this.map);
+          console.log("Geocoded location:", location);
+        } else {
+          throw new Error("No results found for the provided address.");
         }
-      } else {
-        alert("Registration unsuccessful. Please fill out all required fields.");
+      } catch (error) {
+        console.error("Error during geocoding:", error.message);
+        throw error;
       }
+    },
+
+async submitForm() {
+  this.validateEmail();
+  this.validateUsername();
+  this.validatePassword();
+  this.validateConfirmPassword();
+  this.validateFirstName();
+  this.validateLastName();
+  this.validateStreetName();
+  this.validateStreetNumber();
+  this.validateCity();
+  this.validateCountry();
+
+  if (Object.values(this.errors).every((error) => error === "")) {
+    try {
+      // Pre nego što pošaljemo formu, geokodirajmo adresu
+      await this.geocodeAddress();
+
+      // Prosledi podatke backendu
+      await axios.post("http://localhost:8080/api/users/register", this.form);
+      alert("Registration successful!");
+      this.$router.push({ name: 'Login' });
+    } catch (error) {
+      console.error("Error during form submission:", error.message);
+      alert("Could not get coordinates for the address. Please try again.");
     }
   }
+},
+
+  },
 };
 </script>
 
