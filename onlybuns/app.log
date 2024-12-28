@@ -1,129 +1,31 @@
-2024-12-27T13:16:02.991+01:00  INFO 18136 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 18136 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
-2024-12-27T13:16:02.992+01:00  INFO 18136 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
-2024-12-27T13:16:03.433+01:00  INFO 18136 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-12-27T13:16:03.483+01:00  INFO 18136 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 45 ms. Found 6 JPA repository interfaces.
-2024-12-27T13:16:03.840+01:00  INFO 18136 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-12-27T13:16:03.851+01:00  INFO 18136 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-12-27T13:16:03.852+01:00  INFO 18136 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-12-27T13:16:03.910+01:00  INFO 18136 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-12-27T13:16:03.910+01:00  INFO 18136 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 888 ms
-2024-12-27T13:16:03.965+01:00  INFO 18136 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-27T13:16:04.045+01:00  INFO 18136 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@ce12fbb
-2024-12-27T13:16:04.046+01:00  INFO 18136 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-12-27T13:16:04.093+01:00  INFO 18136 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-12-27T13:16:04.123+01:00  INFO 18136 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-12-27T13:16:04.148+01:00  INFO 18136 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-12-27T13:16:04.358+01:00  INFO 18136 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-12-27T13:16:04.410+01:00  WARN 18136 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
-2024-12-27T13:16:05.106+01:00  INFO 18136 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-12-27T13:16:05.234+01:00  INFO 18136 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-12-27T13:16:05.379+01:00  INFO 18136 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-12-27T13:16:05.965+01:00  INFO 18136 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-12-27T13:16:05.966+01:00  WARN 18136 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-12-27T13:16:06.143+01:00  WARN 18136 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-12-27T13:16:06.483+01:00  INFO 18136 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2024-12-27T13:16:06.491+01:00  INFO 18136 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 3.755 seconds (process running for 4.137)
-2024-12-27T13:16:11.011+01:00  INFO 18136 --- [onlybuns] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-27T13:16:11.012+01:00  INFO 18136 --- [onlybuns] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-12-27T13:16:11.013+01:00  INFO 18136 --- [onlybuns] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2024-12-27T13:16:24.256+01:00  INFO 18136 --- [onlybuns] [http-nio-8080-exec-6] c.project.onlybuns.service.PostService   : Fetching all time popular posts from database...
-2024-12-27T13:16:24.256+01:00  INFO 18136 --- [onlybuns] [http-nio-8080-exec-4] c.project.onlybuns.service.PostService   : Fetching this week popular posts from database...
-2024-12-27T13:16:30.062+01:00 ERROR 18136 --- [onlybuns] [scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
-
-java.lang.IllegalArgumentException: image == null!
-	at java.desktop/javax.imageio.IIOImage.<init>(IIOImage.java:109) ~[na:na]
-	at com.project.onlybuns.service.ImageCompression.compressImage(ImageCompression.java:90) ~[classes/:na]
-	at com.project.onlybuns.service.ImageCompression.compressOldImages(ImageCompression.java:111) ~[classes/:na]
-	at com.project.onlybuns.service.PostService.compressImages(PostService.java:93) ~[classes/:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
-	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130) ~[spring-context-6.1.13.jar:6.1.13]
-	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124) ~[spring-context-6.1.13.jar:6.1.13]
-	at io.micrometer.observation.Observation.observe(Observation.java:499) ~[micrometer-observation-1.13.4.jar:1.13.4]
-	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124) ~[spring-context-6.1.13.jar:6.1.13]
-	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-6.1.13.jar:6.1.13]
-	at org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:96) ~[spring-context-6.1.13.jar:6.1.13]
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
-	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) ~[na:na]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
-	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
-
-2024-12-27T13:17:00.016+01:00 ERROR 18136 --- [onlybuns] [scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
-
-java.lang.IllegalArgumentException: image == null!
-	at java.desktop/javax.imageio.IIOImage.<init>(IIOImage.java:109) ~[na:na]
-	at com.project.onlybuns.service.ImageCompression.compressImage(ImageCompression.java:90) ~[classes/:na]
-	at com.project.onlybuns.service.ImageCompression.compressOldImages(ImageCompression.java:111) ~[classes/:na]
-	at com.project.onlybuns.service.PostService.compressImages(PostService.java:93) ~[classes/:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
-	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130) ~[spring-context-6.1.13.jar:6.1.13]
-	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124) ~[spring-context-6.1.13.jar:6.1.13]
-	at io.micrometer.observation.Observation.observe(Observation.java:499) ~[micrometer-observation-1.13.4.jar:1.13.4]
-	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124) ~[spring-context-6.1.13.jar:6.1.13]
-	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-6.1.13.jar:6.1.13]
-	at org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:96) ~[spring-context-6.1.13.jar:6.1.13]
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
-	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) ~[na:na]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
-	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
-
-2024-12-27T13:17:30.017+01:00 ERROR 18136 --- [onlybuns] [scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
-
-java.lang.IllegalArgumentException: image == null!
-	at java.desktop/javax.imageio.IIOImage.<init>(IIOImage.java:109) ~[na:na]
-	at com.project.onlybuns.service.ImageCompression.compressImage(ImageCompression.java:90) ~[classes/:na]
-	at com.project.onlybuns.service.ImageCompression.compressOldImages(ImageCompression.java:111) ~[classes/:na]
-	at com.project.onlybuns.service.PostService.compressImages(PostService.java:93) ~[classes/:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
-	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130) ~[spring-context-6.1.13.jar:6.1.13]
-	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124) ~[spring-context-6.1.13.jar:6.1.13]
-	at io.micrometer.observation.Observation.observe(Observation.java:499) ~[micrometer-observation-1.13.4.jar:1.13.4]
-	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124) ~[spring-context-6.1.13.jar:6.1.13]
-	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-6.1.13.jar:6.1.13]
-	at org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:96) ~[spring-context-6.1.13.jar:6.1.13]
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
-	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) ~[na:na]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
-	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
-
-2024-12-27T13:18:00.024+01:00 ERROR 18136 --- [onlybuns] [scheduling-1] o.s.s.s.TaskUtils$LoggingErrorHandler    : Unexpected error occurred in scheduled task
-
-java.lang.IllegalArgumentException: image == null!
-	at java.desktop/javax.imageio.IIOImage.<init>(IIOImage.java:109) ~[na:na]
-	at com.project.onlybuns.service.ImageCompression.compressImage(ImageCompression.java:90) ~[classes/:na]
-	at com.project.onlybuns.service.ImageCompression.compressOldImages(ImageCompression.java:111) ~[classes/:na]
-	at com.project.onlybuns.service.PostService.compressImages(PostService.java:93) ~[classes/:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[na:na]
-	at org.springframework.scheduling.support.ScheduledMethodRunnable.runInternal(ScheduledMethodRunnable.java:130) ~[spring-context-6.1.13.jar:6.1.13]
-	at org.springframework.scheduling.support.ScheduledMethodRunnable.lambda$run$2(ScheduledMethodRunnable.java:124) ~[spring-context-6.1.13.jar:6.1.13]
-	at io.micrometer.observation.Observation.observe(Observation.java:499) ~[micrometer-observation-1.13.4.jar:1.13.4]
-	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:124) ~[spring-context-6.1.13.jar:6.1.13]
-	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54) ~[spring-context-6.1.13.jar:6.1.13]
-	at org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:96) ~[spring-context-6.1.13.jar:6.1.13]
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539) ~[na:na]
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
-	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) ~[na:na]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
-	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
-
-2024-12-27T13:18:05.582+01:00  INFO 18136 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-12-27T13:18:05.585+01:00  INFO 18136 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-12-27T13:18:05.588+01:00  INFO 18136 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-12-28T12:10:11.719+01:00  INFO 18168 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 18168 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
+2024-12-28T12:10:11.727+01:00  INFO 18168 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
+2024-12-28T12:10:12.348+01:00  INFO 18168 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-12-28T12:10:12.411+01:00  INFO 18168 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 55 ms. Found 6 JPA repository interfaces.
+2024-12-28T12:10:12.815+01:00  INFO 18168 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-12-28T12:10:12.825+01:00  INFO 18168 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-28T12:10:12.825+01:00  INFO 18168 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2024-12-28T12:10:12.879+01:00  INFO 18168 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-28T12:10:12.880+01:00  INFO 18168 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1105 ms
+2024-12-28T12:10:12.935+01:00  INFO 18168 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-28T12:10:13.050+01:00  INFO 18168 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@65c17e38
+2024-12-28T12:10:13.052+01:00  INFO 18168 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-12-28T12:10:13.116+01:00  INFO 18168 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-12-28T12:10:13.165+01:00  INFO 18168 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-12-28T12:10:13.212+01:00  INFO 18168 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-12-28T12:10:13.490+01:00  INFO 18168 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-12-28T12:10:13.561+01:00  WARN 18168 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
+2024-12-28T12:10:14.348+01:00  INFO 18168 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-12-28T12:10:14.486+01:00  INFO 18168 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-12-28T12:10:14.673+01:00  INFO 18168 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-12-28T12:10:15.297+01:00  INFO 18168 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2024-12-28T12:10:15.298+01:00  WARN 18168 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
+2024-12-28T12:10:15.502+01:00  WARN 18168 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-12-28T12:10:15.920+01:00  INFO 18168 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2024-12-28T12:10:15.927+01:00  INFO 18168 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 4.609 seconds (process running for 5.275)
+2024-12-28T12:11:49.639+01:00  INFO 18168 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-28T12:11:49.639+01:00  INFO 18168 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-28T12:11:49.641+01:00  INFO 18168 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-12-28T12:26:21.464+01:00  INFO 18168 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-12-28T12:26:21.466+01:00  INFO 18168 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-12-28T12:26:21.468+01:00  INFO 18168 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

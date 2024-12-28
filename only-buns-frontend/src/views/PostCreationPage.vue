@@ -90,11 +90,27 @@ export default {
     this.map.on('click', this.onMapClick);
   },
   methods: {
-    onMapClick(event) {
-      const { lat, lng } = event.latlng; // Dobij latitude i longitude
-      this.post.location.latitude = lat.toFixed(6);
-      this.post.location.longitude = lng.toFixed(6);
-    },
+    async onMapClick(event) {
+    const { lat, lng } = event.latlng; // Dobij latitude i longitude
+    this.post.location.latitude = lat.toFixed(6);
+    this.post.location.longitude = lng.toFixed(6);
+
+    //L.marker([lat, lng]).addTo(this.map);
+
+    try {
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`
+      );
+
+      const address = response.data.address;
+      this.post.location.streetName = address.road || '';
+      this.post.location.streetNumber = address.house_number || '';
+      this.post.location.city = address.city || address.town || address.village || '';
+      this.post.location.country = address.country || '';
+    } catch (error) {
+      console.error("Error fetching address:", error);
+    }
+  },
     handleFileChange(event) {
       const file = event.target.files[0];
       if (file) {

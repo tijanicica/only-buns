@@ -85,13 +85,13 @@ public class PostService {
             return "/images/" + fileName;
     }
 
-    @Scheduled(cron = "*/30 * * * * ?")
-    public void compressImages() {
+    //@Scheduled(cron = "*/30 * * * * ?")
+    /*public void compressImages() {
         String workingDirectory = System.getProperty("user.dir");
         String inputDirectory = Paths.get(workingDirectory, "..", "only-buns-frontend", "public", "images").toString();;
         String outputDirectory = Paths.get(workingDirectory, "..", "only-buns-frontend", "public", "compressed+images").toString();
         ImageCompression.compressOldImages(inputDirectory, outputDirectory);
-    }
+    } */
 
     public Post getPostById(Integer postId) {
         return postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
