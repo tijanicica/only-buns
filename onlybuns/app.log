@@ -1,341 +1,105 @@
-2024-12-28T12:10:11.719+01:00  INFO 18168 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 18168 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
-2024-12-28T12:10:11.727+01:00  INFO 18168 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
-2024-12-28T12:10:12.348+01:00  INFO 18168 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-12-28T12:10:12.411+01:00  INFO 18168 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 55 ms. Found 6 JPA repository interfaces.
-2024-12-28T12:10:12.815+01:00  INFO 18168 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-12-28T12:10:12.825+01:00  INFO 18168 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-12-28T12:10:12.825+01:00  INFO 18168 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-12-28T12:10:12.879+01:00  INFO 18168 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-12-28T12:10:12.880+01:00  INFO 18168 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1105 ms
-2024-12-28T12:10:12.935+01:00  INFO 18168 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-28T12:10:13.050+01:00  INFO 18168 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@65c17e38
-2024-12-28T12:10:13.052+01:00  INFO 18168 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-12-28T12:10:13.116+01:00  INFO 18168 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-12-28T12:10:13.165+01:00  INFO 18168 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-12-28T12:10:13.212+01:00  INFO 18168 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-12-28T12:10:13.490+01:00  INFO 18168 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-12-28T12:10:13.561+01:00  WARN 18168 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
-2024-12-28T12:10:14.348+01:00  INFO 18168 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-12-28T12:10:14.486+01:00  INFO 18168 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T12:10:14.673+01:00  INFO 18168 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-12-28T12:10:15.297+01:00  INFO 18168 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-12-28T12:10:15.298+01:00  WARN 18168 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-12-28T12:10:15.502+01:00  WARN 18168 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-12-28T12:10:15.920+01:00  INFO 18168 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2024-12-28T12:10:15.927+01:00  INFO 18168 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 4.609 seconds (process running for 5.275)
-2024-12-28T12:11:49.639+01:00  INFO 18168 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-28T12:11:49.639+01:00  INFO 18168 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-12-28T12:11:49.641+01:00  INFO 18168 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
-2024-12-28T12:26:21.464+01:00  INFO 18168 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T12:26:21.466+01:00  INFO 18168 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-12-28T12:26:21.468+01:00  INFO 18168 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-12-28T15:07:31.909+01:00  INFO 8164 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 8164 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
-2024-12-28T15:07:31.911+01:00  INFO 8164 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
-2024-12-28T15:07:32.521+01:00  INFO 8164 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-12-28T15:07:32.626+01:00  INFO 8164 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 95 ms. Found 6 JPA repository interfaces.
-2024-12-28T15:07:33.113+01:00  INFO 8164 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-12-28T15:07:33.125+01:00  INFO 8164 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-12-28T15:07:33.125+01:00  INFO 8164 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-12-28T15:07:33.181+01:00  INFO 8164 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-12-28T15:07:33.182+01:00  INFO 8164 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1231 ms
-2024-12-28T15:07:33.245+01:00  INFO 8164 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-28T15:07:33.371+01:00  INFO 8164 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@59d0cdb6
-2024-12-28T15:07:33.373+01:00  INFO 8164 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-12-28T15:07:33.443+01:00  INFO 8164 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-12-28T15:07:33.472+01:00  INFO 8164 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-12-28T15:07:33.506+01:00  INFO 8164 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-12-28T15:07:33.731+01:00  INFO 8164 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-12-28T15:07:33.791+01:00  WARN 8164 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
-2024-12-28T15:07:34.617+01:00  INFO 8164 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-12-28T15:07:34.825+01:00  INFO 8164 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T15:07:35.135+01:00  INFO 8164 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-12-28T15:07:36.079+01:00  INFO 8164 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-12-28T15:07:36.082+01:00  WARN 8164 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-12-28T15:07:36.442+01:00  WARN 8164 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-12-28T15:07:37.049+01:00  INFO 8164 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2024-12-28T15:07:37.063+01:00  INFO 8164 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 5.453 seconds (process running for 5.906)
-2024-12-28T15:07:42.489+01:00  INFO 8164 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-28T15:07:42.490+01:00  INFO 8164 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-12-28T15:07:42.491+01:00  INFO 8164 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2024-12-28T15:09:27.446+01:00  INFO 8164 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T15:09:27.449+01:00  INFO 8164 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-12-28T15:09:27.451+01:00  INFO 8164 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-12-28T15:20:18.198+01:00  INFO 12808 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 12808 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
-2024-12-28T15:20:18.200+01:00  INFO 12808 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
-2024-12-28T15:20:18.784+01:00  INFO 12808 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-12-28T15:20:18.881+01:00  INFO 12808 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 90 ms. Found 6 JPA repository interfaces.
-2024-12-28T15:20:19.393+01:00  INFO 12808 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-12-28T15:20:19.407+01:00  INFO 12808 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-12-28T15:20:19.408+01:00  INFO 12808 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-12-28T15:20:19.468+01:00  INFO 12808 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-12-28T15:20:19.468+01:00  INFO 12808 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1236 ms
-2024-12-28T15:20:19.544+01:00  INFO 12808 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-28T15:20:19.647+01:00  INFO 12808 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7a1a3468
-2024-12-28T15:20:19.649+01:00  INFO 12808 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-12-28T15:20:19.704+01:00  INFO 12808 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-12-28T15:20:19.740+01:00  INFO 12808 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-12-28T15:20:19.764+01:00  INFO 12808 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-12-28T15:20:20.025+01:00  INFO 12808 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-12-28T15:20:20.093+01:00  WARN 12808 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
-2024-12-28T15:20:21.219+01:00  INFO 12808 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-12-28T15:20:21.441+01:00  INFO 12808 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T15:20:21.678+01:00  INFO 12808 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-12-28T15:20:22.699+01:00  INFO 12808 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-12-28T15:20:22.701+01:00  WARN 12808 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-12-28T15:20:23.056+01:00  WARN 12808 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-12-28T15:20:23.617+01:00  INFO 12808 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2024-12-28T15:20:23.629+01:00  INFO 12808 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 5.718 seconds (process running for 6.123)
-2024-12-28T15:20:54.491+01:00  INFO 12808 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-28T15:20:54.492+01:00  INFO 12808 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-12-28T15:20:54.495+01:00  INFO 12808 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
-2024-12-28T15:27:19.491+01:00  INFO 12808 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T15:27:19.493+01:00  INFO 12808 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-12-28T15:27:19.495+01:00  INFO 12808 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-12-28T19:09:21.118+01:00  INFO 17352 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 17352 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
-2024-12-28T19:09:21.120+01:00  INFO 17352 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
-2024-12-28T19:09:21.708+01:00  INFO 17352 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-12-28T19:09:21.785+01:00  INFO 17352 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 71 ms. Found 6 JPA repository interfaces.
-2024-12-28T19:09:22.385+01:00  INFO 17352 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-12-28T19:09:22.394+01:00  INFO 17352 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-12-28T19:09:22.395+01:00  INFO 17352 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-12-28T19:09:22.448+01:00  INFO 17352 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-12-28T19:09:22.448+01:00  INFO 17352 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1285 ms
-2024-12-28T19:09:22.518+01:00  INFO 17352 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-28T19:09:22.629+01:00  INFO 17352 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@67d4c48d
-2024-12-28T19:09:22.630+01:00  INFO 17352 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-12-28T19:09:22.724+01:00  INFO 17352 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-12-28T19:09:22.792+01:00  INFO 17352 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-12-28T19:09:22.838+01:00  INFO 17352 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-12-28T19:09:23.209+01:00  INFO 17352 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-12-28T19:09:23.299+01:00  WARN 17352 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
-2024-12-28T19:09:24.437+01:00  INFO 17352 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-12-28T19:09:24.595+01:00  INFO 17352 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T19:09:24.827+01:00  INFO 17352 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-12-28T19:09:25.601+01:00  INFO 17352 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-12-28T19:09:25.602+01:00  WARN 17352 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-12-28T19:09:25.870+01:00  WARN 17352 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-12-28T19:09:26.388+01:00  INFO 17352 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2024-12-28T19:09:26.399+01:00  INFO 17352 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 5.787 seconds (process running for 6.82)
-2024-12-28T19:11:10.255+01:00  INFO 17352 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-28T19:11:10.255+01:00  INFO 17352 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-12-28T19:11:10.264+01:00  INFO 17352 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 8 ms
-2024-12-28T20:01:17.668+01:00  INFO 17352 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T20:01:17.680+01:00  INFO 17352 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-12-28T20:01:17.683+01:00  INFO 17352 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-12-28T20:21:25.533+01:00  INFO 12516 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 12516 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
-2024-12-28T20:21:25.535+01:00  INFO 12516 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
-2024-12-28T20:21:26.030+01:00  INFO 12516 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-12-28T20:21:26.097+01:00  INFO 12516 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 60 ms. Found 6 JPA repository interfaces.
-2024-12-28T20:21:26.513+01:00  INFO 12516 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-12-28T20:21:26.522+01:00  INFO 12516 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-12-28T20:21:26.522+01:00  INFO 12516 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-12-28T20:21:26.558+01:00  INFO 12516 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-12-28T20:21:26.558+01:00  INFO 12516 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 995 ms
-2024-12-28T20:21:26.607+01:00  INFO 12516 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-28T20:21:26.692+01:00  INFO 12516 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@59d0cdb6
-2024-12-28T20:21:26.694+01:00  INFO 12516 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-12-28T20:21:26.765+01:00  INFO 12516 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-12-28T20:21:26.796+01:00  INFO 12516 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-12-28T20:21:26.819+01:00  INFO 12516 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-12-28T20:21:27.057+01:00  INFO 12516 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-12-28T20:21:27.111+01:00  WARN 12516 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
-2024-12-28T20:21:27.946+01:00  INFO 12516 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-12-28T20:21:28.148+01:00  INFO 12516 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T20:21:28.367+01:00  INFO 12516 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-12-28T20:21:29.301+01:00  INFO 12516 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-12-28T20:21:29.302+01:00  WARN 12516 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-12-28T20:21:29.620+01:00  WARN 12516 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-12-28T20:21:30.223+01:00  INFO 12516 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2024-12-28T20:21:30.236+01:00  INFO 12516 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 4.956 seconds (process running for 5.353)
-2024-12-28T20:21:35.676+01:00  INFO 12516 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-28T20:21:35.677+01:00  INFO 12516 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-12-28T20:21:35.679+01:00  INFO 12516 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2024-12-28T20:22:47.334+01:00  INFO 12516 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T20:22:47.350+01:00  INFO 12516 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-12-28T20:22:47.367+01:00  INFO 12516 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-12-28T21:51:54.767+01:00  INFO 19964 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 19964 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
-2024-12-28T21:51:54.769+01:00  INFO 19964 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
-2024-12-28T21:51:55.341+01:00  INFO 19964 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-12-28T21:51:55.413+01:00  INFO 19964 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 64 ms. Found 6 JPA repository interfaces.
-2024-12-28T21:51:55.849+01:00  INFO 19964 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-12-28T21:51:55.865+01:00  INFO 19964 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-12-28T21:51:55.866+01:00  INFO 19964 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-12-28T21:51:55.935+01:00  INFO 19964 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-12-28T21:51:55.936+01:00  INFO 19964 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1133 ms
-2024-12-28T21:51:56.025+01:00  INFO 19964 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-28T21:51:56.143+01:00  INFO 19964 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7f3fc42f
-2024-12-28T21:51:56.146+01:00  INFO 19964 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-12-28T21:51:56.213+01:00  INFO 19964 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-12-28T21:51:56.248+01:00  INFO 19964 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-12-28T21:51:56.283+01:00  INFO 19964 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-12-28T21:51:56.544+01:00  INFO 19964 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-12-28T21:51:56.608+01:00  WARN 19964 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
-2024-12-28T21:51:57.506+01:00  INFO 19964 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-12-28T21:51:57.650+01:00  INFO 19964 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T21:51:57.937+01:00  INFO 19964 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-12-28T21:51:58.624+01:00  INFO 19964 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-12-28T21:51:58.625+01:00  WARN 19964 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-12-28T21:51:58.969+01:00  WARN 19964 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-12-28T21:51:59.549+01:00  INFO 19964 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2024-12-28T21:51:59.563+01:00  INFO 19964 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 5.117 seconds (process running for 5.544)
-2024-12-28T21:55:53.026+01:00  INFO 19964 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-28T21:55:53.026+01:00  INFO 19964 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-12-28T21:55:53.028+01:00  INFO 19964 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
-2024-12-28T22:06:07.100+01:00  INFO 19964 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T22:06:07.103+01:00  INFO 19964 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-12-28T22:06:07.106+01:00  INFO 19964 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-12-28T22:08:08.904+01:00  INFO 8360 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 8360 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
-2024-12-28T22:08:08.904+01:00  INFO 8360 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
-2024-12-28T22:08:09.509+01:00  INFO 8360 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-12-28T22:08:09.591+01:00  INFO 8360 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 75 ms. Found 6 JPA repository interfaces.
-2024-12-28T22:08:10.040+01:00  INFO 8360 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-12-28T22:08:10.048+01:00  INFO 8360 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-12-28T22:08:10.049+01:00  INFO 8360 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-12-28T22:08:10.096+01:00  INFO 8360 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-12-28T22:08:10.096+01:00  INFO 8360 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1150 ms
-2024-12-28T22:08:10.158+01:00  INFO 8360 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-28T22:08:10.272+01:00  INFO 8360 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@59d0cdb6
-2024-12-28T22:08:10.274+01:00  INFO 8360 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-12-28T22:08:10.353+01:00  INFO 8360 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-12-28T22:08:10.396+01:00  INFO 8360 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-12-28T22:08:10.428+01:00  INFO 8360 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-12-28T22:08:10.650+01:00  INFO 8360 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-12-28T22:08:10.711+01:00  WARN 8360 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
-2024-12-28T22:08:11.530+01:00  INFO 8360 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-12-28T22:08:11.715+01:00  INFO 8360 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T22:08:11.930+01:00  INFO 8360 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-12-28T22:08:12.704+01:00  INFO 8360 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-12-28T22:08:12.707+01:00  WARN 8360 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-12-28T22:08:13.029+01:00  WARN 8360 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-12-28T22:08:13.577+01:00  INFO 8360 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2024-12-28T22:08:13.591+01:00  INFO 8360 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 4.997 seconds (process running for 5.433)
-2024-12-28T22:08:46.615+01:00  INFO 8360 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-28T22:08:46.615+01:00  INFO 8360 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-12-28T22:08:46.616+01:00  INFO 8360 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2024-12-28T22:10:48.896+01:00  INFO 8360 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T22:10:48.896+01:00  INFO 8360 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-12-28T22:10:48.906+01:00  INFO 8360 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-12-28T22:14:22.882+01:00  INFO 19596 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 19596 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
-2024-12-28T22:14:22.884+01:00  INFO 19596 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
-2024-12-28T22:14:23.456+01:00  INFO 19596 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-12-28T22:14:23.520+01:00  INFO 19596 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 57 ms. Found 6 JPA repository interfaces.
-2024-12-28T22:14:23.954+01:00  INFO 19596 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-12-28T22:14:23.962+01:00  INFO 19596 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-12-28T22:14:23.963+01:00  INFO 19596 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-12-28T22:14:24.002+01:00  INFO 19596 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-12-28T22:14:24.003+01:00  INFO 19596 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1082 ms
-2024-12-28T22:14:24.069+01:00  INFO 19596 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-28T22:14:24.186+01:00  INFO 19596 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7a1a3468
-2024-12-28T22:14:24.188+01:00  INFO 19596 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-12-28T22:14:24.256+01:00  INFO 19596 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-12-28T22:14:24.294+01:00  INFO 19596 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-12-28T22:14:24.329+01:00  INFO 19596 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-12-28T22:14:24.587+01:00  INFO 19596 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-12-28T22:14:24.664+01:00  WARN 19596 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
-2024-12-28T22:14:25.766+01:00  INFO 19596 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-12-28T22:14:25.980+01:00  INFO 19596 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T22:14:26.288+01:00  INFO 19596 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-12-28T22:14:27.160+01:00  INFO 19596 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-12-28T22:14:27.161+01:00  WARN 19596 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-12-28T22:14:27.478+01:00  WARN 19596 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-12-28T22:14:28.037+01:00  INFO 19596 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2024-12-28T22:14:28.049+01:00  INFO 19596 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 5.432 seconds (process running for 5.83)
-2024-12-28T22:14:32.615+01:00  INFO 19596 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-28T22:14:32.615+01:00  INFO 19596 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-12-28T22:14:32.616+01:00  INFO 19596 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
-2024-12-28T22:22:04.335+01:00  INFO 19596 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T22:22:04.340+01:00  INFO 19596 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-12-28T22:22:04.346+01:00  INFO 19596 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-12-28T22:22:08.753+01:00  INFO 7336 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 7336 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
-2024-12-28T22:22:08.756+01:00  INFO 7336 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
-2024-12-28T22:22:09.258+01:00  INFO 7336 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-12-28T22:22:09.318+01:00  INFO 7336 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 56 ms. Found 6 JPA repository interfaces.
-2024-12-28T22:22:09.734+01:00  INFO 7336 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-12-28T22:22:09.744+01:00  INFO 7336 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-12-28T22:22:09.744+01:00  INFO 7336 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-12-28T22:22:09.802+01:00  INFO 7336 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-12-28T22:22:09.803+01:00  INFO 7336 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1009 ms
-2024-12-28T22:22:09.872+01:00  INFO 7336 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-28T22:22:09.998+01:00  INFO 7336 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@79ba0a6f
-2024-12-28T22:22:10.000+01:00  INFO 7336 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-12-28T22:22:10.075+01:00  INFO 7336 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-12-28T22:22:10.125+01:00  INFO 7336 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-12-28T22:22:10.155+01:00  INFO 7336 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-12-28T22:22:10.482+01:00  INFO 7336 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-12-28T22:22:10.556+01:00  WARN 7336 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
-2024-12-28T22:22:11.656+01:00  INFO 7336 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-12-28T22:22:11.863+01:00  INFO 7336 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T22:22:12.103+01:00  INFO 7336 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-12-28T22:22:13.013+01:00  INFO 7336 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-12-28T22:22:13.014+01:00  WARN 7336 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-12-28T22:22:13.319+01:00  WARN 7336 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-12-28T22:22:13.858+01:00  INFO 7336 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2024-12-28T22:22:13.870+01:00  INFO 7336 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 5.465 seconds (process running for 5.956)
-2024-12-28T22:22:19.162+01:00  INFO 7336 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-28T22:22:19.163+01:00  INFO 7336 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-12-28T22:22:19.164+01:00  INFO 7336 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2024-12-28T22:25:59.627+01:00  INFO 7336 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T22:25:59.629+01:00  INFO 7336 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-12-28T22:25:59.633+01:00  INFO 7336 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-12-28T22:26:03.272+01:00  INFO 16108 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 16108 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
-2024-12-28T22:26:03.274+01:00  INFO 16108 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
-2024-12-28T22:26:03.818+01:00  INFO 16108 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-12-28T22:26:03.873+01:00  INFO 16108 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 51 ms. Found 6 JPA repository interfaces.
-2024-12-28T22:26:04.362+01:00  INFO 16108 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-12-28T22:26:04.373+01:00  INFO 16108 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-12-28T22:26:04.373+01:00  INFO 16108 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-12-28T22:26:04.430+01:00  INFO 16108 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-12-28T22:26:04.430+01:00  INFO 16108 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1124 ms
-2024-12-28T22:26:04.502+01:00  INFO 16108 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-28T22:26:04.673+01:00  INFO 16108 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3b9ac754
-2024-12-28T22:26:04.676+01:00  INFO 16108 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-12-28T22:26:04.773+01:00  INFO 16108 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-12-28T22:26:04.824+01:00  INFO 16108 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-12-28T22:26:04.863+01:00  INFO 16108 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-12-28T22:26:05.194+01:00  INFO 16108 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-12-28T22:26:05.265+01:00  WARN 16108 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
-2024-12-28T22:26:06.472+01:00  INFO 16108 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-12-28T22:26:06.709+01:00  INFO 16108 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T22:26:06.989+01:00  INFO 16108 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-12-28T22:26:07.991+01:00  INFO 16108 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-12-28T22:26:07.994+01:00  WARN 16108 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-12-28T22:26:08.425+01:00  WARN 16108 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-12-28T22:26:09.041+01:00  INFO 16108 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2024-12-28T22:26:09.056+01:00  INFO 16108 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 6.1 seconds (process running for 6.515)
-2024-12-28T22:26:19.760+01:00  INFO 16108 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-28T22:26:19.762+01:00  INFO 16108 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-12-28T22:26:19.764+01:00  INFO 16108 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
-2024-12-28T22:32:31.341+01:00  INFO 16108 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T22:32:31.357+01:00  INFO 16108 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-12-28T22:32:31.357+01:00  INFO 16108 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2024-12-28T22:33:56.705+01:00  INFO 5648 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 5648 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
-2024-12-28T22:33:56.707+01:00  INFO 5648 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
-2024-12-28T22:33:57.239+01:00  INFO 5648 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-12-28T22:33:57.291+01:00  INFO 5648 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 46 ms. Found 6 JPA repository interfaces.
-2024-12-28T22:33:57.768+01:00  INFO 5648 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-12-28T22:33:57.778+01:00  INFO 5648 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-12-28T22:33:57.779+01:00  INFO 5648 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-12-28T22:33:57.829+01:00  INFO 5648 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2024-12-28T22:33:57.831+01:00  INFO 5648 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1088 ms
-2024-12-28T22:33:57.907+01:00  INFO 5648 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-28T22:33:58.035+01:00  INFO 5648 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@15986dd5
-2024-12-28T22:33:58.040+01:00  INFO 5648 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-12-28T22:33:58.140+01:00  INFO 5648 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-12-28T22:33:58.186+01:00  INFO 5648 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-12-28T22:33:58.216+01:00  INFO 5648 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-12-28T22:33:58.434+01:00  INFO 5648 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-12-28T22:33:58.493+01:00  WARN 5648 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
-2024-12-28T22:33:59.262+01:00  INFO 5648 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-12-28T22:33:59.393+01:00  INFO 5648 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T22:33:59.603+01:00  INFO 5648 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2024-12-28T22:34:00.233+01:00  INFO 5648 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2024-12-28T22:34:00.235+01:00  WARN 5648 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
-2024-12-28T22:34:00.519+01:00  WARN 5648 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-12-28T22:34:01.007+01:00  INFO 5648 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2024-12-28T22:34:01.020+01:00  INFO 5648 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 4.603 seconds (process running for 4.989)
-2024-12-28T22:36:15.865+01:00  INFO 5648 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-12-28T22:36:15.865+01:00  INFO 5648 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-12-28T22:36:15.865+01:00  INFO 5648 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
-2024-12-28T22:46:18.306+01:00  INFO 5648 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-12-28T22:46:18.306+01:00  INFO 5648 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-12-28T22:46:18.323+01:00  INFO 5648 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-01-03T16:26:53.687+01:00  INFO 20068 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 20068 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
+2025-01-03T16:26:53.692+01:00  INFO 20068 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-01-03T16:26:54.434+01:00  INFO 20068 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-03T16:26:54.500+01:00  INFO 20068 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 59 ms. Found 6 JPA repository interfaces.
+2025-01-03T16:26:54.980+01:00  INFO 20068 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-01-03T16:26:54.992+01:00  INFO 20068 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-01-03T16:26:54.992+01:00  INFO 20068 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2025-01-03T16:26:55.108+01:00  INFO 20068 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-01-03T16:26:55.109+01:00  INFO 20068 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1380 ms
+2025-01-03T16:26:55.200+01:00  INFO 20068 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-01-03T16:26:55.325+01:00  INFO 20068 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4b97b3d2
+2025-01-03T16:26:55.328+01:00  INFO 20068 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-01-03T16:26:55.432+01:00  INFO 20068 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-01-03T16:26:55.512+01:00  INFO 20068 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2025-01-03T16:26:55.556+01:00  INFO 20068 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-01-03T16:26:55.829+01:00  INFO 20068 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-03T16:26:55.923+01:00  WARN 20068 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
+2025-01-03T16:26:56.870+01:00  INFO 20068 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-03T16:26:57.126+01:00  INFO 20068 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-03T16:26:57.406+01:00  INFO 20068 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-03T16:26:58.427+01:00  INFO 20068 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-01-03T16:26:58.428+01:00  WARN 20068 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
+2025-01-03T16:26:58.698+01:00  WARN 20068 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-01-03T16:26:59.317+01:00  INFO 20068 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-01-03T16:26:59.335+01:00  INFO 20068 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 6.008 seconds (process running for 6.538)
+2025-01-03T16:29:21.551+01:00  INFO 20068 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-01-03T16:29:21.551+01:00  INFO 20068 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-01-03T16:29:21.553+01:00  INFO 20068 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-01-03T16:44:35.242+01:00  INFO 20068 --- [onlybuns] [http-nio-8080-exec-10] c.project.onlybuns.service.PostService   : Fetching all time popular posts from database...
+2025-01-03T16:44:35.243+01:00  INFO 20068 --- [onlybuns] [http-nio-8080-exec-6] c.project.onlybuns.service.PostService   : Fetching this week popular posts from database...
+2025-01-03T18:01:45.198+01:00  INFO 20068 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-03T18:01:45.203+01:00  INFO 20068 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-01-03T18:01:45.206+01:00  INFO 20068 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-01-03T18:31:48.073+01:00  INFO 17676 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 17676 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
+2025-01-03T18:31:48.075+01:00  INFO 17676 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-01-03T18:31:48.587+01:00  INFO 17676 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-03T18:31:48.642+01:00  INFO 17676 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50 ms. Found 7 JPA repository interfaces.
+2025-01-03T18:31:49.023+01:00  INFO 17676 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-01-03T18:31:49.035+01:00  INFO 17676 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-01-03T18:31:49.035+01:00  INFO 17676 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2025-01-03T18:31:49.082+01:00  INFO 17676 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-01-03T18:31:49.082+01:00  INFO 17676 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 979 ms
+2025-01-03T18:31:49.132+01:00  INFO 17676 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-01-03T18:31:49.222+01:00  INFO 17676 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@31da0434
+2025-01-03T18:31:49.224+01:00  INFO 17676 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-01-03T18:31:49.284+01:00  INFO 17676 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-01-03T18:31:49.329+01:00  INFO 17676 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2025-01-03T18:31:49.357+01:00  INFO 17676 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-01-03T18:31:49.573+01:00  INFO 17676 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-03T18:31:49.618+01:00  WARN 17676 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
+2025-01-03T18:31:50.343+01:00  INFO 17676 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-03T18:31:50.495+01:00  INFO 17676 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-03T18:31:50.682+01:00  INFO 17676 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-03T18:31:51.253+01:00  INFO 17676 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-01-03T18:31:51.254+01:00  WARN 17676 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
+2025-01-03T18:31:51.487+01:00  WARN 17676 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-01-03T18:31:52.050+01:00  INFO 17676 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-01-03T18:31:52.052+01:00  INFO 17676 --- [onlybuns] [main] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [localhost:5672]
+2025-01-03T18:31:52.094+01:00  INFO 17676 --- [onlybuns] [main] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#6ea34ece:0/SimpleConnection@4b87ddbe [delegate=amqp://guest@127.0.0.1:5672/, localPort=54497]
+2025-01-03T18:31:52.098+01:00  INFO 17676 --- [onlybuns] [main] o.s.amqp.rabbit.core.RabbitAdmin         : Auto-declaring a non-durable, auto-delete, or exclusive Queue (rabbit-care-queue) durable:false, auto-delete:false, exclusive:false. It will be redeclared if the broker stops and is restarted while the connection factory is alive, but all messages will be lost.
+2025-01-03T18:31:52.129+01:00  INFO 17676 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 4.36 seconds (process running for 4.745)
+2025-01-03T18:33:46.575+01:00  INFO 17676 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-01-03T18:33:46.576+01:00  INFO 17676 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-01-03T18:33:46.578+01:00  INFO 17676 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-01-03T18:35:40.407+01:00  INFO 17676 --- [onlybuns] [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] o.s.a.r.l.SimpleMessageListenerContainer : Waiting for workers to finish.
+2025-01-03T18:35:40.734+01:00  INFO 17676 --- [onlybuns] [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] o.s.a.r.l.SimpleMessageListenerContainer : Successfully waited for workers to finish.
+2025-01-03T18:35:40.842+01:00  INFO 17676 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-03T18:35:40.843+01:00  INFO 17676 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-01-03T18:35:40.846+01:00  INFO 17676 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-01-03T18:35:43.712+01:00  INFO 3884 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Starting OnlybunsApplication using Java 17.0.12 with PID 3884 (C:\Users\tijanicica\Desktop\isa-project\onlybuns\target\classes started by tijanicica in C:\Users\tijanicica\Desktop\isa-project\onlybuns)
+2025-01-03T18:35:43.713+01:00  INFO 3884 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-01-03T18:35:44.213+01:00  INFO 3884 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-03T18:35:44.266+01:00  INFO 3884 --- [onlybuns] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 48 ms. Found 7 JPA repository interfaces.
+2025-01-03T18:35:44.659+01:00  INFO 3884 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-01-03T18:35:44.667+01:00  INFO 3884 --- [onlybuns] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-01-03T18:35:44.668+01:00  INFO 3884 --- [onlybuns] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2025-01-03T18:35:44.706+01:00  INFO 3884 --- [onlybuns] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-01-03T18:35:44.707+01:00  INFO 3884 --- [onlybuns] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 964 ms
+2025-01-03T18:35:44.757+01:00  INFO 3884 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-01-03T18:35:44.847+01:00  INFO 3884 --- [onlybuns] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@31da0434
+2025-01-03T18:35:44.848+01:00  INFO 3884 --- [onlybuns] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-01-03T18:35:44.910+01:00  INFO 3884 --- [onlybuns] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-01-03T18:35:44.948+01:00  INFO 3884 --- [onlybuns] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2025-01-03T18:35:44.972+01:00  INFO 3884 --- [onlybuns] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-01-03T18:35:45.196+01:00  INFO 3884 --- [onlybuns] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-03T18:35:45.253+01:00  WARN 3884 --- [onlybuns] [main] org.hibernate.dialect.Dialect            : HHH000511: The 10.23.0 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.
+2025-01-03T18:35:45.986+01:00  INFO 3884 --- [onlybuns] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-03T18:35:46.117+01:00  INFO 3884 --- [onlybuns] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-03T18:35:46.311+01:00  INFO 3884 --- [onlybuns] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-01-03T18:35:46.882+01:00  INFO 3884 --- [onlybuns] [main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-01-03T18:35:46.883+01:00  WARN 3884 --- [onlybuns] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider.
+2025-01-03T18:35:47.094+01:00  WARN 3884 --- [onlybuns] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-01-03T18:35:47.657+01:00  INFO 3884 --- [onlybuns] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-01-03T18:35:47.661+01:00  INFO 3884 --- [onlybuns] [main] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [localhost:5672]
+2025-01-03T18:35:47.706+01:00  INFO 3884 --- [onlybuns] [main] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#68c4f321:0/SimpleConnection@aad1828 [delegate=amqp://guest@127.0.0.1:5672/, localPort=54712]
+2025-01-03T18:35:47.710+01:00  INFO 3884 --- [onlybuns] [main] o.s.amqp.rabbit.core.RabbitAdmin         : Auto-declaring a non-durable, auto-delete, or exclusive Queue (rabbit-care-queue) durable:false, auto-delete:false, exclusive:false. It will be redeclared if the broker stops and is restarted while the connection factory is alive, but all messages will be lost.
+2025-01-03T18:35:47.742+01:00  INFO 3884 --- [onlybuns] [main] c.project.onlybuns.OnlybunsApplication   : Started OnlybunsApplication in 4.284 seconds (process running for 4.642)
+2025-01-03T18:35:58.135+01:00  INFO 3884 --- [onlybuns] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-01-03T18:35:58.136+01:00  INFO 3884 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-01-03T18:35:58.137+01:00  INFO 3884 --- [onlybuns] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-01-03T18:49:37.408+01:00  INFO 3884 --- [onlybuns] [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] o.s.a.r.l.SimpleMessageListenerContainer : Waiting for workers to finish.
+2025-01-03T18:49:37.783+01:00  INFO 3884 --- [onlybuns] [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] o.s.a.r.l.SimpleMessageListenerContainer : Successfully waited for workers to finish.
+2025-01-03T18:49:37.895+01:00  INFO 3884 --- [onlybuns] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-03T18:49:37.897+01:00  INFO 3884 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-01-03T18:49:37.900+01:00  INFO 3884 --- [onlybuns] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

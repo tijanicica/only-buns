@@ -53,14 +53,22 @@ export default {
         this.map = L.map("map").setView([this.userLocation.lat, this.userLocation.lng], 13);
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
 
-        // Add a marker for the user's location
-        L.marker([this.userLocation.lat, this.userLocation.lng])
+        // Add a marker for the user's location with custom icon
+        const userIcon = L.icon({
+          iconUrl: '/path/to/user-icon.png', // Put your icon image path here
+          iconSize: [32, 32], // Size of the icon
+          iconAnchor: [16, 32], // Anchor point of the icon
+          popupAnchor: [0, -32], // Where the popup will appear
+        });
+
+        L.marker([this.userLocation.lat, this.userLocation.lng], { icon: userIcon })
           .addTo(this.map)
           .bindPopup("Your Location")
           .openPopup();
 
         // Load nearby posts
         await this.loadNearbyPosts();
+        await this.loadNearbyLocations();
       } catch (error) {
         console.error("Error fetching user profile or initializing map:", error.message);
       }
@@ -73,7 +81,15 @@ export default {
         posts.forEach((post) => {
           // Check if post has location
           if (post.location && post.location.latitude && post.location.longitude) {
-            const marker = L.marker([post.location.latitude, post.location.longitude]).addTo(this.map);
+            const postIcon = L.icon({
+              iconUrl: "/assets/post-icon.jpg", // Put your icon image path here
+              iconSize: [32, 32],
+              iconAnchor: [16, 32],
+              popupAnchor: [0, -32],
+            });
+
+            const marker = L.marker([post.location.latitude, post.location.longitude], { icon: postIcon })
+              .addTo(this.map);
 
             // Bind a tooltip to the marker for hovering over it
             marker.bindTooltip(`
@@ -90,6 +106,29 @@ export default {
         });
       } catch (error) {
         console.error("Error fetching nearby posts:", error.message);
+      }
+    },
+    async loadNearbyLocations() {
+      try {
+        const response = await axios.get("http://localhost:8080/api/rabbit-care/locations");
+        const locations = response.data;
+
+        locations.forEach((location) => {
+          const locationIcon = L.icon({
+            iconUrl: "/assets/vet-icon.jpg", // Put your icon image path here
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32],
+          });
+
+          const marker = L.marker([location.latitude, location.longitude], { icon: locationIcon })
+            .addTo(this.map);
+
+          marker.bindTooltip(location.name, { permanent: false, sticky: true });
+          this.markers.push(marker);
+        });
+      } catch (error) {
+        console.error("Error fetching locations:", error.message);
       }
     }
   },
@@ -122,5 +161,4 @@ export default {
 .leaflet-container {
   border-radius: 8px;
 }
-
 </style>
