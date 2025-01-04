@@ -32,6 +32,20 @@ export default {
     }
   },
   methods: {
+    mounted() {
+  this.initializeMap();
+},
+methods: {
+  initializeMap() {
+    if (this.userLocation.lat && this.userLocation.lng) {
+      this.map = L.map("map").setView([this.userLocation.lat, this.userLocation.lng], 13);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
+    } else {
+      console.error("User location is not set.");
+    }
+  },
+},
+
     async fetchProfileData(email, token) {
       try {
         const response = await axios.get(`http://localhost:8080/api/users/maps-profile/${email}`, {
@@ -52,10 +66,11 @@ export default {
         // Initialize the map
         this.map = L.map("map").setView([this.userLocation.lat, this.userLocation.lng], 13);
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
+  
 
         // Add a marker for the user's location with custom icon
         const userIcon = L.icon({
-          iconUrl: '/path/to/user-icon.png', // Put your icon image path here
+          iconUrl: "/assets/user-icon.jpg", // Put your icon image path here
           iconSize: [32, 32], // Size of the icon
           iconAnchor: [16, 32], // Anchor point of the icon
           popupAnchor: [0, -32], // Where the popup will appear
@@ -152,7 +167,7 @@ export default {
 
 .leaflet-map {
   height: 500px;
-  width: 80%;
+  width: 100%;
   max-width: 900px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
