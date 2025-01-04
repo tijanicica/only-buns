@@ -47,6 +47,7 @@ public class RegisteredUserService {
     private final FollowService followService;
     private final LocationService locationService;
     private final LocationRepository locationRepository;
+    private final BloomFilterService bloomFilterService;
 
 
 
@@ -60,6 +61,10 @@ public class RegisteredUserService {
     public RegisteredUser findById(Integer userId) {
         return registeredUserRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
     }
+
+    public RegisteredUser findByUsername(String username) {
+        return registeredUserRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found"));
+    }
     @Transactional
     public void register(RegistrationDto registrationDto) {
 
@@ -67,16 +72,20 @@ public class RegisteredUserService {
         if (registeredUserRepository.findByEmail(registrationDto.getEmail()).isPresent()) {
             throw new IllegalArgumentException ("User with the given email already exists!");
         }
-        if (registeredUserRepository.findByUsername(registrationDto.getUsername()).isPresent()) {
-            throw new IllegalArgumentException ("User with the given username already exists!");
+        // bloom filter za username
+        if (bloomFilterService.mightContain(registrationDto.getUsername())) {
+            // zbog laznih pozitiva
+            if (registeredUserRepository.findByUsername(registrationDto.getUsername()).isPresent()) {
+                throw new IllegalArgumentException("User with the given username already exists!");
+            }
         }
 
         // samo za testiranje transakcije
-        try {
+        /*try {
             Thread.sleep(1500);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
+        } */
 
 
         RegisteredUser user = new RegisteredUser();
@@ -85,6 +94,9 @@ public class RegisteredUserService {
         location.setCountry(registrationDto.getCountry());
         location.setStreetName(registrationDto.getStreetName());
         location.setStreetNumber(registrationDto.getStreetNumber());
+        location.setLatitude(registrationDto.getLatitude());
+        location.setLongitude(registrationDto.getLongitude());
+        locationRepository.save(location);
         user.setUsername(registrationDto.getUsername());
 
         user.setFirstName(registrationDto.getFirstName());
@@ -104,6 +116,8 @@ public class RegisteredUserService {
         user.setActivationToken(token);
 
         registeredUserRepository.save(user);
+
+        bloomFilterService.addUsername(user.getUsername());
 
         emailService.sendActivationEmail(user.getEmail(), token);
     }

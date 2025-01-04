@@ -25,14 +25,14 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "location_id")
-    @JsonIgnore
+    //@JsonIgnore
     private Location location;
 
     private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
-    @JsonIgnore
+    //@JsonIgnore
     private RegisteredUser postCreator;
 
 }
