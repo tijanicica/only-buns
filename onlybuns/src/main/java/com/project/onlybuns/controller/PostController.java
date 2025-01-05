@@ -47,6 +47,12 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
+    @GetMapping(value = "/all-maps")
+    public ResponseEntity<List<Post>> getAllMapsPosts() {
+        List<Post> posts =  postService.getAll();
+        return ResponseEntity.ok(posts);
+    }
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<PostDto>> getUserPosts(@PathVariable Integer userId) {
         List<PostDto> posts = postService.getUserPosts(userId);

@@ -35,6 +35,10 @@ public class PostService {
         return postRepository.findAllByOrderByCreatedAtDesc().stream().map(this.postMapper::toPostDto).toList();
     }
 
+    public List<Post> getAll() {
+        return postRepository.findAll();
+    }
+
     public List<PostDto> getUserPosts(Integer userId) {
         RegisteredUser user = registeredUserService.findById(userId);
         return postRepository.findAllByPostCreator(user).stream()
@@ -85,13 +89,13 @@ public class PostService {
             return "/images/" + fileName;
     }
 
-    @Scheduled(cron = "*/30 * * * * ?")
-    public void compressImages() {
+    //@Scheduled(cron = "*/30 * * * * ?")
+    /*public void compressImages() {
         String workingDirectory = System.getProperty("user.dir");
         String inputDirectory = Paths.get(workingDirectory, "..", "only-buns-frontend", "public", "images").toString();;
         String outputDirectory = Paths.get(workingDirectory, "..", "only-buns-frontend", "public", "compressed+images").toString();
         ImageCompression.compressOldImages(inputDirectory, outputDirectory);
-    }
+    } */
 
     public Post getPostById(Integer postId) {
         return postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
@@ -146,6 +150,15 @@ public class PostService {
                 .toList(); // Convert the stream to a list
     }
 
+    public long countByCreatedAtAfter(LocalDateTime date) {
+        return postRepository.countByCreatedAtAfter(date);
+    }
+    public long countUsersWithPosts() {
+        return postRepository.countDistinctPostCreators();
+    }
 
+    public long countUsersWithPostsAndComments() {
+        return postRepository.countUsersWithPostsAndComments();
+    }
 
 }

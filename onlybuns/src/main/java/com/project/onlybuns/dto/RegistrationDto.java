@@ -19,4 +19,6 @@ public class RegistrationDto {
     private String city;
     private String country;
     private String streetNumber;
+    private double longitude;
+    private double latitude;
 }

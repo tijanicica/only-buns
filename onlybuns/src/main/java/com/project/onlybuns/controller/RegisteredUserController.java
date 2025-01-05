@@ -1,6 +1,7 @@
 package com.project.onlybuns.controller;
 
 import com.project.onlybuns.dto.*;
+import com.project.onlybuns.model.Location;
 import com.project.onlybuns.model.Post;
 import com.project.onlybuns.model.RegisteredUser;
 import com.project.onlybuns.service.FollowService;
@@ -21,6 +22,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +57,17 @@ public class RegisteredUserController {
         RegisteredUserDto user = registeredUserService.getUserProfile(userId);
         return ResponseEntity.ok(user);
     }
+
+    @GetMapping("/maps-profile/{userEmail}")
+    public ResponseEntity<RegisteredUser> getMapsProfile(@PathVariable("userEmail") String userEmail) {
+        RegisteredUser userProfile = registeredUserService.findByEmail(userEmail);
+        return ResponseEntity.ok(userProfile);
+    }
+
+
+
+
+
 
     @PostMapping("/register")
     public ResponseEntity<Void> registerUser(@RequestBody RegistrationDto user) {
