@@ -17,6 +17,8 @@ public class EditUserDto {
         private String streetNumber;
         private String city;
         private String country;
+        private double longitude;
+        private double latitude;
 
 
 

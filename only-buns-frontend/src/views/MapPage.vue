@@ -38,7 +38,7 @@ export default {
 methods: {
   initializeMap() {
     if (this.userLocation.lat && this.userLocation.lng) {
-      this.map = L.map("map").setView([this.userLocation.lat, this.userLocation.lng], 13);
+      this.map = L.map("map", {zoomAnimation: false}).setView([this.userLocation.lat, this.userLocation.lng], 13);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
     } else {
       console.error("User location is not set.");

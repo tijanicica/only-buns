@@ -17,7 +17,6 @@ public class BloomFilterService {
 
     private BloomFilter<String> usernameBloomFilter;
 
-
     private final RegisteredUserRepository registeredUserRepository;
 
     public BloomFilterService(RegisteredUserRepository registeredUserRepository) {
@@ -29,12 +28,12 @@ public class BloomFilterService {
 
         usernameBloomFilter = BloomFilter.create(Funnels.stringFunnel(StandardCharsets.UTF_8),
                 10000,
-                0.01);
+                0.01); // false positive prediction(zeljena verovatnoca)
 
 
         registeredUserRepository.findAll()
                 .stream()
-                .map(user -> ((RegisteredUser) user).getUsername()) // Kastovanje u RegisteredUser
+                .map(user -> ((RegisteredUser) user).getUsername())
                 .forEach(usernameBloomFilter::put);
     }
 

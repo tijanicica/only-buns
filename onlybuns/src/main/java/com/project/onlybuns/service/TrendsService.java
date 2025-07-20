@@ -13,7 +13,9 @@ import com.project.onlybuns.repository.RegisteredUserRepository;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -51,6 +53,12 @@ public class TrendsService {
                 .stream()
                 .map(postMapper::toPostDto)
                 .toList();
+    }
+
+    @Scheduled(fixedRate = 3600000) //na svakih  sat vremena brise kes
+    @CacheEvict(value = "popularPostsLastWeek", allEntries = true)
+    public void evictPopularPostsLastWeekCache() {
+        logger.info("Evicting 'popularPostsLastWeek' cache as per schedule.");
     }
 
     public List<RegisteredUserDto> getTopLikersLastWeek() {

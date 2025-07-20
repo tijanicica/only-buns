@@ -117,6 +117,16 @@ export default {
   data() {
     return {
       profileData: null,
+      editData: {
+        firstName: '',
+        lastName: '',
+        streetName: '',
+        streetNumber: '',
+        city: '',
+        country: '',
+        latitude: null,
+        longitude: null,
+      },
       followers: [],
       following: [],
       posts: [],
@@ -153,18 +163,50 @@ export default {
       }
     },
     openEditModal() {
-      this.isEditModalOpen = true;
+      // Važno: Kopiramo sve podatke, uključujući i postojeće koordinate ako postoje
       this.editData = { ...this.profileData };
+      this.isEditModalOpen = true;
     },
     closeEditModal() {
       this.isEditModalOpen = false;
     },
+    async geocodeAddressForUpdate() {
+      const address = `${this.editData.streetName} ${this.editData.streetNumber}, ${this.editData.city}, ${this.editData.country}`;
+      console.log("Geocoding updated address:", address);
+
+
+      const apiKey = "d5ecc7a49e6b489b911416cad59b056a";
+      const url = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
+          address
+      )}&key=${apiKey}`;
+
+      try {
+        const response = await axios.get(url);
+        console.log("OpenCage response for update:", response);
+
+        if (response.data && response.data.results && response.data.results.length > 0) {
+          const location = response.data.results[0].geometry;
+          this.editData.latitude = location.lat;
+          this.editData.longitude = location.lng;
+          console.log("Geocoded new location:", location);
+        } else {
+          throw new Error("No results found for the provided address.");
+        }
+      } catch (error) {
+        console.error("Error during geocoding:", error.message);
+        throw error;
+      }
+    },
+
     async updateProfile() {
       const token = localStorage.getItem('token');
       try {
+        await this.geocodeAddressForUpdate();
+
         const response = await axios.put('http://localhost:8080/api/users/edit-profile', this.editData, {
           headers: { Authorization: `Bearer ${token}` }
         });
+
         if (response.status === 200) {
           alert('Profile updated successfully!');
           this.profileData = { ...this.editData };
@@ -172,7 +214,11 @@ export default {
         }
       } catch (error) {
         console.error('Error updating profile:', error);
-        alert('Failed to update profile.');
+        if (error.message.includes("geocoding")) {
+          alert('Could not get coordinates for the new address. Please check the address and try again.');
+        } else {
+          alert('Failed to update profile.');
+        }
       }
     },
     async fetchConnections(email, token) {
