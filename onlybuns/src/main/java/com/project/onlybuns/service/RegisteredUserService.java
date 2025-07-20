@@ -80,14 +80,6 @@ public class RegisteredUserService {
             }
         }
 
-        // samo za testiranje transakcije
-        /*try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } */
-
-
         RegisteredUser user = new RegisteredUser();
         Location location = new Location();
         location.setCity(registrationDto.getCity());
@@ -242,12 +234,9 @@ public class RegisteredUserService {
     public void changePassword(String email, String oldPassword, String newPassword) {
         RegisteredUser user = registeredUserRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("User not found!"));
 
-        // Proveravamo da li je stara lozinka tačna
         if (!bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
             throw new IllegalArgumentException("Incorrect old password");
         }
-
-        // Ažuriramo lozinku korisnika
         user.setPassword(bCryptPasswordEncoder.encode(newPassword));
         registeredUserRepository.save(user);
     }
@@ -264,6 +253,8 @@ public class RegisteredUserService {
         location.setCountry(userEditDTO.getCountry());
         location.setStreetName(userEditDTO.getStreetName());
         location.setStreetNumber(userEditDTO.getStreetNumber());
+        location.setLatitude(userEditDTO.getLatitude());
+        location.setLongitude(userEditDTO.getLongitude());
         user.setAddress(location);
 
         locationRepository.save(location);

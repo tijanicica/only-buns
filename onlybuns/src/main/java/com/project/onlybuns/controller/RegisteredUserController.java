@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -88,28 +89,24 @@ public class RegisteredUserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Activation link has expired.");
         }
     }
-    @RateLimiter(name = "login", fallbackMethod = "loginFallback")
+
+
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(HttpServletRequest request, @RequestBody LoginDto loginDto) {
+    public ResponseEntity<?> login(HttpServletRequest request, @RequestBody LoginDto loginDto) {
         if (ipTrackingService.isBlocked(request)) {
-            return new ResponseEntity<>(HttpStatus.TOO_MANY_REQUESTS);
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("Account is blocked due to too many failed login attempts.");
         }
 
-
-        ipTrackingService.trackAttempt(request);
-        String token = registeredUserService.login(loginDto);
-        if (!token.isEmpty()) {
+        try {
+            String token = registeredUserService.login(loginDto);
+            ipTrackingService.resetAttempts(request);
             return ResponseEntity.ok(new TokenDto(token));
-        } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } catch (AuthenticationException e) {
+            ipTrackingService.trackAttempt(request);
+            return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
         }
+    }
 
-    }
-    public ResponseEntity<String> loginFallback(LoginDto loginRequest, RequestNotPermitted ex) {
-        LOG.warn("Too many logins. Try again later");
-        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
-                .body("Too many logins. Try again later");
-    }
 
 
     @PostMapping("/check-email")

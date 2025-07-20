@@ -14,6 +14,5 @@ public class RabbitCareLocationDto {
     private double latitude;
     private double longitude;
 
-    // Getteri i setteri
 }
 

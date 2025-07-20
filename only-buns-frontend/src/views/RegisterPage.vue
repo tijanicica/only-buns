@@ -193,7 +193,7 @@ export default {
       const address = `${this.form.streetName} ${this.form.streetNumber}, ${this.form.city}, ${this.form.country}`;
       console.log("Geocoding address:", address);
 
-      const apiKey = "ba089c09d4be49efa75b6419011869ca"; // Replace with your actual API key
+      const apiKey = "d5ecc7a49e6b489b911416cad59b056a"; // Replace with your actual API key
       const url = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
         address
       )}&key=${apiKey}`;
@@ -237,10 +237,8 @@ async submitForm() {
 
   if (Object.values(this.errors).every((error) => error === "")) {
     try {
-      // Pre nego što pošaljemo formu, geokodirajmo adresu
       await this.geocodeAddress();
 
-      // Prosledi podatke backendu
       await axios.post("http://localhost:8080/api/users/register", this.form);
       alert("Registration successful!");
       this.$router.push({ name: 'Login' });

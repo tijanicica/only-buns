@@ -6,7 +6,7 @@
   
 <!-- Side Menu -->
 <div class="side-menu">
-  <h1 class="onlybuns-title">OnlyBuns</h1>
+  <h1 class="onlybuns-title" @click="$router.push('/user-home')">OnlyBuns</h1>
   <ul class="menu-list">
     <li @click="$router.push('/create')" class="menu-item">
       <i class="fas fa-plus-circle"></i> Create
@@ -378,6 +378,11 @@ export default {
   color: #007bff;
   text-align: center;
   margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.onlybuns-title:hover {
+  color: #007bff;
 }
 
 .menu-list {
