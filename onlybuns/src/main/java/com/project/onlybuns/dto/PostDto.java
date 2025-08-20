@@ -21,4 +21,6 @@ public class PostDto {
     private String creatorUsername;
     private Integer locationId;
     private Location location;
+    private String photoData; // NOVO POLJE za Base64 podatke
+
 }

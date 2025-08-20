@@ -9,6 +9,8 @@ import com.project.onlybuns.model.Post;
 import com.project.onlybuns.model.RegisteredUser;
 import com.project.onlybuns.repository.PostRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +33,32 @@ public class PostService {
     private final CommentService commentService;
     private final FollowService followService;
 
-    public List<PostDto> getAllSortedByDate() {
-        return postRepository.findAllByOrderByCreatedAtDesc().stream().map(this.postMapper::toPostDto).toList();
-    }
+    private final ImageService imageService; // <-- DODAJ NOVI SERVIS
 
+    // Metoda getAllSortedByDate SADA KORISTI imageService
+    public List<PostDto> getAllSortedByDate() {
+        List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc();
+
+        return posts.stream().map(post -> {
+            PostDto dto = postMapper.toPostDto(post);
+            try {
+                String photoUrl = post.getPhoto();
+                if (photoUrl != null && !photoUrl.isEmpty()) {
+                    String imageName = photoUrl.substring(photoUrl.lastIndexOf('/') + 1);
+                    // PROMENA: Pozivamo metodu iz drugog servisa
+                    byte[] imageBytes = imageService.getImageBytes(imageName);
+                    if (imageBytes != null) {
+                        String photoData = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytes);
+                        dto.setPhotoData(photoData);
+                    }
+                }
+            } catch (IOException e) {
+                System.err.println("Greška prilikom čitanja slike za post " + post.getId() + ": " + e.getMessage());
+                dto.setPhotoData(null);
+            }
+            return dto;
+        }).toList();
+    }
     public List<Post> getAll() {
         return postRepository.findAll();
     }
@@ -105,7 +129,25 @@ public class PostService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
 
-        return postMapper.toPostDto(post);
+        PostDto postDto = postMapper.toPostDto(post);
+
+        try {
+            String photoUrl = post.getPhoto();
+            if (photoUrl != null && !photoUrl.isEmpty()) {
+                String imageName = photoUrl.substring(photoUrl.lastIndexOf('/') + 1);
+                // PROMENA: Pozivamo metodu iz drugog servisa
+                byte[] imageBytes = imageService.getImageBytes(imageName);
+                if (imageBytes != null) {
+                    String photoData = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(imageBytes);
+                    postDto.setPhotoData(photoData);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Greška prilikom čitanja slike za post " + postId + ": " + e.getMessage());
+            postDto.setPhotoData(null);
+        }
+
+        return postDto;
     }
 
     public List<CommentDto> getCommentsForPost(Integer postId) {
@@ -132,9 +174,29 @@ public class PostService {
 
     public void deletePost(int id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post not found"));
+                .orElseThrow(() -> new RuntimeException("Post not found with id: " + id));
+
+        String photoUrl = post.getPhoto();
+        if (photoUrl != null && !photoUrl.isEmpty()) {
+            String imageName = photoUrl.substring(photoUrl.lastIndexOf('/') + 1);
+
+            // PROMENA: Pozivamo metodu iz drugog servisa
+            imageService.evictImageFromCache(imageName);
+
+            try {
+                String workingDirectory = System.getProperty("user.dir");
+                Path imagePath = Paths.get(workingDirectory, "..", "only-buns-frontend", "public", "images", imageName);
+                Files.deleteIfExists(imagePath);
+                System.out.println("Obrisana slika sa diska: " + imageName);
+            } catch (IOException e) {
+                System.err.println("Greška prilikom brisanja fajla slike: " + e.getMessage());
+            }
+        }
+
         postRepository.delete(post);
     }
+
+
 
     public int countByUserId(Integer userId) {
         return postRepository.countByPostCreatorId(userId);
@@ -160,5 +222,8 @@ public class PostService {
     public long countUsersWithPostsAndComments() {
         return postRepository.countUsersWithPostsAndComments();
     }
+
+
+
 
 }
