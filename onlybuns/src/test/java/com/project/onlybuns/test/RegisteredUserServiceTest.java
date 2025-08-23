@@ -79,11 +79,11 @@ public class RegisteredUserServiceTest {
     @Test
     public void testConcurrentFollow() throws InterruptedException, ExecutionException {
         // Create a user to be followed
-        Integer userToFollowId = createTestUser("followedUser@mail.com", "followedUser");
+        Integer userToFollowId = createTestUser("followedU3ser@mail.com", "followedUser3");
 
         // Create follower users
-        createTestUser("follower1@mail.com", "follower1");
-        createTestUser("follower2@mail.com", "follower2");
+        createTestUser("follower1234@mail.com", "follower141");
+        createTestUser("follower24444@mail.com", "follower242");
 
         // Define concurrent tasks for following
         ExecutorService executor = Executors.newFixedThreadPool(2);
