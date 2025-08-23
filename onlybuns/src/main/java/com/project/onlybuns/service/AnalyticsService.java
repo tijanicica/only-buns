@@ -42,12 +42,12 @@ public class AnalyticsService {
         // Izračunavanje korisnika
         long totalUsers = userService.countUsers();
         long usersWithBoth = postService.countUsersWithPostsAndComments();
-        long usersWithPostsOnly = postService.countUsersWithPosts() - usersWithBoth;
+        long usersWithPosts = postService.countUsersWithPosts();
         long usersWithCommentsOnly = commentService.countUsersWithComments() - usersWithBoth;
-        long inactiveUsers = totalUsers - (usersWithPostsOnly + usersWithCommentsOnly + usersWithBoth);
+        long inactiveUsers = totalUsers - (usersWithPosts + usersWithCommentsOnly + usersWithBoth);
 
 // Procenti
-        double usersWithPostsOnlyPercent = (usersWithPostsOnly / (double) totalUsers) * 100;
+        double usersWithPostsPercent = (usersWithPosts / (double) totalUsers) * 100;
         double usersWithCommentsOnlyPercent = (usersWithCommentsOnly / (double) totalUsers) * 100;
         double inactiveUsersPercent = (inactiveUsers / (double) totalUsers) * 100;
 
@@ -56,7 +56,7 @@ public class AnalyticsService {
         return analyticsMapper.toAnalyticsDto(
                 weeklyPosts, monthlyPosts, yearlyPosts,
                 weeklyComments, monthlyComments, yearlyComments,
-                usersWithPostsOnlyPercent, usersWithCommentsOnlyPercent, inactiveUsersPercent
+                usersWithPostsPercent, usersWithCommentsOnlyPercent, inactiveUsersPercent
         );
     }
 

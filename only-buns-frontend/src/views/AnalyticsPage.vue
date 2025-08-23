@@ -39,7 +39,7 @@
                 </ul>
 
                 <h3>User Activity</h3>
-                <p>Users with posts only: {{ analytics.usersWithPostsOnly || 0 }}%</p>
+                <p>Users with posts: {{ analytics.usersWithPosts || 0 }}%</p>
                 <p>Users with comments only: {{ analytics.usersWithCommentsOnly || 0 }}%</p>
                 <p>Inactive users: {{ analytics.inactiveUsers || 0 }}%</p>
 
@@ -68,44 +68,29 @@ export default {
     },
     methods: {
         fetchAnalytics() {
-            const token = localStorage.getItem("token");
-            if (token) {
-                axios
-                    .get("http://localhost:8080/api/analytics/posts-comments", {
-                        headers: { Authorization: `Bearer ${token}` },
-                    })
-                    .then((response) => {
-                        console.log("Raw API Response:", response.data);
+    const token = localStorage.getItem("token");
+    if (token) {
+        axios.get("http://localhost:8080/api/analytics/posts-comments", {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+            // Samo preuzmi podatke, bez ponovnog računanja procenata
+            this.analytics = response.data; 
 
-                        // Total Users and Calculations
-                        const totalUsers = response.data.totalUsers || 1; // Avoid division by zero
-                        const usersWithPostsOnlyPercent = (response.data.usersWithPostsOnly / totalUsers).toFixed(2);
-                        const usersWithCommentsOnlyPercent = (response.data.usersWithCommentsOnly / totalUsers).toFixed(2);
-                        const inactiveUsersPercent = (response.data.inactiveUsers / totalUsers).toFixed(2);
-
-                        console.log("Calculated Percentages:", {
-                            usersWithPostsOnlyPercent,
-                            usersWithCommentsOnlyPercent,
-                            inactiveUsersPercent,
-                        });
-
-                        this.analytics = {
-                            ...response.data,
-                            usersWithPostsOnly: usersWithPostsOnlyPercent,
-                            usersWithCommentsOnly: usersWithCommentsOnlyPercent,
-                            inactiveUsers: inactiveUsersPercent,
-                        };
-
-                        console.log("Updated Analytics Object:", this.analytics);
-                        this.renderChart();
-                    })
-                    .catch((error) => {
-                        console.error("Error fetching analytics:", error);
-                    });
-            } else {
-                console.error("No token found. Please login.");
-            }
-        },
+            // Formatiraj procente na dve decimale pre iscrtavanja grafikona
+            this.analytics.usersWithPosts = parseFloat(response.data.usersWithPostsOnly|| 0).toFixed(2);
+            this.analytics.usersWithCommentsOnly = parseFloat(response.data.usersWithCommentsOnly || 0).toFixed(2);
+            this.analytics.inactiveUsers = parseFloat(response.data.inactiveUsers || 0).toFixed(2);
+            
+            this.renderChart();
+        })
+        .catch((error) => {
+            console.error("Error fetching analytics:", error);
+        });
+    } else {
+        console.error("No token found. Please login.");
+    }
+},
         renderChart() {
             this.$nextTick(() => {
                 const ctx = document.getElementById("activity-chart");
@@ -115,7 +100,7 @@ export default {
                 }
 
                 const data = [
-                    this.analytics?.usersWithPostsOnly || 0,
+                    this.analytics?.usersWithPosts || 0,
                     this.analytics?.usersWithCommentsOnly || 0,
                     this.analytics?.inactiveUsers || 0,
                 ];
@@ -124,7 +109,7 @@ export default {
                     type: "doughnut",
                     data: {
                         labels: [
-                            "Users with Posts Only",
+                            "Users with Posts",
                             "Users with Comments Only",
                             "Inactive Users",
                         ],

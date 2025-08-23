@@ -263,16 +263,14 @@ public class RegisteredUserService {
 
 
     public void deleteInactiveUsers() {
-        LocalDateTime cutoffDate = LocalDateTime.now()
-                .minusMonths(1)
-                .with(TemporalAdjusters.lastDayOfMonth())
-                .withHour(23).withMinute(59).withSecond(59);
+        // Granica je SADA. Brišemo sve neaktivne koji su se registrovali bilo kada pre ovog trenutka.
+        LocalDateTime cutoffDate = LocalDateTime.now();
 
         List<RegisteredUser> inactiveUsers = registeredUserRepository.findInactiveUsersBefore(cutoffDate);
 
         if (!inactiveUsers.isEmpty()) {
             registeredUserRepository.deleteAll(inactiveUsers);
-            System.out.println("Deleted " + inactiveUsers.size() + " inactive user(s).");
+            System.out.println("Deleted " + inactiveUsers.size() + " inactive user(s) registered before " + cutoffDate);
         } else {
             System.out.println("No inactive users found to delete.");
         }
@@ -288,18 +286,18 @@ public class RegisteredUserService {
        znaci svaki posl dan u mesecu u ponoc
      */
 
-  /*  @Scheduled(cron = "0 0 0 L * ?")
+    /*@Scheduled(cron = "0 0 0 L * ?")
     public void scheduleInactiveUserCleanup() {
         deleteInactiveUsers();
     }*/
 
     // ovo je samo da se pokaze da radi, svaki minut
-  /*  @Scheduled(cron = "0 * * * * ?")
+    @Scheduled(cron = "0 * * * * ?")
     public void scheduleInactiveUserCleanup() {
         System.out.println("Starting cleanup task at: " + LocalDateTime.now());
         deleteInactiveUsers();
         System.out.println("Cleanup task completed at: " + LocalDateTime.now());
-    }*/
+    }
 
     @Transactional
     public void followUser(Integer userId, String loggedInUserEmail) {
@@ -329,12 +327,17 @@ public class RegisteredUserService {
     }
 
 
+    @Transactional // Obavezno dodaj ovu anotaciju za sigurnost
     public void unfollowUser(Integer userId, String followerEmail) {
         RegisteredUser userToUnfollow = findById(userId);
         RegisteredUser follower = findByEmail(followerEmail);
 
-        // Use the FollowService to perform the unfollow operation
+        // 1. Pozovi FollowService da obriše vezu
         followService.unfollowUser(userToUnfollow, follower);
+
+        // 2. Smanji broj pratilaca na korisniku koji je otpraćen
+        userToUnfollow.setFollowersNumber(Math.max(0, userToUnfollow.getFollowersNumber() - 1));
+        registeredUserRepository.save(userToUnfollow);
     }
 
    /* public int getNumberOfFollowers(Integer userId) {
