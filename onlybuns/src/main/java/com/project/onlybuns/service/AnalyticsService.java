@@ -1,80 +1,83 @@
 package com.project.onlybuns.service;
 
 import com.project.onlybuns.dto.AnalyticsDto;
-import com.project.onlybuns.dto.CommentsDto;
-import com.project.onlybuns.dto.PostsDto;
-import com.project.onlybuns.dto.UserActivityDto;
-import com.project.onlybuns.mapper.AnalyticsMapper;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
+
 @Service
 public class AnalyticsService {
 
     private final PostService postService;
     private final CommentService commentService;
     private final RegisteredUserService userService;
-    private final AnalyticsMapper analyticsMapper;
 
     @Autowired
-    public AnalyticsService(PostService postService, CommentService commentService, RegisteredUserService userService, AnalyticsMapper analyticsMapper) {
+    public AnalyticsService(PostService postService, CommentService commentService, RegisteredUserService userService) {
         this.postService = postService;
         this.commentService = commentService;
         this.userService = userService;
-        this.analyticsMapper = analyticsMapper;
     }
 
-    public AnalyticsDto getAnalytics() {
-        // Broj objava
-        long weeklyPosts = postService.countByCreatedAtAfter(getDateFor("WEEK"));
+    public AnalyticsDto getAnalytics(Integer year, Integer month, Integer week) {
+        // --- Kod za određivanje početnog i krajnjeg datuma ---
+        LocalDateTime start;
+        LocalDateTime end;
 
-        long monthlyPosts = postService.countByCreatedAtAfter(getDateFor("MONTH"));
-        long yearlyPosts = postService.countByCreatedAtAfter(getDateFor("YEAR"));
+        if (week != null && month != null) {
+            // Logika za specifičnu nedelju u mesecu
+            LocalDate firstDayOfMonth = LocalDate.of(year, month, 1);
+            // Pomeramo se na početak izabrane nedelje (uvek Ponedeljak)
+            LocalDate startOfWeek = firstDayOfMonth.plusWeeks(week - 1).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+            start = startOfWeek.atStartOfDay();
+            end = start.plusDays(6).withHour(23).withMinute(59).withSecond(59);
+        } else if (month != null) {
+            // Logika za ceo mesec
+            start = LocalDateTime.of(year, month, 1, 0, 0);
+            end = start.with(TemporalAdjusters.lastDayOfMonth()).withHour(23).withMinute(59).withSecond(59);
+        } else {
+            // Logika za celu godinu
+            start = LocalDateTime.of(year, 1, 1, 0, 0);
+            end = LocalDateTime.of(year, 12, 31, 23, 59, 59);
+        }
+        // --- Kraj koda za datume ---
 
-        // Broj komentara
-        long weeklyComments = commentService.countByCreatedAtAfter(getDateFor("WEEK"));
-        long monthlyComments = commentService.countByCreatedAtAfter(getDateFor("MONTH"));
-        long yearlyComments = commentService.countByCreatedAtAfter(getDateFor("YEAR"));
 
-        // Aktivnost korisnika
-        // Izračunavanje korisnika
+        // 1. Broj postova i komentara u periodu
+        long postsInPeriod = postService.countPostsBetween(start, end);
+        long commentsInPeriod = commentService.countCommentsBetween(start, end);
+
+        // 2. Aktivnost korisnika U PERIODU
         long totalUsers = userService.countUsers();
-        long usersWithBoth = postService.countUsersWithPostsAndComments();
-        long usersWithPosts = postService.countUsersWithPosts();
-        long usersWithCommentsOnly = commentService.countUsersWithComments() - usersWithBoth;
-        long inactiveUsers = totalUsers - (usersWithPosts + usersWithCommentsOnly + usersWithBoth);
+        if (totalUsers == 0) {
+            return new AnalyticsDto(postsInPeriod, commentsInPeriod, 0, 0, 100);
+        }
 
-// Procenti
-        double usersWithPostsPercent = (usersWithPosts / (double) totalUsers) * 100;
-        double usersWithCommentsOnlyPercent = (usersWithCommentsOnly / (double) totalUsers) * 100;
-        double inactiveUsersPercent = (inactiveUsers / (double) totalUsers) * 100;
+        long usersWithPostsInPeriod = postService.countUsersWithPostsBetween(start, end);
+        long usersWithCommentsInPeriod = commentService.countUsersWithCommentsBetween(start, end);
+        long usersWithBothInPeriod = postService.countUsersWithPostsAndCommentsBetween(start, end);
 
+        long usersWithPostsOnlyInPeriod = usersWithPostsInPeriod - usersWithBothInPeriod;
+        long usersWithCommentsOnlyInPeriod = usersWithCommentsInPeriod - usersWithBothInPeriod;
 
-        // Kreiraj DTO koristeći mapper
-        return analyticsMapper.toAnalyticsDto(
-                weeklyPosts, monthlyPosts, yearlyPosts,
-                weeklyComments, monthlyComments, yearlyComments,
-                usersWithPostsPercent, usersWithCommentsOnlyPercent, inactiveUsersPercent
+        long activeUsersInPeriod = usersWithPostsInPeriod + usersWithCommentsOnlyInPeriod;
+        long inactiveUsersInPeriod = totalUsers - activeUsersInPeriod;
+
+        // Procenti
+        double usersWithPostsPercent = (usersWithPostsInPeriod / (double) totalUsers) * 100;
+        double usersWithCommentsOnlyPercent = (usersWithCommentsOnlyInPeriod / (double) totalUsers) * 100;
+        double inactiveUsersPercent = (inactiveUsersInPeriod / (double) totalUsers) * 100;
+
+        return new AnalyticsDto(
+                postsInPeriod,
+                commentsInPeriod,
+                usersWithPostsPercent,
+                usersWithCommentsOnlyPercent,
+                inactiveUsersPercent
         );
     }
-
-
-
-
-    private LocalDateTime getDateFor(String period) {
-        LocalDateTime now = LocalDateTime.now();
-        switch (period) {
-            case "WEEK":
-                return now.minusWeeks(1);
-            case "MONTH":
-                return now.minusMonths(1);
-            case "YEAR":
-                return now.minusYears(1);
-            default:
-                throw new IllegalArgumentException("Invalid period: " + period);
-        }
-    }
 }
-

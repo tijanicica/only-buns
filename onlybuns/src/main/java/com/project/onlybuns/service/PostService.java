@@ -223,6 +223,16 @@ public class PostService {
         return postRepository.countUsersWithPostsAndComments();
     }
 
+    public long countPostsBetween(LocalDateTime start, LocalDateTime end) {
+        return postRepository.countByCreatedAtBetween(start, end);
+    }
+
+    public long countUsersWithPostsBetween(LocalDateTime start, LocalDateTime end) {
+        return postRepository.countDistinctPostCreatorsBetween(start, end);
+    }
+    public long countUsersWithPostsAndCommentsBetween(LocalDateTime start, LocalDateTime end) {
+        return postRepository.countUsersWithPostsAndCommentsBetween(start, end);
+    }
 
 
 

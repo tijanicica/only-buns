@@ -44,4 +44,11 @@ public class CommentService {
     public long countUsersWithComments() {
         return commentRepository.countDistinctCommentCreators();
     }
+    public long countCommentsBetween(LocalDateTime start, LocalDateTime end) {
+        return commentRepository.countByDateBetween(start, end);
+    }
+
+    public long countUsersWithCommentsBetween(LocalDateTime start, LocalDateTime end) {
+        return commentRepository.countDistinctCommentersBetween(start, end);
+    }
 }
