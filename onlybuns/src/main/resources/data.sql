@@ -1,118 +1,52 @@
--- Ubacivanje lokacija
-INSERT INTO location (latitude, longitude, street_number, street_name, city, country)
-VALUES (45.2671, 19.8335, 10, 'Ulica 1', 'Novi Sad', 'Srbija');
+-- Brišemo prethodne unose da izbegnemo duplikate pri svakom pokretanju (opciono, ali korisno za testiranje)
+-- Napomena: Redosled brisanja je važan zbog stranih ključeva!
+DELETE FROM chatroom_participants;
+DELETE FROM chat_message;
+DELETE FROM chat_room;
+-- DELETE FROM registered_user; -- Ovu liniju otkomentariši samo ako želiš da obrišeš SVE korisnike
 
-INSERT INTO location (latitude, longitude, street_number, street_name, city, country)
-VALUES (45.2510, 19.8451, 20, 'Ulica 2', 'Novi Sad', 'Srbija');
+-- Dodajemo nekoliko korisnika. Lozinka za sve je "password" (enkodovano).
+-- Enkodovana vrednost za "password" je: $2a$10$YourEncodedPasswordHashHere (GENERISATI NOVU!)
+-- Za potrebe primera, koristićemo privremeni hash. U realnosti, svaki korisnik bi imao svoj.
+-- Hash za "password": $2a$10$y.Cr3O58v2.531j3eO.s5.O23g31.DWS.u36a.GW8zz.n37.s.h6W
+INSERT INTO registered_user (id, email, username, first_name, last_name, password, is_active, is_admin, followers_number, registration_date) VALUES
+                                                                                                                                                 (1, 'iva_user@gmail.com', 'iva', 'Iva', 'Ivanovic', 'sifra123', true, true, 0, NOW()),
+                                                                                                                                                 (2, 'marko@example.com', 'marko', 'Marko', 'Markovic', '$2a$10$y.Cr3O58v2.531j3eO.s5.O23g31.DWS.u36a.GW8zz.n37.s.h6W', true, false, 0, NOW()),
+                                                                                                                                                 (3, 'jelena@example.com', 'jelena', 'Jelena', 'Jelenic', '$2a$10$y.Cr3O58v2.531j3eO.s5.O23g31.DWS.u36a.GW8zz.n37.s.h6W', true, false, 0, NOW()),
+                                                                                                                                                 (4, 'petar@example.com', 'petar', 'Petar', 'Petrovic', '$2a$10$y.Cr3O58v2.531j3eO.s5.O23g31.DWS.u36a.GW8zz.n37.s.h6W', true, false, 0, NOW())
+ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email, username = EXCLUDED.username;
 
-INSERT INTO location (latitude, longitude, street_number, street_name, city, country)
-VALUES (45.2455, 19.8284, 30, 'Ulica 3', 'Novi Sad', 'Srbija');
+-- Kreiramo jednu testnu GRUPNU sobu
+INSERT INTO chat_room (id, name, admin_id, is_group_chat) VALUES
+    (101, 'ISA Projekat Grupa', 1, true)
+ON CONFLICT (id) DO NOTHING;
 
--- Ubacivanje korisnika sa definisanim datumima
-INSERT INTO registered_user (email, username, password, first_name, last_name, location_id, is_active, registration_date, activation_date, last_login_date, is_admin, followers_number)
-VALUES ('tijana@example.com', 'tijana', 'hashedPassword1', 'Tijana', 'Petrović', 1, TRUE, '2024-10-20 12:00:00', '2024-10-25 14:00:00', '2024-10-30 10:00:00', FALSE, 100);
+-- Dodajemo učesnike u tu GRUPNU sobu
+INSERT INTO chatroom_participants (chatroom_id, user_id) VALUES
+                                                             (101, 1), -- Admin (Iva)
+                                                             (101, 3)  -- Član (Jelena)
+ON CONFLICT (chatroom_id, user_id) DO NOTHING;
 
-INSERT INTO registered_user (email, username, password, first_name, last_name, location_id, is_active, registration_date, activation_date, last_login_date, is_admin, followers_number)
-VALUES ('marko@example.com', 'marko', 'hashedPassword2', 'Marko', 'Marković', 2, TRUE, '2024-10-18 09:30:00', '2024-10-23 11:00:00', '2024-10-30 09:00:00', FALSE, 150);
+-- Dodajemo nekoliko testnih poruka u GRUPNU sobu
+INSERT INTO chat_message (content, sent_at, sender_id, chat_room_id) VALUES
+                                                                         ('Ćao svima, dobrodošli u grupu!', NOW() - INTERVAL '5 minute', 1, 101),
+                                                                         ('Zdravo!', NOW() - INTERVAL '4 minute', 3, 101);
 
-INSERT INTO registered_user (email, username, password, first_name, last_name, location_id, is_active, registration_date, activation_date, last_login_date, is_admin, followers_number)
-VALUES ('jelena@example.com', 'jelena', 'hashedPassword3', 'Jelena', 'Jovanović', 3, TRUE, '2024-10-15 08:45:00', '2024-10-20 13:30:00', '2024-10-29 15:00:00', FALSE, 200);
+-- Kreiramo jedan testni PRIVATNI čet između korisnika 1 (Iva) i 2 (Marko)
+INSERT INTO chat_room (id, name, is_group_chat) VALUES
+    (102, 'iva - marko', false)
+ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO registered_user (email, username, password, first_name, last_name, location_id, is_active, registration_date, activation_date, last_login_date, is_admin, followers_number, activation_token)
-VALUES ('iva@example.com', 'iva', 'hashedPassword3', 'iva', 'ivanovic', 2, TRUE, '2024-10-15 08:45:00', '2024-10-20 13:30:00', '2024-10-29 15:00:00', TRUE, 200, 'f97dde36-9fa2-4f7c-8c3d-93efb61fbc79');
+-- Dodajemo učesnike u taj PRIVATNI čet
+INSERT INTO chatroom_participants (chatroom_id, user_id) VALUES
+                                                             (102, 1),
+                                                             (102, 2)
+ON CONFLICT (chatroom_id, user_id) DO NOTHING;
 
+-- Dodajemo testnu poruku u PRIVATNI čet
+INSERT INTO chat_message (content, sent_at, sender_id, chat_room_id) VALUES
+    ('Hej Marko, kako si?', NOW() - INTERVAL '10 minute', 1, 102);
 
--- Ubacivanje objava sa vremenima nakon activation_date
-INSERT INTO post (description, photo, location_id, created_at, user_id)
-VALUES ('Moj novi zeka!', '/images/bunny1.jpg', 1, '2024-10-26 15:00:00', 1);
-
-INSERT INTO post (description, photo, location_id, created_at, user_id)
-VALUES ('Pogledajte kako moj zeka skace!', '/images/bunny2.jpg', 2, '2024-10-24 12:30:00', 2);
-
-INSERT INTO post (description, photo, location_id, created_at, user_id)
-VALUES ('Još jedno divno jutro sa mojim zekama', '/images/bunny3.jpg', 3, '2024-10-21 10:15:00', 3);
-
-INSERT INTO post (description, photo, location_id, created_at, user_id)
-VALUES ('Zečevi u akciji!', '/images/bunny4.jpg', 1, '2024-10-27 09:00:00', 1);
-
-INSERT INTO post (description, photo, location_id, created_at, user_id)
-VALUES ('Najslađi zeka ikada!', '/images/bunny5.jpg', 2, '2024-10-26 17:20:00', 2);
-
--- Ubacivanje dodatnih objava
-INSERT INTO post (description, photo, location_id, created_at, user_id)
-VALUES ('Zeka na odmoru', '/images/bunny9.jpg', 1, '2024-10-28 14:00:00', 1);
-
-INSERT INTO post (description, photo, location_id, created_at, user_id)
-VALUES ('Najlepši zeka ikada!', '/images/bunny10.jpg', 2, '2024-10-28 16:30:00', 2);
-
-INSERT INTO post (description, photo, location_id, created_at, user_id)
-VALUES ('Još jedno zimsko jutro sa zekama', '/images/bunny11.jpg', 3, '2024-10-29 11:15:00', 3);
-
-INSERT INTO post (description, photo, location_id, created_at, user_id)
-VALUES ('Vreme za igru!', '/images/bunny6.jpg', 1, '2024-10-29 18:00:00', 1);
-
-INSERT INTO post (description, photo, location_id, created_at, user_id)
-VALUES ('Zeka u prirodi!', '/images/bunny8.jpg', 2, '2024-10-30 09:20:00', 2);
-
--- Ubacivanje lajkova
-INSERT INTO post_like (post_id, user_id, date)
-VALUES (1, 2, '2024-10-27 16:00:00');
-
-INSERT INTO post_like (post_id, user_id, date)
-VALUES (1, 3, '2024-10-27 16:30:00');
-
-INSERT INTO post_like (post_id, user_id, date)
-VALUES (2, 1, '2024-10-24 13:00:00');
-
-INSERT INTO post_like (post_id, user_id, date)
-VALUES (3, 2, '2024-10-21 11:00:00');
-
-INSERT INTO post_like (post_id, user_id, date)
-VALUES (4, 3, '2024-10-28 12:15:00');
-
-INSERT INTO post_like (post_id, user_id, date)
-VALUES (5, 1, '2024-10-26 18:00:00');
-
-INSERT INTO post_like (post_id, user_id, date)
-VALUES (5, 3, '2024-10-27 08:30:00');
-
--- Ubacivanje komentara
-INSERT INTO comment (post_id, user_id, date, content)
-VALUES (1, 2, '2024-10-27 16:10:00', 'Predivno!');
-
-INSERT INTO comment (post_id, user_id, date, content)
-VALUES (1, 3, '2024-10-27 16:40:00', 'Baš je sladak zeka!');
-
-INSERT INTO comment (post_id, user_id, date, content)
-VALUES (2, 1, '2024-10-24 13:15:00', 'Sjajna fotka!');
-
-INSERT INTO comment (post_id, user_id, date, content)
-VALUES (3, 2, '2024-10-21 11:10:00', 'Voleo bih da upoznam tvog zeku!');
-
-INSERT INTO comment (post_id, user_id, date, content)
-VALUES (4, 3, '2024-10-28 12:30:00', 'Super je energičan!');
-
-INSERT INTO comment (post_id, user_id, date, content)
-VALUES (5, 1, '2024-10-26 18:30:00', 'Zeko izgleda prelepo!');
-
-INSERT INTO comment (post_id, user_id, date, content)
-VALUES (5, 3, '2024-10-27 08:40:00', 'Baš je simpatičan!');
-
-
-INSERT INTO follow (followed_id, follower_id, created_at)
-VALUES (1, 2, '2024-10-29 12:00:00');
-
-INSERT INTO follow (followed_id, follower_id, created_at)
-VALUES (1, 3, '2024-10-28 15:00:00');
-
-INSERT INTO follow (followed_id, follower_id, created_at)
-VALUES (2, 1, '2024-10-30 10:30:00');
-
-INSERT INTO follow (followed_id, follower_id, created_at)
-VALUES (2, 3, '2024-10-29 12:00:00');
-
-INSERT INTO follow (followed_id, follower_id, created_at)
-VALUES (3, 1, '2024-10-28 15:00:00');
-
-INSERT INTO follow (followed_id, follower_id, created_at)
-VALUES (3, 2, '2024-10-30 10:30:00');
+-- Podešavamo sekvence da počnu od većeg broja da ne bi došlo do konflikta ID-jeva
+SELECT setval('chat_room_id_seq', (SELECT MAX(id) FROM chat_room));
+SELECT setval('registered_user_id_seq', (SELECT MAX(id) FROM registered_user));

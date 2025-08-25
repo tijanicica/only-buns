@@ -16,7 +16,7 @@ public class CommentDto {
     private String content;
     private LocalDateTime date;
     private String username;
-    private String name;  //ime korisnika koji je dodao komentar
+    private String name;
     private Integer postId;
 
 }

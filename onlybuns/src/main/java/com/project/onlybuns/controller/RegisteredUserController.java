@@ -335,6 +335,11 @@ public class RegisteredUserController {
         }
     }
 
+    @GetMapping("/chat-buddies")
+    public ResponseEntity<List<RegisteredUserDto>> getAvailableChatUsers() {
+        return ResponseEntity.ok(registeredUserService.findAvailableChatUsers());
+    }
+
 
 
 
