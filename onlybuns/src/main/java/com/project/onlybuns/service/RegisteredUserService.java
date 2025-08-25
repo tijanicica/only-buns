@@ -373,6 +373,14 @@ public class RegisteredUserService {
     }
 
 
+    public List<RegisteredUserDto> findAvailableChatUsers() {
+        return registeredUserRepository.findByIsAdminFalseAndIsActiveTrue()
+                .stream()
+                .map(registeredUserMapper::toUserDto)
+                .collect(Collectors.toList());
+    }
+
+
 
 
 

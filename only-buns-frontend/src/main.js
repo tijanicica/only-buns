@@ -12,6 +12,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 
 axios.defaults.baseURL = 'http://localhost:8080/api';
 
+
 const app = createApp(App);
 
 

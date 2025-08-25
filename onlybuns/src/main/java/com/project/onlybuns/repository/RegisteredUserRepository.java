@@ -57,7 +57,7 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
 
     long countByUsername(String user1);
 
-
+    List<RegisteredUser> findByIsAdminFalseAndIsActiveTrue();
 
 }
 

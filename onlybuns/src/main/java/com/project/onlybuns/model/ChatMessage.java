@@ -1,28 +1,28 @@
 package com.project.onlybuns.model;
 
+import com.project.onlybuns.model.*;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@ToString
+@Getter @Setter @ToString
 @Entity
 public class ChatMessage {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
+
+    private String content;
+
+    private LocalDateTime sentAt;
 
     @ManyToOne
     private RegisteredUser sender;
 
-    private String content;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime timestamp;
+    @ManyToOne
+    private ChatRoom chatRoom;
 
 }
