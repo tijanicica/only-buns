@@ -16,13 +16,9 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 public class AnalyticsDto {
-    private long weeklyPosts;
-    private long monthlyPosts;
-    private long yearlyPosts;
-    private long weeklyComments;
-    private long monthlyComments;
-    private long yearlyComments;
-    private double usersWithPostsOnly;
+    private long posts;
+    private long comments;
+    private double usersWithPosts;
     private double usersWithCommentsOnly;
     private double inactiveUsers;
 

@@ -52,6 +52,15 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query("SELECT COUNT(DISTINCT p.postCreator.id) FROM Post p WHERE p.postCreator.id IN (SELECT c.user.id FROM Comment c)")
     long countUsersWithPostsAndComments();
 
+    long countByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
+
+    @Query("SELECT COUNT(DISTINCT p.postCreator.id) FROM Post p WHERE p.createdAt BETWEEN :start AND :end")
+    long countDistinctPostCreatorsBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
+    @Query("SELECT COUNT(DISTINCT p.postCreator.id) FROM Post p WHERE p.createdAt BETWEEN :start AND :end " +
+            "AND p.postCreator.id IN (SELECT DISTINCT c.user.id FROM Comment c WHERE c.date BETWEEN :start AND :end)")
+    long countUsersWithPostsAndCommentsBetween(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
 
 
 
