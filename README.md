@@ -1,8 +1,7 @@
-# OnlyBuns 🐰
+# OnlyBuns
 
 A social network faculty project for rabbit owners — think Instagram/Twitter, but every post is about a bunny. Users register, post photos with locations, follow each other, chat in real time, and browse trending content and analytics. Built as three independent pieces: a Spring Boot backend, a Vue 3 frontend, and a small Python RabbitMQ producer for seeding vet/rabbit-care locations on the map.
 
-> **Status:** This branch consolidates every feature branch built over the course of the project into `main`, which had fallen behind after the first few PRs. It's kept here as a **code showcase** — it reflects the final implementation rather than a guaranteed, ready-to-run deployment (secrets are hardcoded in `application.properties` from local dev and would need to be replaced).
 
 ## Concept
 
@@ -143,6 +142,3 @@ python main.py
 
 Publishes a set of hardcoded rabbit-care-center locations onto the `direct_exchange` / `rabbit-care-queue`, which the backend consumes and the frontend renders on the map page.
 
-## History note
-
-`main` only ever tracked the first PR (home page). All subsequent feature work — auth, posts, social graph, chat, admin tooling, analytics/trends, rate limiting, load balancing, image compression/caching — landed on `develop` through 26 further pull requests but was never merged back into `main`. This branch merges `develop` (confirmed to be a superset of every other feature branch) into `main` to bring the full implementation together in one place.
